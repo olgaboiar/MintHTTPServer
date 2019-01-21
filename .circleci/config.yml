@@ -49,7 +49,7 @@ jobs:
 
       # run tests!
       - run: gradle test jacocoTestReport
-      - run: gradle cucumber
+#      - run: gradle cucumber
 
 
       - run:
