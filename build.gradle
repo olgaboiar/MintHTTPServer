@@ -19,8 +19,6 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
-    testCompile 'io.cucumber:cucumber-java:4.2.0'
-    testCompile 'io.cucumber:cucumber-junit:4.2.0'
 }
 
 test {
@@ -46,22 +44,12 @@ jacocoTestReport {
     }
 }
 
-task cucumber() {
-    dependsOn assemble, compileTestJava
-    doLast {
-        javaexec {
-            main = "cucumber.api.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/resources']
-        }
-    }
-}
 
 jar {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'com.olgaboiar.guacomole.ServerRunner'
+                'Main-Class': 'com.olgaboiar.mint.Server'
         )
     }
 }
