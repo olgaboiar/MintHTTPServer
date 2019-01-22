@@ -1,7 +1,11 @@
 .gradle
 out
-build
 .idea
+build/classes/
+build/distributions/
+build/jacocoHtml/
+build/scripts/
+build/tmp/
 
 # Ignore Gradle GUI config
 gradle-app.setting
