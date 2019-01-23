@@ -10,6 +10,9 @@ public class Server {
     String host;
     static int port;
     ServerSocket serverSocket;
+    Socket clientSocket;
+    BufferedReader in;
+    PrintWriter out;
 
     public Server(String host, int port) {
         this.host = host;
@@ -26,13 +29,10 @@ public class Server {
     }
 
     public void perform() throws IOException {
-        Socket clientSocket = serverSocket.accept();
-        System.out.println("connected");
+        acceptClientConnection();
         List<String> list = new ArrayList<String>();
-//        Thread thread = new Thread();
-//        thread.start();
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        out = new PrintWriter(clientSocket.getOutputStream());
         BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
         String input = in.readLine();
         while (input.length() > 0) {
@@ -51,6 +51,16 @@ public class Server {
             out.println("");
         }
         out.flush();
+        closeClientConnection();
+    }
+
+    public void acceptClientConnection () throws IOException {
+        clientSocket = serverSocket.accept();
+        System.out.println("connected");
+
+    }
+
+    public void closeClientConnection() throws IOException {
         out.close();
         in.close();
         clientSocket.close();
