@@ -30,9 +30,8 @@ public class Server {
 
     public void perform() throws IOException {
         acceptClientConnection();
+        listenToClientConnection();
         List<String> list = new ArrayList<String>();
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out = new PrintWriter(clientSocket.getOutputStream());
         BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
         String input = in.readLine();
         while (input.length() > 0) {
@@ -56,8 +55,11 @@ public class Server {
 
     public void acceptClientConnection () throws IOException {
         clientSocket = serverSocket.accept();
-        System.out.println("connected");
+    }
 
+    public void listenToClientConnection() throws IOException {
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        out = new PrintWriter(clientSocket.getOutputStream());
     }
 
     public void closeClientConnection() throws IOException {
