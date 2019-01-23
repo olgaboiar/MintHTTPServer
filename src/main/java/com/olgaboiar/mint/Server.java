@@ -18,6 +18,7 @@ public class Server implements ServerInterface {
     PrintWriter out;
     String host;
     static int port;
+    RequestParser parser = new RequestParser();
 
     public Server(String host, int port) {
         this.host = host;
@@ -27,9 +28,6 @@ public class Server implements ServerInterface {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-//        while(true) {
-//            perform();
-//        }
     }
 
     @Override
@@ -43,9 +41,9 @@ public class Server implements ServerInterface {
             list.add(input);
             input = in.readLine();
         }
-        String[] requestLineArr = list.get(0).split(" ");
-        if (requestLineArr[0].equals("GET")){
-            System.out.println("it's get");
+        Request currentRequest = parser.parse(list);
+        String method = currentRequest.getMethod();
+        if (method.equals("GET")){
             out.println("HTTP/1.0 200 OK");
             out.println("Content-Type: text/html");
             out.println("");
@@ -61,6 +59,7 @@ public class Server implements ServerInterface {
 
     @Override
     public void listenToClientConnection() throws IOException {
+//        clientSocket = serverSocket.accept();
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream());
     }

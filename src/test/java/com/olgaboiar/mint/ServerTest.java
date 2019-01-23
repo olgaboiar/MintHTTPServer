@@ -46,30 +46,4 @@ class ServerTest {
         testClient.close();
     }
 
-//    @Test
-//    void testServerIsNotReachableAfterStopping () throws Exception {
-//        testServer.stop();
-//        InetAddress server = InetAddress.getByName("localhost");
-//        boolean reachable = server.isReachable(5000);
-//        assertFalse(reachable);
-//    }
-
 }
-
-//    @Override
-//    public void listenToClientConnection() throws IOException {
-//        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//        out = new PrintWriter(clientSocket.getOutputStream());
-//    }
-//
-//    @Override
-//    public void closeClientConnection() throws IOException {
-//        out.close();
-//        in.close();
-//        clientSocket.close();
-//    }
-//
-//    @Override
-//    public void stop() throws IOException {
-//        serverSocket.close();
-//    }
