@@ -32,17 +32,13 @@ public class Server {
         acceptClientConnection();
         listenToClientConnection();
         List<String> list = new ArrayList<String>();
-        BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
         String input = in.readLine();
         while (input.length() > 0) {
             System.out.println(input);
             list.add(input);
             input = in.readLine();
         }
-        System.out.println(list);
-        System.out.println(list.get(0));
         String[] requestLineArr = list.get(0).split(" ");
-        System.out.println(requestLineArr[0]);
         if (requestLineArr[0].equals("GET")){
             System.out.println("it's get");
             out.println("HTTP/1.0 200 OK");
