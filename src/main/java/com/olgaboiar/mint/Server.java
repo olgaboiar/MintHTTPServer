@@ -1,33 +1,38 @@
 package com.olgaboiar.mint;
 
-import java.io.*;
+import com.olgaboiar.mint.ServerInterface;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
-    String host;
-    static int port;
+public class Server implements ServerInterface {
     ServerSocket serverSocket;
     Socket clientSocket;
     BufferedReader in;
     PrintWriter out;
+    String host;
+    static int port;
 
     public Server(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
+    @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-        System.out.println("start");
-
         while(true) {
             perform();
         }
     }
 
+    @Override
     public void perform() throws IOException {
         acceptClientConnection();
         listenToClientConnection();
@@ -49,21 +54,25 @@ public class Server {
         closeClientConnection();
     }
 
-    public void acceptClientConnection () throws IOException {
+    @Override
+    public void acceptClientConnection() throws IOException {
         clientSocket = serverSocket.accept();
     }
 
+    @Override
     public void listenToClientConnection() throws IOException {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream());
     }
 
+    @Override
     public void closeClientConnection() throws IOException {
         out.close();
         in.close();
         clientSocket.close();
     }
 
+    @Override
     public void stop() throws IOException {
         serverSocket.close();
     }
