@@ -4,6 +4,7 @@ out
 build/classes/
 build/distributions/
 build/jacocoHtml/
+build/reports/tests/
 build/scripts/
 build/tmp/
 
