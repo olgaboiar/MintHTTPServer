@@ -27,9 +27,9 @@ public class Server implements ServerInterface {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-        while(true) {
-            perform();
-        }
+//        while(true) {
+//            perform();
+//        }
     }
 
     @Override

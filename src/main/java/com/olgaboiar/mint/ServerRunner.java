@@ -14,6 +14,9 @@ public class ServerRunner {
         System.out.println(port);
         System.out.println("starting");
         server.start();
+        while(true) {
+            server.perform();
+        }
 
     }
 }
