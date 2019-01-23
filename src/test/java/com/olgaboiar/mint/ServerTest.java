@@ -7,6 +7,8 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +21,7 @@ class ServerTest {
         String host = "localhost";
         int port = 5000;
         testServer = new Server(host, port);
+        testServer.start();
     }
 
     @AfterAll
@@ -28,10 +31,19 @@ class ServerTest {
 
     @Test
     void testServerIsReachableAfterStarting () throws Exception {
-        testServer.start();
         InetAddress server = InetAddress.getByName("localhost");
-        boolean reachable = server.isReachable(5000);
+        boolean reachable = server.isReachable(7000);
         assertTrue(reachable);
+    }
+
+    @Test
+    void testServerAcceptsClientConnection () throws Exception {
+        Socket testClient = new Socket();
+        testClient.connect(new InetSocketAddress("localhost", 5000));
+        testServer.acceptClientConnection();
+        boolean connected = testClient.isConnected();
+        assertTrue(connected);
+        testClient.close();
     }
 
 //    @Test
@@ -44,13 +56,6 @@ class ServerTest {
 
 }
 
-
-//
-//    @Override
-//    public void acceptClientConnection() throws IOException {
-//        clientSocket = serverSocket.accept();
-//    }
-//
 //    @Override
 //    public void listenToClientConnection() throws IOException {
 //        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
