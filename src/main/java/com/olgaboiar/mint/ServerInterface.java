@@ -8,7 +8,7 @@ public interface ServerInterface {
     void acceptClientConnection() throws IOException;
     void listenToClientConnection() throws IOException;
     void readClientInput() throws IOException;
-    void sendResponseToClient(String[] responseArray) throws IOException;
+    void sendResponseToClient(Response response) throws IOException;
     void closeClientConnection() throws IOException;
     void stop() throws IOException;
 }

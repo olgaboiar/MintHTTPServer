@@ -10,8 +10,6 @@ public class ServerRunner {
         int port = 5000;
 //        int port = Integer.parseInt(args[1]);
         server = new Server(host, port);
-        System.out.println(host);
-        System.out.println(port);
         System.out.println("starting");
         server.start();
         while(true) {

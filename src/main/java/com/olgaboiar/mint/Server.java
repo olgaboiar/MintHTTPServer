@@ -1,9 +1,6 @@
 package com.olgaboiar.mint;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -34,8 +31,8 @@ public class Server implements ServerInterface {
         acceptClientConnection();
         listenToClientConnection();
         readClientInput();
-        String[] responseArray = responseGenerator.generateResponse();
-        sendResponseToClient(responseArray);
+        Response response = responseGenerator.generateResponse();
+        sendResponseToClient(response);
         closeClientConnection();
     }
 
@@ -58,13 +55,27 @@ public class Server implements ServerInterface {
             list.add(input);
             input = in.readLine();
         }
+        Request currentRequest = parser.parse(list);
+        String method = currentRequest.getMethod();
+        String file = "." + currentRequest.getRequestedFile();
+        System.out.println(method);
+        System.out.println(file);
+        File searchForFile = new File(file);
+        System.out.println(searchForFile.isFile());
+        if (searchForFile.isFile()) {
+            System.out.println("file exists, append it to response body");
+        } else {
+            System.out.println("file doesn't exist, give not found error");
+        }
+
     }
 
     @Override
-    public void sendResponseToClient(String[] responseArray) {
-        for (String item : responseArray) {
-            out.println(item);
-        }
+    public void sendResponseToClient(Response response) {
+
+        out.println(response.getStatusLine());
+        out.println(response.getContentType());
+        out.println("");
         out.flush();
     }
 
