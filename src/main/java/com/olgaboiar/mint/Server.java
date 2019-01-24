@@ -1,7 +1,5 @@
 package com.olgaboiar.mint;
 
-import com.olgaboiar.mint.ServerInterface;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +17,7 @@ public class Server implements ServerInterface {
     String host;
     static int port;
     RequestParser parser = new RequestParser();
+    ResponseGenerator responseGenerator = new ResponseGenerator();
 
     public Server(String host, int port) {
         this.host = host;
@@ -31,24 +30,12 @@ public class Server implements ServerInterface {
     }
 
     @Override
-    public void perform() throws IOException {
+    public void run() throws IOException {
         acceptClientConnection();
         listenToClientConnection();
-        List<String> list = new ArrayList<String>();
-        String input = in.readLine();
-        while (input.length() > 0) {
-            System.out.println(input);
-            list.add(input);
-            input = in.readLine();
-        }
-        Request currentRequest = parser.parse(list);
-        String method = currentRequest.getMethod();
-        if (method.equals("GET")){
-            out.println("HTTP/1.0 200 OK");
-            out.println("Content-Type: text/html");
-            out.println("");
-        }
-        out.flush();
+        readClientInput();
+        String[] responseArray = responseGenerator.generateResponse();
+        sendResponseToClient(responseArray);
         closeClientConnection();
     }
 
@@ -59,9 +46,27 @@ public class Server implements ServerInterface {
 
     @Override
     public void listenToClientConnection() throws IOException {
-//        clientSocket = serverSocket.accept();
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream());
+    }
+
+    @Override
+    public void readClientInput() throws IOException {
+        List<String> list = new ArrayList<String>();
+        String input = in.readLine();
+        while (input.length() > 0) {
+            System.out.println(input);
+            list.add(input);
+            input = in.readLine();
+        }
+    }
+
+    @Override
+    public void sendResponseToClient(String[] responseArray) {
+        for (String item : responseArray) {
+            out.println(item);
+        }
+        out.flush();
     }
 
     @Override
