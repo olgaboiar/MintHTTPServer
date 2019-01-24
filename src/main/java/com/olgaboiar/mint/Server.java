@@ -55,7 +55,6 @@ public class Server implements ServerInterface {
         List<String> list = new ArrayList<String>();
         String input = in.readLine();
         while (input.length() > 0) {
-            System.out.println(input);
             list.add(input);
             input = in.readLine();
         }
