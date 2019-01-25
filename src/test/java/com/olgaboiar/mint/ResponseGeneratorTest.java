@@ -8,7 +8,8 @@ class ResponseGeneratorTest {
     @Test
     void testResponseGeneratorReturnsResponseArray() {
         ResponseGenerator testResponseGenerator = new ResponseGenerator();
-        String[] responseArray = testResponseGenerator.generateResponse();
+        Response response = testResponseGenerator.generateResponse();
+        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
