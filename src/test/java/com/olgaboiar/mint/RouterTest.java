@@ -12,6 +12,17 @@ class RouterTest {
     void returns200OKWhenLegalRouteIsRequested() {
         Request testRequest = new Request();
         testRequest.setMethod("GET");
+        testRequest.setRequestedFile("/simple_get");
+        testRequest.setProtocol("HTTP");
+        response = router.route(testRequest);
+        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        assertArrayEquals(new String[]{"HTTP/1.0 200 OK", "Content-Type: text/html", ""}, responseArray);
+    }
+
+    @Test
+    void returns200OKWhenExistentFileIsRequested() {
+        Request testRequest = new Request();
+        testRequest.setMethod("GET");
         testRequest.setRequestedFile("/index.html");
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
