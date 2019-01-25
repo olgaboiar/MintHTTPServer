@@ -21,4 +21,14 @@ public class ResponseGenerator {
 
         return response;
     }
+
+    public Response generateNotFoundResponse() {
+        String statusLine = ("HTTP/1.0 404 Not Found");
+        String contentType = ("Content-Type: text/plain");
+//        String blankLine = ("");
+
+        Response response = new Response(statusLine, contentType);
+
+        return response;
+    }
 }

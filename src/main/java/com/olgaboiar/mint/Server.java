@@ -15,6 +15,8 @@ public class Server implements ServerInterface {
     static int port;
     RequestParser parser = new RequestParser();
     ResponseGenerator responseGenerator = new ResponseGenerator();
+    Router router = new Router();
+    Response response;
 
     public Server(String host, int port) {
         this.host = host;
@@ -31,7 +33,7 @@ public class Server implements ServerInterface {
         acceptClientConnection();
         listenToClientConnection();
         readClientInput();
-        Response response = responseGenerator.generateResponse();
+//        Response response = responseGenerator.generateResponse();
         sendResponseToClient(response);
         closeClientConnection();
     }
@@ -55,18 +57,9 @@ public class Server implements ServerInterface {
             list.add(input);
             input = in.readLine();
         }
+        System.out.println(list);
         Request currentRequest = parser.parse(list);
-        String method = currentRequest.getMethod();
-        String file = "." + currentRequest.getRequestedFile();
-        System.out.println(method);
-        System.out.println(file);
-        File searchForFile = new File(file);
-        System.out.println(searchForFile.isFile());
-        if (searchForFile.isFile()) {
-            System.out.println("file exists, append it to response body");
-        } else {
-            System.out.println("file doesn't exist, give not found error");
-        }
+        response = router.route(currentRequest);
 
     }
 
