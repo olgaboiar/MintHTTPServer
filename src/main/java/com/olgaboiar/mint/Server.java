@@ -68,6 +68,7 @@ public class Server implements ServerInterface {
 
         out.println(response.getHeader().getStatusLine());
         out.println(response.getHeader().getContentType());
+        out.println(response.getHeader().getDate());
         out.println("");
         out.flush();
     }

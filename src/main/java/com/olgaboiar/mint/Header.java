@@ -4,10 +4,12 @@ public class Header {
     private String statusLine;
     private String contentType;
     private String blankLine;
+    private String date;
 
-    public Header(String statusLine, String contentType) {
+    public Header(String statusLine, String contentType, String date) {
         this.statusLine = statusLine;
         this.contentType = contentType;
+        this.date = date;
         this.blankLine = ("");
     }
 
@@ -17,5 +19,9 @@ public class Header {
 
     String getContentType() {
         return contentType;
+    }
+
+    String getDate() {
+        return date;
     }
 }
