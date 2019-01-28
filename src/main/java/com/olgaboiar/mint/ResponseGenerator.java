@@ -8,7 +8,6 @@ public class ResponseGenerator {
     public Response generateResponse() {
         String statusCode = ("200 OK");
         String contentType = ("Content-Type: text/html");
-//        Header header = new Header(statusLine, contentType);
         Header header = headerGenerator.generate(statusCode, contentType);
         Body body = new Body(test_body);
         Response response = new Response(header, body);
@@ -20,7 +19,6 @@ public class ResponseGenerator {
         String statusCode = ("Not Found");
         String contentType = ("Content-Type: text/plain");
         Header header = headerGenerator.generate(statusCode, contentType);
-//        Header header = new Header(statusLine, contentType);
         Body body = new Body(test_body);
         Response response = new Response(header, body);
 

@@ -65,11 +65,7 @@ public class Server implements ServerInterface {
 
     @Override
     public void sendResponseToClient(Response response) {
-
-        out.println(response.getHeader().getStatusLine());
-        out.println(response.getHeader().getContentType());
-        out.println(response.getHeader().getDate());
-        out.println("");
+        out.println(response.getHeader().prepareHeaders());
         out.flush();
     }
 

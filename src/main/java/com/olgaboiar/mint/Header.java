@@ -24,4 +24,12 @@ public class Header {
     String getDate() {
         return date;
     }
+
+    String prepareHeaders() {
+        String headersToSend = statusLine + "\n"
+                + contentType + "\n"
+                + date + "\n"
+                + blankLine;
+        return headersToSend;
+    }
 }
