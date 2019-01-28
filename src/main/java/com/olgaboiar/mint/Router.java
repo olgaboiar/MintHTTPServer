@@ -26,7 +26,7 @@ public class Router {
         }
         else {
             System.out.println("file doesn't exist, give not found error");
-            response = responseGenerator.generateResponse("Not Found", "");
+            response = responseGenerator.generateResponse("404 Not Found", "");
         }
         return response;
     }
