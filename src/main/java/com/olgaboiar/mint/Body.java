@@ -6,4 +6,8 @@ public class Body {
     Body(String body) {
         this.body = body;
     }
+
+    String getBodyString() {
+        return body;
+    }
 }
