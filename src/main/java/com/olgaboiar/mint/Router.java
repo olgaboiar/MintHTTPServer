@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Router {
     ResponseGenerator responseGenerator = new ResponseGenerator();
     Response response;
-    private String[] allowedRoutes = {"/simple_get"};
+    private String[] allowedRoutes = {"/simple_get", "/method_options"};
 
     public Response route(Request request) {
         String method = request.getMethod();
