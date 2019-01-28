@@ -1,6 +1,7 @@
 package com.olgaboiar.mint;
 
 public class ResponseGenerator {
+    String test_body = "test";
 
 //    public String[] generateResponse() {
 //        String statusLine = ("HTTP/1.0 200 OK");
@@ -15,9 +16,9 @@ public class ResponseGenerator {
     public Response generateResponse() {
         String statusLine = ("HTTP/1.0 200 OK");
         String contentType = ("Content-Type: text/html");
-//        String blankLine = ("");
-
-        Response response = new Response(statusLine, contentType);
+        Header header = new Header(statusLine, contentType);
+        Body body = new Body(test_body);
+        Response response = new Response(header, body);
 
         return response;
     }
@@ -25,9 +26,10 @@ public class ResponseGenerator {
     public Response generateNotFoundResponse() {
         String statusLine = ("HTTP/1.0 404 Not Found");
         String contentType = ("Content-Type: text/plain");
-//        String blankLine = ("");
 
-        Response response = new Response(statusLine, contentType);
+        Header header = new Header(statusLine, contentType);
+        Body body = new Body(test_body);
+        Response response = new Response(header, body);
 
         return response;
     }

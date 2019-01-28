@@ -1,0 +1,3 @@
+route allowed
+(file exists, append it to response body
+)file doesn't exist, give not found error

@@ -15,7 +15,7 @@ class RouterTest {
         testRequest.setRequestedFile("/simple_get");
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
-        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
@@ -26,7 +26,7 @@ class RouterTest {
         testRequest.setRequestedFile("/index.html");
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
-        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
@@ -37,7 +37,7 @@ class RouterTest {
         testRequest.setRequestedFile("/no-directory");
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
-        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 404 Not Found", "Content-Type: text/plain", ""}, responseArray);
     }
 

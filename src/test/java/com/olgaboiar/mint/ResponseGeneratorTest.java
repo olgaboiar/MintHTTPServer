@@ -9,7 +9,7 @@ class ResponseGeneratorTest {
     void testResponseGeneratorReturnsResponseObject() {
         ResponseGenerator testResponseGenerator = new ResponseGenerator();
         Response response = testResponseGenerator.generateResponse();
-        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
@@ -17,7 +17,7 @@ class ResponseGeneratorTest {
     void testResponseGeneratorReturnsResponseForNotFound() {
         ResponseGenerator testResponseGenerator = new ResponseGenerator();
         Response response = testResponseGenerator.generateNotFoundResponse();
-        String[] responseArray = {response.getStatusLine(), response.getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
         assertArrayEquals(new String[]{"HTTP/1.0 404 Not Found", "Content-Type: text/plain", ""}, responseArray);
     }
 
