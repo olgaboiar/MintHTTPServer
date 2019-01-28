@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.olgaboiar.mint.RequestParserTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-01-28T19:18:03" hostname="Olgas-MacBook-Pro.local" time="0.011">
+<testsuite name="com.olgaboiar.mint.RequestParserTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-01-28T19:19:48" hostname="Olgas-MacBook-Pro.local" time="0.028">
   <properties/>
-  <testcase name="testRequestParserCreatesRequestObject()" classname="com.olgaboiar.mint.RequestParserTest" time="0.003"/>
-  <testcase name="testParsedRequestObjectHasMethod()" classname="com.olgaboiar.mint.RequestParserTest" time="0.007"/>
+  <testcase name="testRequestParserCreatesRequestObject()" classname="com.olgaboiar.mint.RequestParserTest" time="0.019"/>
+  <testcase name="testParsedRequestObjectHasMethod()" classname="com.olgaboiar.mint.RequestParserTest" time="0.008"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

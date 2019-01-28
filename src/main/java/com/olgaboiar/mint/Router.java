@@ -19,6 +19,9 @@ public class Router {
         if (searchForFile.isFile()) {
             List<String> fileContent = Files.readAllLines(Paths.get(file));
             String body = String.join("", fileContent);
+            if (method.equals("HEAD")) {
+                body = "";
+            }
             response = responseGenerator.generateResponse("200 OK", body);
         } else if (Arrays.asList(allowedRoutes).contains(request.getRequestedFile())) {
             System.out.println("route allowed");
