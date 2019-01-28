@@ -14,14 +14,14 @@ public class Router {
         File searchForFile = new File(file);
         if (searchForFile.isFile()) {
             System.out.println("file exists, append it to response body");
-            response = responseGenerator.generateResponse();
+            response = responseGenerator.generateResponse("200 OK");
         } else if (Arrays.asList(allowedRoutes).contains(request.getRequestedFile())) {
             System.out.println("route allowed");
-            response = responseGenerator.generateResponse();
+            response = responseGenerator.generateResponse("200 OK");
         }
         else {
             System.out.println("file doesn't exist, give not found error");
-            response = responseGenerator.generateNotFoundResponse();
+            response = responseGenerator.generateResponse("Not Found");
         }
         return response;
     }

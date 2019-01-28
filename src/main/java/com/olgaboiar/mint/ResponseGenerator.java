@@ -5,8 +5,7 @@ public class ResponseGenerator {
     HeaderGenerator headerGenerator = new HeaderGenerator();
 
 
-    public Response generateResponse() {
-        String statusCode = ("200 OK");
+    public Response generateResponse(String statusCode) {
         String contentType = ("Content-Type: text/html");
         Header header = headerGenerator.generate(statusCode, contentType);
         Body body = new Body(test_body);
@@ -15,13 +14,4 @@ public class ResponseGenerator {
         return response;
     }
 
-    public Response generateNotFoundResponse() {
-        String statusCode = ("Not Found");
-        String contentType = ("Content-Type: text/plain");
-        Header header = headerGenerator.generate(statusCode, contentType);
-        Body body = new Body(test_body);
-        Response response = new Response(header, body);
-
-        return response;
-    }
 }
