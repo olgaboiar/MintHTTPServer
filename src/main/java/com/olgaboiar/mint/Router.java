@@ -12,9 +12,9 @@ public class Router {
     private String[] allowedRoutes = {"/simple_get", "/method_options", "/get_with_body"};
 
     public Response route(Request request) throws IOException {
-        String file = "." + request.getRequestedFile();
-        File searchForFile = new File(file);
-        if (searchForFile.isFile()) {
+        String filePath = "." + request.getRequestedFile();
+        File requestedResource = new File(filePath);
+        if (requestedResource.isFile()) {
             return new FileHandler().handleRequest(request);
         } else if (Arrays.asList(allowedRoutes).contains(request.getRequestedFile())) {
             return new RouteHandler().handleRequest(request);
