@@ -30,8 +30,7 @@ public class Router {
             response = responseGenerator.generateResponse(STATUS_CODE_200, "");
         }
         else {
-            System.out.println("file doesn't exist, give not found error");
-            response = responseGenerator.generateResponse(STATUS_CODE_404, "");
+            return new NotFoundHandler().handleRequest(request);
         }
         return response;
     }
