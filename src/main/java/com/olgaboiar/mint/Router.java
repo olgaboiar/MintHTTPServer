@@ -1,5 +1,7 @@
 package com.olgaboiar.mint;
 
+import static com.olgaboiar.mint.Constants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,14 +24,14 @@ public class Router {
             if (method.equals("HEAD")) {
                 body = "";
             }
-            response = responseGenerator.generateResponse("200 OK", body);
+            response = responseGenerator.generateResponse(STATUS_CODE_200, body);
         } else if (Arrays.asList(allowedRoutes).contains(request.getRequestedFile())) {
             System.out.println("route allowed");
-            response = responseGenerator.generateResponse("200 OK", "");
+            response = responseGenerator.generateResponse(STATUS_CODE_200, "");
         }
         else {
             System.out.println("file doesn't exist, give not found error");
-            response = responseGenerator.generateResponse("404 Not Found", "");
+            response = responseGenerator.generateResponse(STATUS_CODE_404, "");
         }
         return response;
     }

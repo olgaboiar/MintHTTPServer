@@ -1,10 +1,7 @@
 package com.olgaboiar.mint;
 
 public class ResponseGenerator {
-//    String test_body = "test";
     HeaderGenerator headerGenerator = new HeaderGenerator();
-    String body;
-
 
     public Response generateResponse(String statusCode, String body) {
         String contentType = ("Content-Type: text/html");
