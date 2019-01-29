@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server implements ServerInterface {
+public class Server implements IServer {
     ServerSocket serverSocket;
     Socket clientSocket;
     BufferedReader in;
