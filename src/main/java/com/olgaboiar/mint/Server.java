@@ -26,6 +26,7 @@ public class Server implements IServer {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
+//        logger.setLevel(Level.FINE);
     }
 
     @Override
