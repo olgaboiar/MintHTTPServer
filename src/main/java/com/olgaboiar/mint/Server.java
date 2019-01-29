@@ -17,6 +17,7 @@ public class Server implements IServer {
     ResponseGenerator responseGenerator = new ResponseGenerator();
     Router router = new Router();
     Response response;
+    Logger logger = new Logger();
 
     public Server(String host, int port) {
         this.host = host;
@@ -26,7 +27,7 @@ public class Server implements IServer {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-//        logger.setLevel(Level.FINE);
+        logger.logToConsole("Connection on port " + port);
     }
 
     @Override
