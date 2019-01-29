@@ -1,11 +1,9 @@
 package com.olgaboiar.mint;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import static com.olgaboiar.mint.Constants.*;
 
 public class HeaderGenerator {
-    private static final String PROTOCOL = "HTTP/1.1";
-    private final String DATE = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+
 
     public Header generate(String statusCode, String contentType) {
         String statusLine = PROTOCOL + " " + statusCode;
