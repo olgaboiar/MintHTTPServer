@@ -1,6 +1,9 @@
-package com.olgaboiar.mint;
+package com.olgaboiar.mint.handlers;
 
-import java.io.File;
+import com.olgaboiar.mint.Request;
+import com.olgaboiar.mint.Response;
+import com.olgaboiar.mint.ResponseGenerator;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

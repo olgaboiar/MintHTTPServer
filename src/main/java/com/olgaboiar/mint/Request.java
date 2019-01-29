@@ -5,13 +5,13 @@ public class Request {
     private String requestedFile;
     private String protocol;
 
-    String getMethod() { return method; }
+    public String getMethod() { return method; }
 
-    String getRequestedFile() {
+    public String getRequestedFile() {
         return requestedFile;
     }
 
-    String getProtocol() {
+    public String getProtocol() {
         return protocol;
     }
 

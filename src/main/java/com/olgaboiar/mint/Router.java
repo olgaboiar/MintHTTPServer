@@ -1,5 +1,9 @@
 package com.olgaboiar.mint;
 
+import com.olgaboiar.mint.handlers.FileHandler;
+import com.olgaboiar.mint.handlers.NotFoundHandler;
+import com.olgaboiar.mint.handlers.RouteHandler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
