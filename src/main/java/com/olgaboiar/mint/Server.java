@@ -59,7 +59,6 @@ public class Server implements IServer {
             list.add(input);
             input = in.readLine();
         }
-        System.out.println(list);
         Request currentRequest = parser.parse(list);
         response = router.route(currentRequest);
 
