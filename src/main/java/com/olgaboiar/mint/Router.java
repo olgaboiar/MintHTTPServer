@@ -1,26 +1,34 @@
 package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.handlers.FileHandler;
+import com.olgaboiar.mint.handlers.IHandler;
 import com.olgaboiar.mint.handlers.NotFoundHandler;
 import com.olgaboiar.mint.handlers.RouteHandler;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Router {
-    private String[] allowedRoutes = {"/simple_get", "/method_options", "/get_with_body"};
+    private Map<String, IHandler> routes = new HashMap<>();
+
+    public Router() {
+        registerTestRoutes();
+    }
 
     public Response route(Request request) throws IOException {
-        String filePath = "." + request.getRequestedFile();
-        File requestedResource = new File(filePath);
-        if (requestedResource.isFile()) {
-            return new FileHandler().handleRequest(request);
-        } else if (Arrays.asList(allowedRoutes).contains(request.getRequestedFile())) {
-            return new RouteHandler().handleRequest(request);
-        }
-        else {
-            return new NotFoundHandler().handleRequest(request);
-        }
+        IHandler handler =  routes.getOrDefault(request.getRequestedFile(), new NotFoundHandler());
+        return handler.handleRequest(request);
+    }
+
+    public void setHandler(String route, IHandler routeHandler) {
+        routes.put(route, routeHandler);
+    }
+
+    public void registerTestRoutes() {
+        setHandler("/simple_get", new RouteHandler());
+        setHandler("/method_options", new RouteHandler());
+        setHandler("/get_with_body", new RouteHandler());
+        setHandler("/index.html", new FileHandler());
     }
 }

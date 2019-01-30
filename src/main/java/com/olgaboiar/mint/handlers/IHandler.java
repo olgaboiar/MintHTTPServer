@@ -5,6 +5,6 @@ import com.olgaboiar.mint.Response;
 
 import java.io.IOException;
 
-interface IHandler {
+public interface IHandler {
     Response handleRequest(Request request) throws IOException;
 }
