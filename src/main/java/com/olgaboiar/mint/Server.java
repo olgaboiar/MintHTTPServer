@@ -14,7 +14,6 @@ public class Server implements IServer {
     String host;
     static int port;
     RequestParser parser = new RequestParser();
-    ResponseGenerator responseGenerator = new ResponseGenerator();
     Router router = new Router();
     Response response;
     Logger logger = new Logger();

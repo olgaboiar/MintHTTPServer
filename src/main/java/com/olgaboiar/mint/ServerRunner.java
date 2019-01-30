@@ -17,6 +17,5 @@ public class ServerRunner {
         while(true) {
             server.run();
         }
-
     }
 }

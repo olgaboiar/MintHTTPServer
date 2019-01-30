@@ -14,5 +14,4 @@ public class RequestParser {
         parsedRequest.setProtocol(protocol);
         return parsedRequest;
     }
-
 }

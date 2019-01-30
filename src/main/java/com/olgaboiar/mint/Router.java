@@ -33,4 +33,3 @@ public class Router {
         setHandler(new Route("/index.html", "HEAD"), new HEADHandler());
     }
 }
-

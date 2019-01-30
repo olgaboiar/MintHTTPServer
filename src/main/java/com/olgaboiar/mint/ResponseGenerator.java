@@ -8,8 +8,6 @@ public class ResponseGenerator {
         Header header = headerGenerator.generate(statusCode, contentType);
         Body responseBody = new Body(body);
         Response response = new Response(header, responseBody);
-
         return response;
     }
-
 }

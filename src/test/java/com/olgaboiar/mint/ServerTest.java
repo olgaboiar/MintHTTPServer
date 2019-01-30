@@ -45,5 +45,4 @@ class ServerTest {
         assertTrue(connected);
         testClient.close();
     }
-
 }
