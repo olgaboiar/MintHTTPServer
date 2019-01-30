@@ -14,9 +14,9 @@ public class Logger {
         if (!file.exists()){
             file.createNewFile();
         }
-        FileOutputStream fos = new FileOutputStream(fileName, true);
-        fos.write(message.getBytes());
-        fos.write("\r\n".getBytes());
-        fos.close();
+        FileOutputStream output = new FileOutputStream(fileName, true);
+        output.write(message.getBytes());
+        output.write("\r\n".getBytes());
+        output.close();
     }
 }

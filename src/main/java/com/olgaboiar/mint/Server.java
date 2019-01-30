@@ -27,8 +27,7 @@ public class Server implements IServer {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-        logger.logToConsole("Connection on port " + port);
-        logger.logToFile("Connection on port " + port, "logs.txt");
+        logger.logToFile("\nConnection on port " + port, "logs.txt");
     }
 
     @Override
@@ -60,13 +59,15 @@ public class Server implements IServer {
             input = in.readLine();
         }
         Request currentRequest = parser.parse(list);
+        logger.logToFile("\nReceived request:\n" + list, "logs.txt");
         response = router.route(currentRequest);
 
     }
 
     @Override
-    public void sendResponseToClient(Response response) {
+    public void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
+        logger.logToFile("\nResponse sent:\n" + response.prepareResponse(), "logs.txt");
         out.flush();
     }
 
