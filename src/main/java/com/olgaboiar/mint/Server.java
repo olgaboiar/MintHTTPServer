@@ -35,7 +35,6 @@ public class Server implements IServer {
         acceptClientConnection();
         listenToClientConnection();
         readClientInput();
-//        Response response = responseGenerator.generateResponse();
         sendResponseToClient(response);
         closeClientConnection();
     }
