@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.olgaboiar.mint.RouterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-01-28T19:19:48" hostname="Olgas-MacBook-Pro.local" time="0.024">
+  <properties/>
+  <testcase name="returns200OKWhenLegalRouteIsRequested()" classname="com.olgaboiar.mint.RouterTest" time="0.015"/>
+  <testcase name="returns200OKWhenExistentFileIsRequested()" classname="com.olgaboiar.mint.RouterTest" time="0.006"/>
+  <testcase name="returnsNotFoundWhenNonExistentRouteIsRequested()" classname="com.olgaboiar.mint.RouterTest" time="0.001"/>
+  <system-out><![CDATA[route allowed
+file doesn't exist, give not found error
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

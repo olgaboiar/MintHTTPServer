@@ -1,14 +1,15 @@
 package com.olgaboiar.mint;
 
 public class ResponseGenerator {
+    HeaderGenerator headerGenerator = new HeaderGenerator();
 
-    public String[] generateResponse() {
-        String statusLine = ("HTTP/1.0 200 OK");
+    public Response generateResponse(String statusCode, String body) {
         String contentType = ("Content-Type: text/html");
-        String blankLine = ("");
+        Header header = headerGenerator.generate(statusCode, contentType);
+        Body responseBody = new Body(body);
+        Response response = new Response(header, responseBody);
 
-        String[] responseArray = new String[] {statusLine, contentType, blankLine};
-
-        return responseArray;
+        return response;
     }
+
 }

@@ -1,15 +1,12 @@
 package com.olgaboiar.mint;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server implements ServerInterface {
+public class Server implements IServer {
     ServerSocket serverSocket;
     Socket clientSocket;
     BufferedReader in;
@@ -18,6 +15,8 @@ public class Server implements ServerInterface {
     static int port;
     RequestParser parser = new RequestParser();
     ResponseGenerator responseGenerator = new ResponseGenerator();
+    Router router = new Router();
+    Response response;
 
     public Server(String host, int port) {
         this.host = host;
@@ -34,8 +33,8 @@ public class Server implements ServerInterface {
         acceptClientConnection();
         listenToClientConnection();
         readClientInput();
-        String[] responseArray = responseGenerator.generateResponse();
-        sendResponseToClient(responseArray);
+//        Response response = responseGenerator.generateResponse();
+        sendResponseToClient(response);
         closeClientConnection();
     }
 
@@ -58,13 +57,14 @@ public class Server implements ServerInterface {
             list.add(input);
             input = in.readLine();
         }
+        Request currentRequest = parser.parse(list);
+        response = router.route(currentRequest);
+
     }
 
     @Override
-    public void sendResponseToClient(String[] responseArray) {
-        for (String item : responseArray) {
-            out.println(item);
-        }
+    public void sendResponseToClient(Response response) {
+        out.println(response.prepareResponse());
         out.flush();
     }
 
