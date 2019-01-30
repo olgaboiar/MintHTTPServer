@@ -28,6 +28,7 @@ public class Server implements IServer {
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
         logger.logToConsole("Connection on port " + port);
+        logger.logToFile("Connection on port " + port, "logs.txt");
     }
 
     @Override
