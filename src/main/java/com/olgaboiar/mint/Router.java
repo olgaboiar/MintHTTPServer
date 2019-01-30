@@ -27,7 +27,7 @@ public class Router {
         setHandler(new Route("/simple_get", "GET"), new RouteHandler());
         setHandler(new Route("/simple_get", "HEAD"), new HEADHandler());
         setHandler(new Route("/method_options", "GET"), new RouteHandler());
-        setHandler(new Route("/get_with_body", "GET"), new RouteHandler());
+        setHandler(new Route("/get_with_body", "GET"), new NotAllowedHandler());
         setHandler(new Route("/get_with_body", "HEAD"), new HEADHandler());
         setHandler(new Route("/index.html", "GET"), new FileHandler());
         setHandler(new Route("/index.html", "HEAD"), new HEADHandler());
