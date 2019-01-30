@@ -17,9 +17,6 @@ public class FileHandler implements IHandler {
         String file = "." + request.getRequestedFile();
         List<String> fileContent = Files.readAllLines(Paths.get(file));
         String body = String.join("", fileContent);
-//        if (request.getMethod().equals("HEAD")) {
-//            body = "";
-//        }
         return new ResponseGenerator().generateResponse(STATUS_CODE_200, body);
     }
 }

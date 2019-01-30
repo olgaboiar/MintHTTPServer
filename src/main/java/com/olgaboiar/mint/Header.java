@@ -21,10 +21,6 @@ public class Header {
         return contentType;
     }
 
-    String getDate() {
-        return date;
-    }
-
     String prepareHeaders() {
         String headersToSend = statusLine + "\n"
                 + contentType + "\n"

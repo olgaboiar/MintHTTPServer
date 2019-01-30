@@ -1,8 +1,5 @@
 package com.olgaboiar.mint;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
 public final class Constants {
 
     public static final int DEFAULT_PORT = 5000;

@@ -9,6 +9,7 @@ public class Logger {
     public void logToConsole(String message) {
         System.out.println(message);
     }
+    
     public void logToFile(String message, String fileName) throws IOException {
         File file = new File(fileName);
         if (!file.exists()){

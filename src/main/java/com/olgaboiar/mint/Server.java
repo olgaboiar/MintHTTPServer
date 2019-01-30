@@ -61,7 +61,6 @@ public class Server implements IServer {
         Request currentRequest = parser.parse(list);
         logger.logToFile("\nReceived request:\n" + list, "logs.txt");
         response = router.route(currentRequest);
-
     }
 
     @Override

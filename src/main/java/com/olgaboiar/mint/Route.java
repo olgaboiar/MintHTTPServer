@@ -11,14 +11,6 @@ public final class Route {
         this.method = method;
     }
 
-    String getPath() {
-        return path;
-    }
-
-    String getMethod() {
-        return method;
-    }
-
     @Override
     public boolean equals(Object route) {
         if (route == this) {
