@@ -8,7 +8,6 @@ build/reports/tests/
 build/scripts/
 build/tmp/
 logs.txt
-testLogs.txt
 
 # Ignore Gradle GUI config
 gradle-app.setting
