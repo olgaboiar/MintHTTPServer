@@ -18,7 +18,7 @@ public class Server implements IServer {
     RequestParser parser = new RequestParser();
     Router router = new Router();
     Response response;
-    Logger logger = new Logger("logs.txt");
+    FileLogger logger = new FileLogger("logs.txt");
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
 
@@ -30,8 +30,8 @@ public class Server implements IServer {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-        logger.logToFile(date + "\nServer started.");
-        logger.logToFile("\nConnection on port " + port);
+        logger.logMessage(date + "\nServer started.");
+        logger.logMessage("\nConnection on port " + port);
     }
 
     @Override
@@ -63,14 +63,14 @@ public class Server implements IServer {
             input = in.readLine();
         }
         Request currentRequest = parser.parse(list);
-        logger.logToFile("\nReceived request:\n" + list);
+        logger.logMessage("\nReceived request:\n" + list);
         response = router.route(currentRequest);
     }
 
     @Override
     public void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
-        logger.logToFile("\nResponse sent:\n" + response.prepareResponse());
+        logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
     }
 
