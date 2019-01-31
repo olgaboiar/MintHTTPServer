@@ -18,11 +18,7 @@ public class Router {
         if (methodList == null) {
             return new NotFoundHandler().handleRequest(request);
         }
-        System.out.println(methodList);
-        IHandler handler =  methodList.get(request.getMethod());
-        if (handler == null) {
-            return new NotAllowedHandler().handleRequest(request);
-        }
+        IHandler handler =  methodList.getOrDefault(request.getMethod(), new NotAllowedHandler());
         return handler.handleRequest(request);
     }
 
