@@ -3,6 +3,8 @@ package com.olgaboiar.mint;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,9 @@ public class Server implements IServer {
     RequestParser parser = new RequestParser();
     Router router = new Router();
     Response response;
-    Logger logger = new Logger();
+    Logger logger = new Logger("logs.txt");
+    static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+
 
     public Server(String host, int port) {
         this.host = host;
@@ -26,7 +30,8 @@ public class Server implements IServer {
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
-        logger.logToFile("\nConnection on port " + port, "logs.txt");
+        logger.logToFile(date + "\nServer started.");
+        logger.logToFile("\nConnection on port " + port);
     }
 
     @Override
@@ -58,14 +63,14 @@ public class Server implements IServer {
             input = in.readLine();
         }
         Request currentRequest = parser.parse(list);
-        logger.logToFile("\nReceived request:\n" + list, "logs.txt");
+        logger.logToFile("\nReceived request:\n" + list);
         response = router.route(currentRequest);
     }
 
     @Override
     public void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
-        logger.logToFile("\nResponse sent:\n" + response.prepareResponse(), "logs.txt");
+        logger.logToFile("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
     }
 
