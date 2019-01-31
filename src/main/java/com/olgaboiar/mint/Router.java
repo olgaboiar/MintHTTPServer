@@ -7,20 +7,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
-    private Map<Route, IHandler> routes = new HashMap<>();
+    private Map<String, Map<String, IHandler>> routes = new HashMap<>();
 
     public Router() {
         registerTestRoutes();
     }
 
     public Response route(Request request) throws IOException {
-        Route route = new Route(request.getRequestedFile(), request.getMethod());
-        IHandler handler =  routes.getOrDefault(route, new NotFoundHandler());
+        Map<String, IHandler> methodList = routes.get(request.getRequestedFile());
+        if (methodList == null) {
+            return new NotFoundHandler().handleRequest(request);
+        }
+        System.out.println(methodList);
+        IHandler handler =  methodList.get(request.getMethod());
         return handler.handleRequest(request);
     }
 
     public void setHandler(Route route, IHandler routeHandler) {
-        routes.put(route, routeHandler);
+        Map<String, IHandler> methodList = routes.get(route.getPath());
+        if(methodList == null) {
+            methodList = new HashMap();
+            routes.put(route.getPath(), methodList);
+        }
+        methodList.put(route.getMethod(), routeHandler);
     }
 
     public void registerTestRoutes() {
