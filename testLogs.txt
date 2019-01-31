@@ -18,3 +18,20 @@ Thu, 31 Jan 2019 12:35:25 -0500
 Server started.
 
 Connection on port 5000
+Thu, 31 Jan 2019 12:37:47 -0500
+Server started.
+
+Connection on port 5000
+test log message
+Thu, 31 Jan 2019 12:38:12 -0500
+Server started.
+
+Connection on port 5000
+Thu, 31 Jan 2019 12:39:58 -0500
+Server started.
+
+Connection on port 5000
+Thu, 31 Jan 2019 12:40:34 -0500
+Server started.
+
+Connection on port 5000

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.olgaboiar.mint.RequestTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2019-01-28T19:19:48" hostname="Olgas-MacBook-Pro.local" time="0.012">
+<testsuite name="com.olgaboiar.mint.RequestTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2019-01-31T17:40:34" hostname="Olgas-MacBook-Pro.local" time="0.018">
   <properties/>
   <testcase name="getprotocolReturnsNullWhenNoMethodSet()" classname="com.olgaboiar.mint.RequestTest" time="0.002"/>
-  <testcase name="getMethodReturnsNullWhenNoMethodSet()" classname="com.olgaboiar.mint.RequestTest" time="0.0"/>
+  <testcase name="getMethodReturnsNullWhenNoMethodSet()" classname="com.olgaboiar.mint.RequestTest" time="0.003"/>
   <testcase name="getProtocolReturnsProtocolWhenProtocolIsSet()" classname="com.olgaboiar.mint.RequestTest" time="0.002"/>
   <testcase name="getRequestedFileReturnsNullWhenNoMethodSet()" classname="com.olgaboiar.mint.RequestTest" time="0.001"/>
   <testcase name="getRequestedFileReturnsFiledWhenFileIsSet()" classname="com.olgaboiar.mint.RequestTest" time="0.0"/>
   <testcase name="setMethodSetsRequestMethodToGet()" classname="com.olgaboiar.mint.RequestTest" time="0.001"/>
-  <testcase name="getMethodReturnsMethodWhenMethod()" classname="com.olgaboiar.mint.RequestTest" time="0.0"/>
+  <testcase name="getMethodReturnsMethodWhenMethod()" classname="com.olgaboiar.mint.RequestTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

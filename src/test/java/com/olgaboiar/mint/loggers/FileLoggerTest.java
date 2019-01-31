@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileLoggerTest {
     @Test
     void getMethodReturnsNullWhenNoMethodSet() throws IOException {
-        FileLogger testFileLogger = new FileLogger("testLogs.txt");
-        File file = new File("testLogs.txt");
+        FileLogger testFileLogger = new FileLogger("testLoggerLogs.txt");
+        File file = new File("testLoggerLogs.txt");
         String actual = readLastLine(file);
         String message = "test log message";
         testFileLogger.logMessage(message);
