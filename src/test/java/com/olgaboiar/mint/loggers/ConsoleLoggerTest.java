@@ -10,7 +10,7 @@ import java.io.PrintStream;
 class ConsoleLoggerTest {
 
     @Test
-    void getMethodReturnsNullWhenNoMethodSet() throws IOException {
+    void testLoggingMessagesToConsole() throws IOException {
         ConsoleLogger testConsoleLogger = new ConsoleLogger();
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));

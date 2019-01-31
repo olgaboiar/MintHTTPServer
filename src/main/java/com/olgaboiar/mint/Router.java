@@ -25,11 +25,11 @@ public class Router {
 
     public void registerTestRoutes() {
         setHandler(new Route("/simple_get", "GET"), new RouteHandler());
-        setHandler(new Route("/simple_get", "HEAD"), new HEADHandler());
+        setHandler(new Route("/simple_get", "HEAD"), new HeadHandler());
         setHandler(new Route("/method_options", "GET"), new RouteHandler());
         setHandler(new Route("/get_with_body", "GET"), new RouteHandler());
-        setHandler(new Route("/get_with_body", "HEAD"), new HEADHandler());
+        setHandler(new Route("/get_with_body", "HEAD"), new HeadHandler());
         setHandler(new Route("/index.html", "GET"), new FileHandler());
-        setHandler(new Route("/index.html", "HEAD"), new HEADHandler());
+        setHandler(new Route("/index.html", "HEAD"), new HeadHandler());
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static com.olgaboiar.mint.Constants.STATUS_CODE_200;
 
-public class HEADHandler implements IHandler {
+public class HeadHandler implements IHandler {
     @Override
     public Response handleRequest(Request request) throws IOException {
         String body = "";
