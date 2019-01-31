@@ -1,4 +1,4 @@
-package com.olgaboiar.mint;
+package com.olgaboiar.mint.loggers;
 
 import java.io.IOException;
 

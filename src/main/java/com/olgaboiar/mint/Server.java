@@ -1,5 +1,7 @@
 package com.olgaboiar.mint;
 
+import com.olgaboiar.mint.loggers.FileLogger;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
