@@ -20,6 +20,9 @@ public class Router {
         }
         System.out.println(methodList);
         IHandler handler =  methodList.get(request.getMethod());
+        if (handler == null) {
+            return new NotAllowedHandler().handleRequest(request);
+        }
         return handler.handleRequest(request);
     }
 
