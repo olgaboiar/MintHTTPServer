@@ -1,6 +1,7 @@
 package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.loggers.FileLogger;
+import com.olgaboiar.mint.loggers.ILogger;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -20,13 +21,14 @@ public class Server implements IServer {
     RequestParser parser = new RequestParser();
     Router router = new Router();
     Response response;
-    FileLogger logger = new FileLogger("logs.txt");
+    ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
 
-    public Server(String host, int port) {
+    public Server(String host, int port, ILogger logger) {
         this.host = host;
         this.port = port;
+        this.logger = logger;
     }
 
     @Override

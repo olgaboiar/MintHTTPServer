@@ -7,7 +7,7 @@ import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileLoggerTest {
+public class FileLoggerTest {
     @Test
     void getMethodReturnsNullWhenNoMethodSet() throws IOException {
         FileLogger testFileLogger = new FileLogger("testLogs.txt");
