@@ -10,7 +10,7 @@ public class Response {
         this.body = body;
     }
 
-    Header getHeader() {
+    public Header getHeader() {
         return header;
     }
 

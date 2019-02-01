@@ -1,10 +1,11 @@
 package com.olgaboiar.mint;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import com.olgaboiar.mint.loggers.FileLogger;
+import com.olgaboiar.mint.loggers.FileLoggerTest;
+import com.olgaboiar.mint.loggers.ILogger;
+import org.junit.jupiter.api.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -15,12 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ServerTest {
     Server testServer;
+    String host = "localhost";
+    int port = 5000;
+    ILogger logger = new FileLogger("testLogs.txt");
 
     @BeforeAll
     public void setUp () throws Exception {
-        String host = "localhost";
-        int port = 5000;
-        testServer = new Server(host, port);
+        testServer = new Server(host, port, logger);
         testServer.start();
     }
 
@@ -44,5 +46,17 @@ class ServerTest {
         boolean connected = testClient.isConnected();
         assertTrue(connected);
         testClient.close();
+    }
+
+    @Test
+    void testLoggerIsLoggingAfterServerStarts () throws Exception {
+
+        File file = new File("~/com.olgaboiar.mint/artifact-1");
+        if (!file.exists()){
+            file = new File("testLogs.txt");
+        }
+        String readLastLineOfTestLogsFile = new FileLoggerTest().readLastLine(file);
+        String expected = "Connection on port " + port;
+        Assertions.assertEquals(expected, readLastLineOfTestLogsFile);
     }
 }
