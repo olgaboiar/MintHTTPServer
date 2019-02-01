@@ -18,6 +18,7 @@ class RequestParserTest {
         incomingRequest.add("Connection: close");
         incomingRequest.add("Host: 0.0.0.0:5000");
         Request parsedRequest = testRequestParser.parse(incomingRequest);
+
         assertTrue(parsedRequest instanceof Request);
     }
 
@@ -32,7 +33,7 @@ class RequestParserTest {
         incomingRequest.add("Host: 0.0.0.0:5000");
         Request parsedRequest = testRequestParser.parse(incomingRequest);
         String method = parsedRequest.getMethod();
+
         assertEquals("HEAD", method);
     }
-
 }

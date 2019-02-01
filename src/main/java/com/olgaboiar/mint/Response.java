@@ -26,5 +26,4 @@ public class Response {
         }
         return responseToSend;
     }
-
 }

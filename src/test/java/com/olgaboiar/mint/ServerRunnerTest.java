@@ -28,5 +28,4 @@ class ServerRunnerTest {
         boolean reachable = server.isReachable(5000);
         assertTrue(reachable);
     }
-
 }

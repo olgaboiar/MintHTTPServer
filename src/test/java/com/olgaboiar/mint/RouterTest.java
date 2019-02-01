@@ -18,6 +18,7 @@ class RouterTest {
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+
         assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
@@ -29,6 +30,7 @@ class RouterTest {
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+
         assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
     }
 
@@ -40,7 +42,7 @@ class RouterTest {
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+
         assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", "Content-Type: text/html", ""}, responseArray);
     }
-
 }

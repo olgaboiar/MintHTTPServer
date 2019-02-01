@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.olgaboiar.mint.ServerRunnerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-01-28T19:19:48" hostname="Olgas-MacBook-Pro.local" time="0.023">
+<testsuite name="com.olgaboiar.mint.ServerRunnerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-01-31T22:12:16" hostname="Olgas-MacBook-Pro.local" time="0.024">
   <properties/>
-  <testcase name="testServerIsReachable()" classname="com.olgaboiar.mint.ServerRunnerTest" time="0.023"/>
+  <testcase name="testServerIsReachable()" classname="com.olgaboiar.mint.ServerRunnerTest" time="0.024"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

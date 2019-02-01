@@ -5,7 +5,9 @@ public class Request {
     private String requestedFile;
     private String protocol;
 
-    public String getMethod() { return method; }
+    public String getMethod() {
+        return method;
+    }
 
     public String getRequestedFile() {
         return requestedFile;

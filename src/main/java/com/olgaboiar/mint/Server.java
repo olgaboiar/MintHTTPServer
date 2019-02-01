@@ -1,8 +1,13 @@
 package com.olgaboiar.mint;
 
+import com.olgaboiar.mint.loggers.FileLogger;
+import com.olgaboiar.mint.loggers.ILogger;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +19,23 @@ public class Server implements IServer {
     String host;
     static int port;
     RequestParser parser = new RequestParser();
-    ResponseGenerator responseGenerator = new ResponseGenerator();
     Router router = new Router();
     Response response;
+    ILogger logger;
+    static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
-    public Server(String host, int port) {
+
+    public Server(String host, int port, ILogger logger) {
         this.host = host;
         this.port = port;
+        this.logger = logger;
     }
 
     @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
+        logger.logMessage(date + "\nServer started.");
+        logger.logMessage("\nConnection on port " + port);
     }
 
     @Override
@@ -33,7 +43,6 @@ public class Server implements IServer {
         acceptClientConnection();
         listenToClientConnection();
         readClientInput();
-//        Response response = responseGenerator.generateResponse();
         sendResponseToClient(response);
         closeClientConnection();
     }
@@ -58,13 +67,14 @@ public class Server implements IServer {
             input = in.readLine();
         }
         Request currentRequest = parser.parse(list);
+        logger.logMessage("\nReceived request:\n" + list);
         response = router.route(currentRequest);
-
     }
 
     @Override
-    public void sendResponseToClient(Response response) {
+    public void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
+        logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
     }
 
