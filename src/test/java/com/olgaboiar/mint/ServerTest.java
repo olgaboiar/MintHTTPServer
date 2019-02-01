@@ -50,7 +50,11 @@ class ServerTest {
 
     @Test
     void testLoggerIsLoggingAfterServerStarts () throws Exception {
-        File file = new File("testLogs.txt");
+
+        File file = new File("~/com.olgaboiar.mint/artifact-1");
+        if (!file.exists()){
+            file = new File("testLogs.txt");
+        }
         String readLastLineOfTestLogsFile = new FileLoggerTest().readLastLine(file);
         String expected = "Connection on port " + port;
         Assertions.assertEquals(expected, readLastLineOfTestLogsFile);

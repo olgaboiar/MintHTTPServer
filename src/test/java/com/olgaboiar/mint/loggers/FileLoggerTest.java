@@ -10,12 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileLoggerTest {
     @Test
     void testLoggingMessagesToFile() throws IOException {
-        FileLogger testFileLogger = new FileLogger("testLoggerLogs.txt");
-        File file = new File("testLoggerLogs.txt");
-        String actual = readLastLine(file);
+        String filePath = "artifact-2";
+        File file = new File(filePath);
+        if (!file.exists()){
+            filePath = "testLoggerLogs.txt";
+            file = new File(filePath);
+        }
+        FileLogger testFileLogger = new FileLogger(filePath);
         String message = "test log message";
         testFileLogger.logMessage(message);
-
+        String actual = readLastLine(file);
+        System.out.println(actual);
         Assertions.assertEquals(message, actual);
     }
 
