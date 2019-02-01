@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.olgaboiar.mint.ServerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-01-31T22:12:16" hostname="Olgas-MacBook-Pro.local" time="0.009">
-  <properties/>
-  <testcase name="testServerAcceptsClientConnection()" classname="com.olgaboiar.mint.ServerTest" time="0.006"/>
-  <testcase name="testServerIsReachableAfterStarting()" classname="com.olgaboiar.mint.ServerTest" time="0.001"/>
-  <testcase name="testLoggerIsLoggingAfterServerStarts()" classname="com.olgaboiar.mint.ServerTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

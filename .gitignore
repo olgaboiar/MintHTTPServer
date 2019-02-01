@@ -7,6 +7,7 @@ build/jacocoHtml/
 build/reports/tests/
 build/scripts/
 build/tmp/
+build/test-results/
 logs.txt
 testLogs.txt
 testLoggerlogs.txt
