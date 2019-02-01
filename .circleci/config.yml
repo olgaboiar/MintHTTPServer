@@ -39,6 +39,10 @@ jobs:
           path: ~/com.olgaboiar.mint/artifact-2
           destination: artifact-file2
 
+      - store_artifacts:
+          path: ~/com.olgaboiar.mint/test-results/coverage
+          destination: coverage
+
 
       # Download and cache dependencies
       - restore_cache:
@@ -69,5 +73,6 @@ jobs:
           name: Upload coverage to code climate
           command: |
             export JACOCO_SOURCE_PATH=src/main/java
-            ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco --debug
+#            ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco --debug
+            ./cc-test-reporter format-coverage ~/com.olgaboiar.mint/test-results/coverage --input-type jacoco --debug
             ./cc-test-reporter upload-coverage

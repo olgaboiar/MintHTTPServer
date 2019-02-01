@@ -3,14 +3,13 @@ out
 .idea
 build/classes/
 build/distributions/
-build/jacocoHtml/
 build/reports/tests/
 build/scripts/
 build/tmp/
 build/test-results/
 logs.txt
 testLogs.txt
-testLoggerlogs.txt
+testLoggerLogs.txt
 
 # Ignore Gradle GUI config
 gradle-app.setting
