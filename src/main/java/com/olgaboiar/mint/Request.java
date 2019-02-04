@@ -2,15 +2,15 @@ package com.olgaboiar.mint;
 
 public class Request {
     private String method;
-    private String requestedFile;
+    private String uri;
     private String protocol;
 
     public String getMethod() {
         return method;
     }
 
-    public String getRequestedFile() {
-        return requestedFile;
+    public String getUri() {
+        return uri;
     }
 
     public String getProtocol() {
@@ -21,8 +21,8 @@ public class Request {
         this.method = method;
     }
 
-    void setRequestedFile(String requestedFile) {
-        this.requestedFile = requestedFile;
+    void setRequestedFile(String uri) {
+        this.uri = uri;
     }
 
     void setProtocol(String protocol) {
