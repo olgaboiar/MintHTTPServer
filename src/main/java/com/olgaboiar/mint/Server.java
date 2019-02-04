@@ -1,6 +1,5 @@
 package com.olgaboiar.mint;
 
-import com.olgaboiar.mint.loggers.FileLogger;
 import com.olgaboiar.mint.loggers.ILogger;
 
 import java.io.*;

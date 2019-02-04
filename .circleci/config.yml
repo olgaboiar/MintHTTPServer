@@ -39,7 +39,6 @@ jobs:
           path: ~/com.olgaboiar.mint/artifact-2
           destination: artifact-file2
 
-
       # Download and cache dependencies
       - restore_cache:
           keys:
