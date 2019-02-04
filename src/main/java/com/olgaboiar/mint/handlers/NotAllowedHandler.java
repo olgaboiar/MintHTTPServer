@@ -10,10 +10,10 @@ import java.util.Set;
 import static com.olgaboiar.mint.Constants.STATUS_CODE_405;
 
 public class NotAllowedHandler implements IHandler {
-    Set<String> allowedMethods;
+    String[] allowedMethods;
     Response response;
 
-    public NotAllowedHandler(Set<String> allowedMethods) {
+    public NotAllowedHandler(String[] allowedMethods) {
         this.allowedMethods = allowedMethods;
     }
 

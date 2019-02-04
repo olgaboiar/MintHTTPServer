@@ -8,7 +8,7 @@ public class Header {
     private String blankLine;
     private String date;
     String headersToSend;
-    Set<String> allowedMethods;
+    String[] allowedMethods;
 
     public Header(String statusLine, String contentType, String date) {
         this.statusLine = statusLine;
@@ -48,7 +48,7 @@ public class Header {
         return headersToSend;
     }
 
-    public void setAllowMethods(Set<String> allowedMethods1) {
+    public void setAllowMethods(String[] allowedMethods1) {
         allowedMethods = allowedMethods1;
     }
 }

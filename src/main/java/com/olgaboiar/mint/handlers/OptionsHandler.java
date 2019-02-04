@@ -10,10 +10,10 @@ import java.util.Set;
 import static com.olgaboiar.mint.Constants.STATUS_CODE_200;
 
 public class OptionsHandler implements IHandler {
-    Set<String> allowedMethods;
+    String[] allowedMethods;
     Response response;
 
-    public OptionsHandler(Set<String> allowedMethods) {
+    public OptionsHandler(String[] allowedMethods) {
         this.allowedMethods = allowedMethods;
     }
 
