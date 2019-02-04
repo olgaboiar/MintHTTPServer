@@ -44,16 +44,16 @@ public class Server {
         closeClientConnection();
     }
 
-    public void acceptClientConnection() throws IOException {
+    private void acceptClientConnection() throws IOException {
         clientSocket = serverSocket.accept();
     }
 
-    public void listenToClientConnection() throws IOException {
+    private void listenToClientConnection() throws IOException {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream());
     }
 
-    public void readClientInput() throws IOException {
+    private void readClientInput() throws IOException {
         List<String> list = new ArrayList<String>();
         String input = in.readLine();
         while (input.length() > 0) {
@@ -65,13 +65,13 @@ public class Server {
         response = router.route(currentRequest);
     }
 
-    public void sendResponseToClient(Response response) throws IOException {
+    private void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
     }
 
-    public void closeClientConnection() throws IOException {
+    private void closeClientConnection() throws IOException {
         out.close();
         in.close();
         clientSocket.close();
