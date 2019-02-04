@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Server {
     ServerSocket serverSocket;
-    Socket clientSocket;
-    BufferedReader in;
-    PrintWriter out;
+//    Socket clientSocket;
+//    BufferedReader in;
+//    PrintWriter out;
     String host;
     static int port;
     RequestParser parser = new RequestParser();
@@ -37,25 +37,27 @@ public class Server {
     }
 
     public void run() throws IOException {
-        acceptClientConnection();
-        listenToClientConnection();
-        List<String> clientInput = readClientInput();
+        Socket clientSocket = acceptClientConnection();
+        BufferedReader in = listenToClientConnection(clientSocket);
+        List<String> clientInput = readClientInput(in);
         Request parsedRequest = parseRequest(clientInput);
         Response response = prepareResponse(parsedRequest);
-        sendResponseToClient(response);
-        closeClientConnection();
+        PrintWriter out = sendResponseToClient(response, clientSocket);
+        closeClientConnection(in, out, clientSocket);
     }
 
-    private void acceptClientConnection() throws IOException {
-        clientSocket = serverSocket.accept();
+    private Socket acceptClientConnection() throws IOException {
+        Socket clientSocket = serverSocket.accept();
+        return clientSocket;
     }
 
-    private void listenToClientConnection() throws IOException {
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    private BufferedReader listenToClientConnection(Socket clientSocket) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        return in;
 //        out = new PrintWriter(clientSocket.getOutputStream());
     }
 
-    private List<String> readClientInput() throws IOException {
+    private List<String> readClientInput(BufferedReader in) throws IOException {
         List<String> clientInput = new ArrayList<String>();
         String input = in.readLine();
         while (input.length() > 0) {
@@ -76,14 +78,19 @@ public class Server {
         return response;
     }
 
-    private void sendResponseToClient(Response response) throws IOException {
-        out = new PrintWriter(clientSocket.getOutputStream());
+    private PrintWriter createOutPutStream(Socket clientSocket) throws IOException {
+        return new PrintWriter(clientSocket.getOutputStream());
+    }
+
+    private PrintWriter sendResponseToClient(Response response, Socket clientSocket) throws IOException {
+        PrintWriter out = createOutPutStream(clientSocket);
         out.println(response.prepareResponse());
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
+        return out;
     }
 
-    private void closeClientConnection() throws IOException {
+    private void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
         out.close();
         in.close();
         clientSocket.close();
