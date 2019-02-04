@@ -37,14 +37,13 @@ public class Router {
     }
 
     public IHandler setHandler(String method, String[] allowedForThisPath) {
-        if(method == "GET") {
-            return new RouteHandler();
-        }
-        if(method == "HEAD") {
-            return new HeadHandler();
-        }
-        if(method == "OPTIONS") {
-            return new OptionsHandler(allowedForThisPath);
+        switch (method) {
+            case "GET":
+                return new RouteHandler();
+            case "HEAD":
+                return new HeadHandler();
+            case "OPTIONS":
+                return new OptionsHandler(allowedForThisPath);
         }
         return new NotAllowedHandler(allowedForThisPath);
     }
