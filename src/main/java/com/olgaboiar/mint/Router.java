@@ -3,9 +3,7 @@ package com.olgaboiar.mint;
 import com.olgaboiar.mint.handlers.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Router {
     private Map<String, Map<String, IHandler>> routes = new HashMap<>();
@@ -24,22 +22,26 @@ public class Router {
         return handler.handleRequest(request);
     }
 
-    public void setHandler(Route route, IHandler routeHandler) {
-        Map<String, IHandler> methodList = routes.get(route.getPath());
-        if(methodList == null) {
-            methodList = new HashMap();
-            routes.put(route.getPath(), methodList);
-        }
-        methodList.put(route.getMethod(), routeHandler);
+    public void registerTestRoutes() {
+        populateRouteMap(new Route("/simple_get", new HashMap<String, IHandler>() {{
+            put("GET", new RouteHandler());
+            put("HEAD", new HeadHandler());
+        }}));
+        populateRouteMap(new Route("/method_options", new HashMap<String, IHandler>() {{
+            put("GET", new RouteHandler());
+        }}));
+        populateRouteMap(new Route("/get_with_body", new HashMap<String, IHandler>() {{
+            put("HEAD", new HeadHandler());
+            put("OPTIONS", new RouteHandler());
+        }}));
+        populateRouteMap(new Route("/index.html", new HashMap<String, IHandler>() {{
+            put("GET", new FileHandler());
+            put("HEAD", new HeadHandler());
+        }}));
     }
 
-    public void registerTestRoutes() {
-        setHandler(new Route("/simple_get", "GET"), new RouteHandler());
-        setHandler(new Route("/simple_get", "HEAD"), new HeadHandler());
-        setHandler(new Route("/method_options", "GET"), new RouteHandler());
-        setHandler(new Route("/get_with_body", "HEAD"), new HeadHandler());
-        setHandler(new Route("/get_with_body", "OPTIONS"), new HeadHandler());
-        setHandler(new Route("/index.html", "GET"), new FileHandler());
-        setHandler(new Route("/index.html", "HEAD"), new HeadHandler());
+    public void populateRouteMap(Route route) {
+        routes.put(route.getPath(), route.getAllowedMethods());
+
     }
 }

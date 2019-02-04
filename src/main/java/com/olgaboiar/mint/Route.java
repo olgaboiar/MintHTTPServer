@@ -1,39 +1,23 @@
 package com.olgaboiar.mint;
 
-import java.util.Objects;
+import com.olgaboiar.mint.handlers.IHandler;
+
+import java.util.Map;
 
 public final class Route {
     private final String path;
-    private final String method;
+    private final Map<String, IHandler> allowedMethods;
 
-    public Route(String path, String method) {
+    public Route(String path, Map<String, IHandler> allowedMethods) {
         this.path = path;
-        this.method = method;
+        this.allowedMethods = allowedMethods;
     }
 
     public String getPath() {
         return path;
     }
 
-    public String getMethod() {
-        return method;
-    }
-
-    @Override
-    public boolean equals(Object route) {
-        if (route == this) {
-            return true;
-        }
-        if (!(route instanceof Route)) {
-            return false;
-        }
-        Route routeClone = (Route) route;
-        return Objects.equals(path, routeClone.path) &&
-                Objects.equals(method, routeClone.method);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(path, method);
+    public Map<String, IHandler> getAllowedMethods() {
+        return allowedMethods;
     }
 }
