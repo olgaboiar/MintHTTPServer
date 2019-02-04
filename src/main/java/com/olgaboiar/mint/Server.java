@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server implements IServer {
+public class Server {
     ServerSocket serverSocket;
     Socket clientSocket;
     BufferedReader in;
@@ -30,14 +30,12 @@ public class Server implements IServer {
         this.logger = logger;
     }
 
-    @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
         logger.logMessage(date + "\nServer started.");
         logger.logMessage("\nConnection on port " + port);
     }
 
-    @Override
     public void run() throws IOException {
         acceptClientConnection();
         listenToClientConnection();
@@ -46,18 +44,15 @@ public class Server implements IServer {
         closeClientConnection();
     }
 
-    @Override
     public void acceptClientConnection() throws IOException {
         clientSocket = serverSocket.accept();
     }
 
-    @Override
     public void listenToClientConnection() throws IOException {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream());
     }
 
-    @Override
     public void readClientInput() throws IOException {
         List<String> list = new ArrayList<String>();
         String input = in.readLine();
@@ -70,21 +65,18 @@ public class Server implements IServer {
         response = router.route(currentRequest);
     }
 
-    @Override
     public void sendResponseToClient(Response response) throws IOException {
         out.println(response.prepareResponse());
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
     }
 
-    @Override
     public void closeClientConnection() throws IOException {
         out.close();
         in.close();
         clientSocket.close();
     }
 
-    @Override
     public void stop() throws IOException {
         serverSocket.close();
     }
