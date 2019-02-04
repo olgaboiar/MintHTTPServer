@@ -5,7 +5,6 @@ import com.olgaboiar.mint.Response;
 import com.olgaboiar.mint.ResponseGenerator;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static com.olgaboiar.mint.Constants.STATUS_CODE_405;
 
