@@ -16,7 +16,7 @@ class RequestTest {
     @Test
     void getRequestedFileReturnsNullWhenNoMethodSet() {
         Request testRequest = new Request();
-        String file = testRequest.getRequestedFile();
+        String file = testRequest.getUri();
         assertNull(file);
     }
 
@@ -39,7 +39,7 @@ class RequestTest {
     void getRequestedFileReturnsFiledWhenFileIsSet() {
         Request testRequest = new Request();
         testRequest.setRequestedFile("/index.html");
-        String file = testRequest.getRequestedFile();
+        String file = testRequest.getUri();
         assertNotNull(file);
     }
 
