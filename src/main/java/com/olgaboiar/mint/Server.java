@@ -12,14 +12,8 @@ import java.util.List;
 
 public class Server {
     ServerSocket serverSocket;
-//    Socket clientSocket;
-//    BufferedReader in;
-//    PrintWriter out;
     String host;
     static int port;
-    RequestParser parser = new RequestParser();
-    Router router = new Router();
-//    Response response;
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
@@ -54,7 +48,6 @@ public class Server {
     private BufferedReader listenToClientConnection(Socket clientSocket) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         return in;
-//        out = new PrintWriter(clientSocket.getOutputStream());
     }
 
     private List<String> readClientInput(BufferedReader in) throws IOException {
@@ -68,13 +61,13 @@ public class Server {
     }
 
     private Request parseRequest(List<String> clientInput) throws IOException {
-        Request currentRequest = parser.parse(clientInput);
+        Request currentRequest = new RequestParser().parse(clientInput);
         logger.logMessage("\nReceived request:\n" + clientInput);
         return currentRequest;
     }
 
     private Response prepareResponse(Request parsedRequest) throws IOException {
-        Response response = router.route(parsedRequest);
+        Response response = new Router().route(parsedRequest);
         return response;
     }
 
