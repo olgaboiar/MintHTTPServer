@@ -6,53 +6,20 @@ import java.io.IOException;
 import java.util.*;
 
 public class Router {
-    private Map<String, Map<String, IHandler>> routes = new HashMap<>();
+    RouteMap routes;
 
-    public Router() {
-        registerTestRoutes();
+    public Router(RouteMap routes) {
+        this.routes = routes;
     }
 
     public Response route(Request request) throws IOException {
-        Map<String, IHandler> methodHandlers = routes.get(request.getUri());
+        Map<String, Map<String, IHandler>> routesMap = routes.getMap();
+        Map<String, IHandler> methodHandlers = routesMap.get(request.getUri());
         if (methodHandlers == null) {
-            return new NotFoundHandler().handleRequest(request, routes);
+            return new NotFoundHandler().handleRequest(request, routesMap);
         }
         IHandler handler =  methodHandlers.getOrDefault(request.getMethod(), new NotAllowedHandler());
-        return handler.handleRequest(request, routes);
+        return handler.handleRequest(request, routesMap);
     }
 
-    public void setMethodHandlers(Route route) {
-            routes.put(route.getPath(), route.getAllowedMethods());
-    }
-
-
-    public void registerTestRoutes() {
-        setMethodHandlers(new Route("/simple_get", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
-        }}));
-        setMethodHandlers(new Route("/method_options", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
-        }}));
-        setMethodHandlers(new Route("/method_options2", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
-            put("PUT", new NotAllowedHandler());
-            put("POST", new NotAllowedHandler());
-        }}));
-        setMethodHandlers(new Route("/get_with_body", new HashMap<String, IHandler>() {{
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
-        }}));
-        setMethodHandlers(new Route("/index.html", new HashMap<String, IHandler>() {{
-            put("GET", new FileHandler());
-            put("HEAD", new HeadHandler());
-        }}));
-        setMethodHandlers(new Route("/redirect", new HashMap<String, IHandler>() {{
-            put("GET", new RedirectHandler());
-        }}));
-    }
 }

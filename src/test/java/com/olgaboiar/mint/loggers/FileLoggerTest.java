@@ -8,6 +8,7 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileLoggerTest {
+
     @Test
     void testLoggingMessagesToFile() throws IOException {
         String filePath = "artifact-2";
