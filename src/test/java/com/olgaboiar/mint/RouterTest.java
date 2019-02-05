@@ -7,14 +7,15 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouterTest {
-    Router router = new Router();
+    MockRouteMap testMap = new MockRouteMap();
+    Router router = new Router(testMap);
     Response response;
 
     @Test
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
         Request testRequest = new Request();
         testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/simple_get");
+        testRequest.setRequestedFile("/method_options");
         testRequest.setProtocol("HTTP");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};

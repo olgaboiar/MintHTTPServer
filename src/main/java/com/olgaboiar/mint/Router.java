@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Router {
-    RouteMap routes;
+    IRouteMap routes;
 
-    public Router(RouteMap routes) {
+    public Router(IRouteMap routes) {
         this.routes = routes;
     }
 
