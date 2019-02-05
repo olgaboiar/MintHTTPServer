@@ -38,15 +38,15 @@ class ServerTest {
         assertTrue(reachable);
     }
 
-    @Test
-    void testServerAcceptsClientConnection () throws Exception {
-        Socket testClient = new Socket();
-        testClient.connect(new InetSocketAddress("localhost", 5000));
-        testServer.acceptClientConnection();
-        boolean connected = testClient.isConnected();
-        assertTrue(connected);
-        testClient.close();
-    }
+//    @Test
+//    void testServerAcceptsClientConnection () throws Exception {
+//        Socket testClient = new Socket();
+//        testClient.connect(new InetSocketAddress("localhost", 5000));
+//        testServer.acceptClientConnection();
+//        boolean connected = testClient.isConnected();
+//        assertTrue(connected);
+//        testClient.close();
+//    }
 
     @Test
     void testLoggerIsLoggingAfterServerStarts () throws Exception {

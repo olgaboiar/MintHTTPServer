@@ -6,20 +6,20 @@ import com.olgaboiar.mint.ResponseGenerator;
 
 import java.io.IOException;
 
-import static com.olgaboiar.mint.Constants.STATUS_CODE_405;
+import static com.olgaboiar.mint.Constants.STATUS_CODE_200;
 
-public class NotAllowedHandler implements IHandler {
+public class OptionsHandler implements IHandler {
     String[] allowedMethods;
     Response response;
 
-    public NotAllowedHandler(String[] allowedMethods) {
+    public OptionsHandler(String[] allowedMethods) {
         this.allowedMethods = allowedMethods;
     }
 
     @Override
     public Response handleRequest(Request request) throws IOException {
         String body = "";
-        response =  new ResponseGenerator().generateResponse(STATUS_CODE_405, body);
+        response =  new ResponseGenerator().generateResponse(STATUS_CODE_200, body);
         response.getHeader().setAllowMethods(allowedMethods);
         return response;
     }

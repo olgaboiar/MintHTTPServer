@@ -14,7 +14,7 @@ import static com.olgaboiar.mint.Constants.STATUS_CODE_200;
 public class FileHandler implements IHandler {
     @Override
     public Response handleRequest(Request request) throws IOException {
-        String file = "." + request.getRequestedFile();
+        String file = "." + request.getUri();
         List<String> fileContent = Files.readAllLines(Paths.get(file));
         String body = String.join("", fileContent);
         return new ResponseGenerator().generateResponse(STATUS_CODE_200, body);

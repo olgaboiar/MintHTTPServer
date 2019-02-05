@@ -10,16 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server implements IServer {
+public class Server {
     ServerSocket serverSocket;
-    Socket clientSocket;
-    BufferedReader in;
-    PrintWriter out;
     String host;
     static int port;
-    RequestParser parser = new RequestParser();
-    Router router = new Router();
-    Response response;
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
@@ -30,61 +24,71 @@ public class Server implements IServer {
         this.logger = logger;
     }
 
-    @Override
     public void start() throws IOException {
         serverSocket = new ServerSocket(port);
         logger.logMessage(date + "\nServer started.");
         logger.logMessage("\nConnection on port " + port);
     }
 
-    @Override
     public void run() throws IOException {
-        acceptClientConnection();
-        listenToClientConnection();
-        readClientInput();
-        sendResponseToClient(response);
-        closeClientConnection();
+        Socket clientSocket = acceptClientConnection();
+        BufferedReader in = listenToClientConnection(clientSocket);
+        List<String> clientInput = readClientInput(in);
+        Request parsedRequest = parseRequest(clientInput);
+        Response response = prepareResponse(parsedRequest);
+        PrintWriter out = sendResponseToClient(response, clientSocket);
+        closeClientConnection(in, out, clientSocket);
     }
 
-    @Override
-    public void acceptClientConnection() throws IOException {
-        clientSocket = serverSocket.accept();
+    private Socket acceptClientConnection() throws IOException {
+        Socket clientSocket = serverSocket.accept();
+        return clientSocket;
     }
 
-    @Override
-    public void listenToClientConnection() throws IOException {
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out = new PrintWriter(clientSocket.getOutputStream());
+    private BufferedReader listenToClientConnection(Socket clientSocket) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        return in;
     }
 
-    @Override
-    public void readClientInput() throws IOException {
-        List<String> list = new ArrayList<String>();
+    private List<String> readClientInput(BufferedReader in) throws IOException {
+        List<String> clientInput = new ArrayList<String>();
         String input = in.readLine();
         while (input.length() > 0) {
-            list.add(input);
+            clientInput.add(input);
             input = in.readLine();
         }
-        Request currentRequest = parser.parse(list);
-        logger.logMessage("\nReceived request:\n" + list);
-        response = router.route(currentRequest);
+        return clientInput;
     }
 
-    @Override
-    public void sendResponseToClient(Response response) throws IOException {
+    private Request parseRequest(List<String> clientInput) throws IOException {
+        Request currentRequest = new RequestParser().parse(clientInput);
+        logger.logMessage("\nReceived request:\n" + clientInput);
+        return currentRequest;
+    }
+
+    private Response prepareResponse(Request parsedRequest) throws IOException {
+        Response response = new Router().route(parsedRequest);
+        return response;
+    }
+
+    private PrintWriter createOutPutStream(Socket clientSocket) throws IOException {
+        return new PrintWriter(clientSocket.getOutputStream());
+    }
+
+    private PrintWriter sendResponseToClient(Response response, Socket clientSocket) throws IOException {
+        PrintWriter out = createOutPutStream(clientSocket);
         out.println(response.prepareResponse());
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
         out.flush();
+        return out;
     }
 
-    @Override
-    public void closeClientConnection() throws IOException {
+    private void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
         out.close();
         in.close();
         clientSocket.close();
     }
 
-    @Override
     public void stop() throws IOException {
         serverSocket.close();
     }
