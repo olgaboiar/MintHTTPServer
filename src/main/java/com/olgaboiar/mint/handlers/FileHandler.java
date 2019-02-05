@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import static com.olgaboiar.mint.Constants.STATUS_CODE_200;
 
 public class FileHandler implements IHandler {
     @Override
-    public Response handleRequest(Request request) throws IOException {
+    public Response handleRequest(Request request, Map<String, Map<String, IHandler>> routes) throws IOException {
         String file = "." + request.getUri();
         List<String> fileContent = Files.readAllLines(Paths.get(file));
         String body = String.join("", fileContent);
