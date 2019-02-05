@@ -35,7 +35,7 @@ public class MockRouteMap implements IRouteMap {
             put("HEAD", new HeadHandler());
         }}));
         setMethodHandlers(new Route("/redirect", new HashMap<String, IHandler>() {{
-            put("GET", new RedirectHandler());
+            put("GET", new RedirectHandler("http://0.0.0.0:5000/simple_get"));
         }}));
     }
 }
