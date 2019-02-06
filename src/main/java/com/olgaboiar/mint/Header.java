@@ -1,12 +1,12 @@
 package com.olgaboiar.mint;
 
 import java.util.ArrayList;
-import java.util.Set;
+
+import static com.olgaboiar.mint.Constants.BLANK_LINE;
 
 public class Header {
     private String statusLine;
     private String contentType;
-    private String blankLine;
     private String date;
     ArrayList<String> headers;
     String[] allowedMethods;
@@ -16,7 +16,6 @@ public class Header {
         this.statusLine = statusLine;
         this.contentType = contentType;
         this.date = date;
-        this.blankLine = ("");
         this.allowedMethods = null;
         this.redirect = null;
     }
@@ -52,7 +51,7 @@ public class Header {
 
     String prepareHeaders(ArrayList<String> headers) {
         String headersToSend = String.join("\n", headers);
-        headersToSend += blankLine;
+        headersToSend += BLANK_LINE;
         return headersToSend;
     }
 
