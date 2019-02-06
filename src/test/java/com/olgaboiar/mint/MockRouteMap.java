@@ -2,6 +2,7 @@ package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.handlers.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,14 @@ public class MockRouteMap implements IRouteMap {
     @Override
     public void setMethodHandlers(Route route) {
         testRoutes.put(route.getPath(), route.getAllowedMethods());
+    }
+
+    @Override
+    public ArrayList<String> getAllowedMethods(String path) {
+        Map<String, IHandler> methodHandlers = testRoutes.get(path);
+        ArrayList<String> allowedMethods = new ArrayList<String>(methodHandlers.keySet().size());
+        allowedMethods.addAll(methodHandlers.keySet());
+        return allowedMethods;
     }
 
     @Override

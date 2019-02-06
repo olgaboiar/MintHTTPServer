@@ -3,6 +3,7 @@ package com.olgaboiar.mint;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,10 +14,9 @@ class RouterTest {
 
     @Test
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/method_options");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/method_options");
+        String method = "GET";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
@@ -25,10 +25,9 @@ class RouterTest {
 
     @Test
     void returns200OKWhenExistentFileIsRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/index.html");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/index.html");
+        String method = "GET";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
@@ -37,10 +36,9 @@ class RouterTest {
 
     @Test
     void returns404NotFoundWhenNonExistentRouteIsRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/no-directory");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/dead-end");
+        String method = "GET";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
@@ -49,10 +47,9 @@ class RouterTest {
 
     @Test
     void returns404NotFoundWhenNonExistentFileIsRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/main.html");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/no.html");
+        String method = "GET";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
@@ -61,10 +58,9 @@ class RouterTest {
 
     @Test
     void returns301MovedWhenRedirectedRouteIsRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        testRequest.setRequestedFile("/redirect");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/redirect");
+        String method = "GET";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
@@ -73,10 +69,9 @@ class RouterTest {
 
     @Test
     void returns405MethodNotAllowedWhenUnsupportedMethodRequested() throws IOException {
-        Request testRequest = new Request();
-        testRequest.setMethod("POST");
-        testRequest.setRequestedFile("/index.html");
-        testRequest.setProtocol("HTTP");
+        URL url = new URL("http://0.0.0.0:5000/index.html");
+        String method = "POST";
+        Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 

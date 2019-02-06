@@ -2,6 +2,7 @@ package com.olgaboiar.mint;
 
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RequestParserTest {
     @Test
-    void testRequestParserCreatesRequestObject() {
+    void testRequestParserCreatesRequestObject() throws MalformedURLException {
         RequestParser testRequestParser = new RequestParser();
         List<String> incomingRequest = new ArrayList<String>();
         incomingRequest.add("HEAD /simple_get HTTP/1.1");
@@ -23,7 +24,7 @@ class RequestParserTest {
     }
 
     @Test
-    void testParsedRequestObjectHasMethod() {
+    void testParsedRequestObjectHasMethod() throws MalformedURLException {
         RequestParser testRequestParser = new RequestParser();
         List<String> incomingRequest = new ArrayList<String>();
         incomingRequest.add("HEAD /simple_get HTTP/1.1");

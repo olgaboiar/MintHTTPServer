@@ -12,7 +12,7 @@ public class RedirectHandler implements IHandler {
     }
 
     @Override
-    public Response handleRequest(Request request, RouteMap routes) throws IOException {
+    public Response handleRequest(Request request, IRouteMap routes) throws IOException {
         Response response =  new ResponseGenerator().generateResponse(Constants.Status.STATUS_CODE_301.toString(), "");
         response.getHeader().setRedirection(redirectTarget);
         return response;

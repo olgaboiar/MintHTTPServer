@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FileHandler implements IHandler {
     @Override
-    public Response handleRequest(Request request, RouteMap routes) throws IOException {
+    public Response handleRequest(Request request, IRouteMap routes) throws IOException {
         String file = "." + request.getUri();
         List<String> fileContent = Files.readAllLines(Paths.get(file));
         String body = String.join("", fileContent);

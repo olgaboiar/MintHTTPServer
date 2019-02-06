@@ -32,6 +32,7 @@ public class RouteMap implements IRouteMap {
         routes.put(route.getPath(), route.getAllowedMethods());
     }
 
+    @Override
     public ArrayList<String> getAllowedMethods(String path) {
         Map<String, IHandler> methodHandlers = routes.get(path);
         ArrayList<String> allowedMethods = new ArrayList<String>(methodHandlers.keySet().size());
