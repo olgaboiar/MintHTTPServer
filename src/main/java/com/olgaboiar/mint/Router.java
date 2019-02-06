@@ -15,11 +15,18 @@ public class Router {
     public Response route(Request request) throws IOException {
         Map<String, Map<String, IHandler>> routesMap = routes.getMap();
         Map<String, IHandler> methodHandlers = routesMap.get(request.getUri());
-        if (methodHandlers == null) {
+        if (!methodHandlersExist(methodHandlers)) {
             return new NotFoundHandler().handleRequest(request, routesMap);
         }
         IHandler handler =  methodHandlers.getOrDefault(request.getMethod(), new NotAllowedHandler());
         return handler.handleRequest(request, routesMap);
+    }
+
+    private boolean methodHandlersExist (Map<String, IHandler> methodHandlers) {
+        if (methodHandlers != null) {
+            return true;
+        }
+        return false;
     }
 
 }
