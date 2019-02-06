@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Router {
-    IRouteMap routes;
+    RouteMap routes;
 
-    public Router(IRouteMap routes) {
+    public Router(RouteMap routes) {
         this.routes = routes;
     }
 
@@ -16,10 +16,10 @@ public class Router {
         Map<String, Map<String, IHandler>> routesMap = routes.getMap();
         Map<String, IHandler> methodHandlers = routesMap.get(request.getUri());
         if (!methodHandlersExist(methodHandlers)) {
-            return new NotFoundHandler().handleRequest(request, routesMap);
+            return new NotFoundHandler().handleRequest(request, routes);
         }
         IHandler handler =  methodHandlers.getOrDefault(request.getMethod(), new NotAllowedHandler());
-        return handler.handleRequest(request, routesMap);
+        return handler.handleRequest(request, routes);
     }
 
     private boolean methodHandlersExist (Map<String, IHandler> methodHandlers) {

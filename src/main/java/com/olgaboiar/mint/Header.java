@@ -8,7 +8,7 @@ public class Header {
     private String statusLine;
     private String contentType;
     private String date;
-    String[] allowedMethods;
+    ArrayList<String> allowedMethods;
     String redirect;
 
     public Header(String statusLine, String contentType, String date) {
@@ -79,7 +79,7 @@ public class Header {
         return false;
     }
 
-    public void setAllowMethods(String[] methods) {
+    public void setAllowMethods(ArrayList<String> methods) {
         allowedMethods = methods;
     }
 

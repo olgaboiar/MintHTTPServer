@@ -1,21 +1,16 @@
 package com.olgaboiar.mint.handlers;
 
-import com.olgaboiar.mint.Constants;
-import com.olgaboiar.mint.Request;
-import com.olgaboiar.mint.Response;
-import com.olgaboiar.mint.ResponseGenerator;
+import com.olgaboiar.mint.*;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class OptionsHandler implements IHandler {
 
     @Override
-    public Response handleRequest(Request request, Map<String, Map<String, IHandler>> routes) throws IOException {
+    public Response handleRequest(Request request, RouteMap routes) throws IOException {
         Response response =  new ResponseGenerator().generateResponse(Constants.Status.STATUS_CODE_200.toString(), "");
-        Map<String, IHandler> methodHandlers = routes.get(request.getUri());
-        String[] allowedMethods = new String[methodHandlers.keySet().size()];
-        allowedMethods = methodHandlers.keySet().toArray(allowedMethods);
+        ArrayList<String> allowedMethods = routes.getAllowedMethos(request.getUri());
         response.getHeader().setAllowMethods(allowedMethods);
         return response;
     }
