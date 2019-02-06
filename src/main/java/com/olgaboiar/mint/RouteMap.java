@@ -12,6 +12,14 @@ public class RouteMap implements IRouteMap {
         registerTestRoutes();
     }
 
+    enum Method {
+        GET,
+        HEAD,
+        POST,
+        PUT,
+        OPTIONS
+    }
+
     @Override
     public Map<String, Map<String, IHandler>> getMap() {
         return routes;
@@ -25,31 +33,31 @@ public class RouteMap implements IRouteMap {
     @Override
     public void registerTestRoutes() {
         setMethodHandlers(new Route("/simple_get", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
+            put(Method.GET.toString(), new RouteHandler());
+            put(Method.HEAD.toString(), new HeadHandler());
         }}));
         setMethodHandlers(new Route("/method_options", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
+            put(Method.GET.toString(), new RouteHandler());
+            put(Method.HEAD.toString(), new HeadHandler());
+            put(Method.OPTIONS.toString(), new OptionsHandler());
         }}));
         setMethodHandlers(new Route("/method_options2", new HashMap<String, IHandler>() {{
-            put("GET", new RouteHandler());
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
-            put("PUT", new NotAllowedHandler());
-            put("POST", new NotAllowedHandler());
+            put(Method.GET.toString(), new RouteHandler());
+            put(Method.HEAD.toString(), new HeadHandler());
+            put(Method.OPTIONS.toString(), new OptionsHandler());
+            put(Method.PUT.toString(), new NotAllowedHandler());
+            put(Method.POST.toString(), new NotAllowedHandler());
         }}));
         setMethodHandlers(new Route("/get_with_body", new HashMap<String, IHandler>() {{
-            put("HEAD", new HeadHandler());
-            put("OPTIONS", new OptionsHandler());
+            put(Method.HEAD.toString(), new HeadHandler());
+            put(Method.OPTIONS.toString(), new OptionsHandler());
         }}));
         setMethodHandlers(new Route("/index.html", new HashMap<String, IHandler>() {{
-            put("GET", new FileHandler());
-            put("HEAD", new HeadHandler());
+            put(Method.GET.toString(), new FileHandler());
+            put(Method.HEAD.toString(), new HeadHandler());
         }}));
         setMethodHandlers(new Route("/redirect", new HashMap<String, IHandler>() {{
-            put("GET", new RedirectHandler("http://0.0.0.0:5000/simple_get"));
+            put(Method.GET.toString(), new RedirectHandler("http://0.0.0.0:5000/simple_get"));
         }}));
     }
 

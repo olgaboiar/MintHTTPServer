@@ -8,7 +8,6 @@ public class Header {
     private String statusLine;
     private String contentType;
     private String date;
-    ArrayList<String> headers;
     String[] allowedMethods;
     String redirect;
 
@@ -33,26 +32,51 @@ public class Header {
     }
 
     public ArrayList<String> getHeaders() {
-        headers = new ArrayList<String>();
+        ArrayList<String> headers = new ArrayList<String>();
         headers.add(getStatusLine());
         headers.add(getContentType());
         headers.add(getDate());
-        if (allowedMethods != null) {
-            String allMethods = String.join(",", allowedMethods);
-            String accessControl = "Allow: " + allMethods;
-            headers.add(accessControl);
+        if (allowedMethodsExist()) {
+            String aloowHeader = createAllowHeader();
+            headers.add(aloowHeader);
         }
-        if (redirect != null) {
-            String redirectHeader = "Location: " + redirect;
+        if (redirectExist()) {
+            String redirectHeader = createRedirectHeader();
             headers.add(redirectHeader);
         }
         return headers;
     }
 
-    String prepareHeaders(ArrayList<String> headers) {
+    public String prepareHeaders(ArrayList<String> headers) {
         String headersToSend = String.join("\n", headers);
         headersToSend += BLANK_LINE;
         return headersToSend;
+    }
+
+    private boolean allowedMethodsExist () {
+        if (allowedMethods != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private String createAllowHeader() {
+        String allMethods = String.join(",", allowedMethods);
+        String allowHeader = "Allow: " + allMethods;
+        return allowHeader;
+
+    }
+
+    private String createRedirectHeader () {
+        String redirectHeader = "Location: " + redirect;
+        return redirectHeader;
+    }
+
+    private boolean redirectExist () {
+        if (redirect != null) {
+            return true;
+        }
+        return false;
     }
 
     public void setAllowMethods(String[] methods) {
