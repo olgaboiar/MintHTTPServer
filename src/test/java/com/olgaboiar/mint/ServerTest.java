@@ -3,6 +3,7 @@ package com.olgaboiar.mint;
 import com.olgaboiar.mint.loggers.FileLogger;
 import com.olgaboiar.mint.loggers.FileLoggerTest;
 import com.olgaboiar.mint.loggers.ILogger;
+import com.olgaboiar.mint.loggers.MockFileLogger;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -18,7 +19,8 @@ class ServerTest {
     Server testServer;
     String host = "localhost";
     int port = 5000;
-    ILogger logger = new FileLogger("testLogs.txt");
+//    ILogger logger = new FileLogger("testLogs.txt");
+    ILogger logger = new MockFileLogger();
 
     @BeforeAll
     public void setUp () throws Exception {
