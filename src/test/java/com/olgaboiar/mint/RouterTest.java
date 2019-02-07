@@ -77,4 +77,15 @@ class RouterTest {
 
         assertArrayEquals(new String[]{"HTTP/1.1 405 Method Not Allowed", "Content-Type: text/html", ""}, responseArray);
     }
+
+    @Test
+    void returns200OKAndAllowedMethods() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/method_options");
+        String method = "OPTIONS";
+        Request testRequest = new Request(url, method);
+        response = router.route(testRequest);
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().createAllowHeader()};
+
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD, POST, GET, OPTIONS, PUT"}, responseArray);
+    }
 }
