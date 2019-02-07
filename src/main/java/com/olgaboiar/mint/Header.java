@@ -53,26 +53,26 @@ public class Header {
         return headersToSend;
     }
 
-    private boolean allowedMethodsExist () {
+    public boolean allowedMethodsExist () {
         if (allowedMethods != null) {
             return true;
         }
         return false;
     }
 
-    private String createAllowHeader() {
-        String allMethods = String.join(",", allowedMethods);
+    public String createAllowHeader() {
+        String allMethods = String.join(", ", allowedMethods);
         String allowHeader = "Allow: " + allMethods;
         return allowHeader;
 
     }
 
-    private String createRedirectHeader () {
+    public String createRedirectHeader () {
         String redirectHeader = "Location: " + redirect;
         return redirectHeader;
     }
 
-    private boolean redirectExist () {
+    public boolean redirectExist () {
         if (redirect != null) {
             return true;
         }
