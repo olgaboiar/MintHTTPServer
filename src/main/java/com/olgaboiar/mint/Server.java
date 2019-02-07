@@ -24,7 +24,7 @@ public class Server {
     public void start() throws IOException {
         logger.logMessage(date + "\nServer started.");
         logger.logMessage("\nConnection on port " + DEFAULT_PORT);
-        serverSocket.createServerSocket(DEFAULT_PORT);
+        serverSocket.createServerSocket();
     }
 
     public void run() throws IOException {

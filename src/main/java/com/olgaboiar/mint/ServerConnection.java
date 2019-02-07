@@ -11,9 +11,14 @@ import java.util.List;
 
 public class ServerConnection implements IServerConnection {
     ServerSocket serverSocket;
+    int port;
+
+    public ServerConnection(int port) {
+        this.port = port;
+    }
 
     @Override
-    public void createServerSocket(int port) throws IOException {
+    public void createServerSocket() throws IOException {
         serverSocket = new ServerSocket(port);
     }
 

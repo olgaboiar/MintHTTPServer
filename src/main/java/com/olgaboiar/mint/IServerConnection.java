@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IServerConnection {
 
-    void createServerSocket(int port) throws IOException;
+    void createServerSocket() throws IOException;
 
     Socket acceptClientConnection() throws IOException;
 
