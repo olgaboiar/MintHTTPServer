@@ -23,14 +23,15 @@ class ServerTest {
 
     @BeforeAll
     public void setUp () throws Exception {
-        testServer = new Server(host, port, logger);
+        ServerConnection serverSocket = new ServerConnection(5000);
+        Server testServer = new Server(serverSocket, logger);
         testServer.start();
     }
 
-    @AfterAll
-    public void tearDown() throws IOException {
-        testServer.stop();
-    }
+//    @AfterAll
+//    public void tearDown() throws IOException {
+//        testServer.stop();
+//    }
 
     @Test
     void testServerIsReachableAfterStarting () throws Exception {
