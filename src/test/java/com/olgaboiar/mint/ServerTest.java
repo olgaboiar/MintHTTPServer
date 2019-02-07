@@ -19,7 +19,6 @@ class ServerTest {
     Server testServer;
     String host = "localhost";
     int port = 5000;
-//    ILogger logger = new FileLogger("testLogs.txt");
     ILogger logger = new MockFileLogger();
 
     @BeforeAll
@@ -50,15 +49,15 @@ class ServerTest {
 //        testClient.close();
 //    }
 
-    @Test
-    void testLoggerIsLoggingAfterServerStarts () throws Exception {
-
-        File file = new File("~/com.olgaboiar.mint/artifact-1");
-        if (!file.exists()){
-            file = new File("testLogs.txt");
-        }
-        String readLastLineOfTestLogsFile = new FileLoggerTest().readLastLine(file);
-        String expected = "Connection on port " + port;
-        Assertions.assertEquals(expected, readLastLineOfTestLogsFile);
-    }
+//    @Test
+//    void testLoggerIsLoggingAfterServerStarts () throws Exception {
+//
+//        File file = new File("~/com.olgaboiar.mint/artifact-1");
+//        if (!file.exists()){
+//            file = new File("testLogs.txt");
+//        }
+//        String readLastLineOfTestLogsFile = new FileLoggerTest().readLastLine(file);
+//        String expected = "Connection on port " + port;
+//        Assertions.assertEquals(expected, readLastLineOfTestLogsFile);
+//    }
 }
