@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RouteMap implements IRouteMap {
-    RoutesConfiguration serverRoutes;
+    IRoutesConfiguration serverRoutes;
     private Map<String, Map<String, IHandler>> routes = new HashMap<>();
 
-    public RouteMap(RoutesConfiguration serverRoutes) {
+    public RouteMap(IRoutesConfiguration serverRoutes) {
         this.serverRoutes = serverRoutes;
         registerTestRoutes();
     }

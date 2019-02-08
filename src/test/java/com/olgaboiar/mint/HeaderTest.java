@@ -114,7 +114,7 @@ class HeaderTest {
         methods.add("HEAD");
         testHeader.setAllowMethods(methods);
         String actual = testHeader.createAllowHeader();
-        String expected = "Allow: GET, HEAD";
+        String expected = "Allow: GET,HEAD";
 
         assertEquals(expected, actual);
     }

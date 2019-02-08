@@ -8,13 +8,14 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouterTest {
-    MockRouteMap testMap = new MockRouteMap();
+    MockRoutesConfiguration serverTestRoutes = new MockRoutesConfiguration();
+    MockRouteMap testMap = new MockRouteMap(serverTestRoutes);
     Router router = new Router(testMap);
     Response response;
 
     @Test
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
-        URL url = new URL("http://0.0.0.0:5000/method_options");
+        URL url = new URL("http://0.0.0.0:5000/test");
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
@@ -58,7 +59,7 @@ class RouterTest {
 
     @Test
     void returns301MovedWhenRedirectedRouteIsRequested() throws IOException {
-        URL url = new URL("http://0.0.0.0:5000/redirect");
+        URL url = new URL("http://0.0.0.0:5000/test_redirect");
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
@@ -80,12 +81,12 @@ class RouterTest {
 
     @Test
     void returns200OKAndAllowedMethods() throws IOException {
-        URL url = new URL("http://0.0.0.0:5000/method_options");
+        URL url = new URL("http://0.0.0.0:5000/test");
         String method = "OPTIONS";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().createAllowHeader()};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD, POST, GET, OPTIONS, PUT"}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD,POST,GET,OPTIONS,PUT"}, responseArray);
     }
 }

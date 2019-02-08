@@ -5,7 +5,7 @@ import com.olgaboiar.mint.handlers.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RoutesConfiguration {
+public class RoutesConfiguration implements IRoutesConfiguration {
     ArrayList<Route> allRoutes;
 
     public RoutesConfiguration() {
@@ -20,6 +20,7 @@ public class RoutesConfiguration {
         OPTIONS
     }
 
+    @Override
     public void createRoutes() {
         allRoutes = new ArrayList<> ();
         allRoutes.add(new Route("/simple_get", new HashMap<String, IHandler>() {{
@@ -51,6 +52,7 @@ public class RoutesConfiguration {
         }}));
     }
 
+    @Override
     public ArrayList<Route> getAllRoutes() {
         return allRoutes;
     }
