@@ -20,9 +20,9 @@ public class Response {
 
     String prepareResponse() {
         if (body.getBodyString().length() > 0) {
-            responseToSend = header.prepareHeaders(header.getHeaders()) + "\n" + body.getBodyString();
+            responseToSend = header.prepareHeaders() + "\n" + body.getBodyString();
         } else {
-            responseToSend = header.prepareHeaders(header.getHeaders());
+            responseToSend = header.prepareHeaders();
         }
         return responseToSend;
     }

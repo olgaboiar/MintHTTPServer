@@ -1,14 +1,9 @@
 package com.olgaboiar.mint;
 
-import com.olgaboiar.mint.handlers.HeadHandler;
-import com.olgaboiar.mint.handlers.IHandler;
-import com.olgaboiar.mint.handlers.RouteHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

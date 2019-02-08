@@ -150,7 +150,7 @@ class HeaderTest {
     @Test
     void returnsStringOfHeaders() {
         ArrayList<String> headers = testHeader.getHeaders();
-        String actual = testHeader.prepareHeaders(headers);
+        String actual = testHeader.prepareHeaders();
         String expected = "200 OK\n" +
                 "Content-Type: text/html\n" +
                 testHeader.getDate();

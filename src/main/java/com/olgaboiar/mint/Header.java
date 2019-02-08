@@ -47,8 +47,8 @@ public class Header {
         return headers;
     }
 
-    public String prepareHeaders(ArrayList<String> headers) {
-        String headersToSend = String.join("\n", headers);
+    public String prepareHeaders() {
+        String headersToSend = String.join("\n", getHeaders());
         headersToSend += BLANK_LINE;
         return headersToSend;
     }

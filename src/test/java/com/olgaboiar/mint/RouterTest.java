@@ -25,6 +25,17 @@ class RouterTest {
     }
 
     @Test
+    void returns200OKWhenLegalRouteHeadIsRequested() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/test");
+        String method = "HEAD";
+        Request testRequest = new Request(url, method);
+        response = router.route(testRequest);
+        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
+    }
+
+    @Test
     void returns200OKWhenExistentFileIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/index.html");
         String method = "GET";
