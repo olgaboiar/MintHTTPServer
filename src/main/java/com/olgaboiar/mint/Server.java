@@ -13,10 +13,10 @@ import static com.olgaboiar.mint.Constants.DEFAULT_PORT;
 public class Server {
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
-    ServerConnection serverSocket;
+    IServerConnection serverSocket;
 
 
-    public Server(ServerConnection serverSocket, ILogger logger) {
+    public Server(IServerConnection serverSocket, ILogger logger) {
         this.serverSocket = serverSocket;
         this.logger = logger;
     }
