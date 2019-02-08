@@ -49,7 +49,6 @@ public class Header {
 
     public String prepareHeaders() {
         String headersToSend = String.join("\n", getHeaders());
-        headersToSend += BLANK_LINE;
         return headersToSend;
     }
 

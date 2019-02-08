@@ -10,7 +10,7 @@ public final class Constants {
     public static final ILogger DEFAULT_LOGGER = new FileLogger("logs.txt");
 
     public static final String PROTOCOL = "HTTP/1.1";
-    public static final String BLANK_LINE = "";
+    public static final String BLANK_LINE = "\n\n";
 
     public enum Status {
         STATUS_CODE_200("200 OK"),
