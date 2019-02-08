@@ -61,7 +61,7 @@ public class Header {
     }
 
     public String createAllowHeader() {
-        String allMethods = String.join(", ", allowedMethods);
+        String allMethods = String.join(",", allowedMethods);
         String allowHeader = "Allow: " + allMethods;
         return allowHeader;
 

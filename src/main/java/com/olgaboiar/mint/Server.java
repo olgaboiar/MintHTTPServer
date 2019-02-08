@@ -45,7 +45,8 @@ public class Server {
     }
 
     private Response prepareResponse(Request parsedRequest) throws IOException {
-        RouteMap routeMap = new RouteMap();
+        RoutesConfiguration serverRoutes = new RoutesConfiguration();
+        RouteMap routeMap = new RouteMap(serverRoutes);
         Response response = new Router(routeMap).route(parsedRequest);
         return response;
     }
