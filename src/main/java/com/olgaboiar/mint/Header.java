@@ -53,10 +53,7 @@ public class Header {
     }
 
     public boolean allowedMethodsExist () {
-        if (allowedMethods != null) {
-            return true;
-        }
-        return false;
+        return allowedMethods != null;
     }
 
     public String createAllowHeader() {
@@ -72,10 +69,7 @@ public class Header {
     }
 
     public boolean redirectExist () {
-        if (redirect != null) {
-            return true;
-        }
-        return false;
+        return redirect != null;
     }
 
     public void setAllowMethods(ArrayList<String> methods) {
