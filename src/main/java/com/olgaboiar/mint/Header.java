@@ -37,8 +37,8 @@ public class Header {
         headers.add(getContentType());
         headers.add(getDate());
         if (allowedMethodsExist()) {
-            String aloowHeader = createAllowHeader();
-            headers.add(aloowHeader);
+            String allowHeader = createAllowHeader();
+            headers.add(allowHeader);
         }
         if (redirectExist()) {
             String redirectHeader = createRedirectHeader();
