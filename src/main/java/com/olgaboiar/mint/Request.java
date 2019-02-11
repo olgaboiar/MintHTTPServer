@@ -1,31 +1,22 @@
 package com.olgaboiar.mint;
 
+import java.net.URL;
+
 public class Request {
     private String method;
-    private String uri;
-    private String protocol;
+    private URL url;
+
+    public Request(URL url, String method) {
+        this.url = url;
+        this.method = method;
+
+    }
 
     public String getMethod() {
         return method;
     }
-
+//
     public String getUri() {
-        return uri;
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
-    void setMethod(String method) {
-        this.method = method;
-    }
-
-    void setRequestedFile(String uri) {
-        this.uri = uri;
-    }
-
-    void setProtocol(String protocol) {
-        this.protocol = protocol;
+        return url.getPath();
     }
 }

@@ -3,61 +3,39 @@ package com.olgaboiar.mint;
 import com.olgaboiar.mint.loggers.ILogger;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.olgaboiar.mint.Constants.DEFAULT_PORT;
+
 public class Server {
-    ServerSocket serverSocket;
-    String host;
-    static int port;
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+    IServerConnection serverSocket;
 
 
-    public Server(String host, int port, ILogger logger) {
-        this.host = host;
-        this.port = port;
+    public Server(IServerConnection serverSocket, ILogger logger) {
+        this.serverSocket = serverSocket;
         this.logger = logger;
     }
 
     public void start() throws IOException {
-        serverSocket = new ServerSocket(port);
         logger.logMessage(date + "\nServer started.");
-        logger.logMessage("\nConnection on port " + port);
+        logger.logMessage("\nConnection on port " + DEFAULT_PORT);
+        serverSocket.createServerSocket();
     }
 
     public void run() throws IOException {
-        Socket clientSocket = acceptClientConnection();
-        BufferedReader in = listenToClientConnection(clientSocket);
-        List<String> clientInput = readClientInput(in);
+        Socket clientSocket = serverSocket.acceptClientConnection();
+        BufferedReader in = serverSocket.listenToClientConnection(clientSocket);
+        List<String> clientInput = serverSocket.readClientInput(in);
         Request parsedRequest = parseRequest(clientInput);
         Response response = prepareResponse(parsedRequest);
-        PrintWriter out = sendResponseToClient(response, clientSocket);
-        closeClientConnection(in, out, clientSocket);
-    }
-
-    private Socket acceptClientConnection() throws IOException {
-        Socket clientSocket = serverSocket.accept();
-        return clientSocket;
-    }
-
-    private BufferedReader listenToClientConnection(Socket clientSocket) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        return in;
-    }
-
-    private List<String> readClientInput(BufferedReader in) throws IOException {
-        List<String> clientInput = new ArrayList<String>();
-        String input = in.readLine();
-        while (input.length() > 0) {
-            clientInput.add(input);
-            input = in.readLine();
-        }
-        return clientInput;
+        PrintWriter out = serverSocket.sendResponseToClient(response, clientSocket);
+        logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
+        serverSocket.closeClientConnection(in, out, clientSocket);
     }
 
     private Request parseRequest(List<String> clientInput) throws IOException {
@@ -67,29 +45,13 @@ public class Server {
     }
 
     private Response prepareResponse(Request parsedRequest) throws IOException {
-        Response response = new Router().route(parsedRequest);
+        RoutesConfiguration serverRoutes = new RoutesConfiguration();
+        RouteMap routeMap = new RouteMap(serverRoutes);
+        Response response = new Router(routeMap).route(parsedRequest);
         return response;
     }
 
-    private PrintWriter createOutPutStream(Socket clientSocket) throws IOException {
-        return new PrintWriter(clientSocket.getOutputStream());
-    }
-
-    private PrintWriter sendResponseToClient(Response response, Socket clientSocket) throws IOException {
-        PrintWriter out = createOutPutStream(clientSocket);
-        out.println(response.prepareResponse());
-        logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
-        out.flush();
-        return out;
-    }
-
-    private void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
-        out.close();
-        in.close();
-        clientSocket.close();
-    }
-
     public void stop() throws IOException {
-        serverSocket.close();
+        serverSocket.stop();
     }
 }

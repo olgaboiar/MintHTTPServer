@@ -2,60 +2,34 @@ package com.olgaboiar.mint;
 
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RequestTest {
 
     @Test
-    void getMethodReturnsNullWhenNoMethodSet() {
-        Request testRequest = new Request();
-        String method = testRequest.getMethod();
-        assertNull(method);
+    void getMethodReturnsGetMethodForGetRequest() throws MalformedURLException {
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "GET");
+        String actual = testRequest.getMethod();
+
+        assertEquals("GET", actual);
     }
 
     @Test
-    void getRequestedFileReturnsNullWhenNoMethodSet() {
-        Request testRequest = new Request();
-        String file = testRequest.getUri();
-        assertNull(file);
+    void getMethodReturnsPostMethodForPostRequest() throws MalformedURLException {
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST");
+        String actual = testRequest.getMethod();
+
+        assertEquals("POST", actual);
     }
 
     @Test
-    void getprotocolReturnsNullWhenNoMethodSet() {
-        Request testRequest = new Request();
-        String protocol = testRequest.getProtocol();
-        assertNull(protocol);
-    }
+    void getUriReturnsCorrectPath() throws MalformedURLException {
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST");
+        String actual = testRequest.getUri();
 
-    @Test
-    void getMethodReturnsMethodWhenMethod() {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        String method = testRequest.getMethod();
-        assertNotNull(method);
-    }
-
-    @Test
-    void getRequestedFileReturnsFiledWhenFileIsSet() {
-        Request testRequest = new Request();
-        testRequest.setRequestedFile("/index.html");
-        String file = testRequest.getUri();
-        assertNotNull(file);
-    }
-
-    @Test
-    void getProtocolReturnsProtocolWhenProtocolIsSet() {
-        Request testRequest = new Request();
-        testRequest.setProtocol("HTTP");
-        String protocol = testRequest.getProtocol();
-        assertNotNull(protocol);
-    }
-
-    @Test
-    void setMethodSetsRequestMethodToGet() {
-        Request testRequest = new Request();
-        testRequest.setMethod("GET");
-        String method = testRequest.getMethod();
-        assertEquals("GET", method);
+        assertEquals("/method_options", actual);
     }
 }

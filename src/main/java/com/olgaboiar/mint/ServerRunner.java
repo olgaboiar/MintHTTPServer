@@ -7,8 +7,8 @@ import java.io.IOException;
 public class ServerRunner {
 
     public static void main(String[] args) throws IOException {
-        Server server;
-        server = new Server(DEFAULT_HOST, DEFAULT_PORT, DEFAULT_LOGGER);
+        ServerConnection serverSocket = new ServerConnection(DEFAULT_PORT);
+        Server server = new Server(serverSocket, DEFAULT_LOGGER);
         server.start();
         while(true) {
             server.run();

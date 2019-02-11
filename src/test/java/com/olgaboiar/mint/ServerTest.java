@@ -3,60 +3,44 @@ package com.olgaboiar.mint;
 import com.olgaboiar.mint.loggers.FileLogger;
 import com.olgaboiar.mint.loggers.FileLoggerTest;
 import com.olgaboiar.mint.loggers.ILogger;
+import com.olgaboiar.mint.loggers.MockFileLogger;
 import org.junit.jupiter.api.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ServerTest {
-    Server testServer;
-    String host = "localhost";
-    int port = 5000;
-    ILogger logger = new FileLogger("testLogs.txt");
+    ILogger logger = new MockFileLogger();
 
     @BeforeAll
     public void setUp () throws Exception {
-        testServer = new Server(host, port, logger);
+        MockServerConnection serverSocket = new MockServerConnection();
+        Server testServer = new Server(serverSocket, logger);
         testServer.start();
     }
 
-    @AfterAll
-    public void tearDown() throws IOException {
-        testServer.stop();
-    }
-
-    @Test
-    void testServerIsReachableAfterStarting () throws Exception {
-        InetAddress server = InetAddress.getByName("localhost");
-        boolean reachable = server.isReachable(7000);
-        assertTrue(reachable);
-    }
-
 //    @Test
-//    void testServerAcceptsClientConnection () throws Exception {
-//        Socket testClient = new Socket();
-//        testClient.connect(new InetSocketAddress("localhost", 5000));
-//        testServer.acceptClientConnection();
-//        boolean connected = testClient.isConnected();
-//        assertTrue(connected);
-//        testClient.close();
+//    void testServerAnswersGetRequest () throws Exception {
+//        String requestLine = "GET /simple_get HTTP/1.1";
+//        InputStream stream = new ByteArrayInputStream((requestLine).getBytes(StandardCharsets.UTF_8));
+//        System.setIn(stream);
+//
+//        String actual = new StringWriter().toString();
+//        String expected = String.join("\r\n", new String[]{
+//                "HTTP/1.1 200 OK",
+//                "Content-Length: 0",
+//                "",
+//                "",
+//                ""
+//        });
+//
+//        assertEquals(expected, actual);
 //    }
 
-    @Test
-    void testLoggerIsLoggingAfterServerStarts () throws Exception {
-
-        File file = new File("~/com.olgaboiar.mint/artifact-1");
-        if (!file.exists()){
-            file = new File("testLogs.txt");
-        }
-        String readLastLineOfTestLogsFile = new FileLoggerTest().readLastLine(file);
-        String expected = "Connection on port " + port;
-        Assertions.assertEquals(expected, readLastLineOfTestLogsFile);
-    }
 }

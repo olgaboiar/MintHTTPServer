@@ -1,12 +1,7 @@
 .gradle
 out
 .idea
-build/classes/
-build/distributions/
-build/reports/tests/
-build/scripts/
-build/tmp/
-build/test-results/
+build
 logs.txt
 testLogs.txt
 testLoggerLogs.txt

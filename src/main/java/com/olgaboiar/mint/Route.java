@@ -1,19 +1,24 @@
 package com.olgaboiar.mint;
 
+import com.olgaboiar.mint.handlers.IHandler;
+
+import java.util.Map;
+
 public final class Route {
     private final String path;
-    String[] allowedMethods;
+    Map<String, IHandler> methodHandlers;
 
-    public Route(String path, String[] allowedMethods) {
+    public Route(String path, Map<String, IHandler> methodHandlers) {
         this.path = path;
-        this.allowedMethods = allowedMethods;
+        this.methodHandlers = methodHandlers;
     }
 
     public String getPath() {
         return path;
     }
 
-    public String[] getAllowedMethods() {
-        return allowedMethods;
+    public Map<String, IHandler> getAllowedMethods() {
+        return methodHandlers;
     }
+
 }

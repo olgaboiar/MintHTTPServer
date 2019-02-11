@@ -1,21 +1,22 @@
 package com.olgaboiar.mint;
 
-import java.util.Set;
+import java.util.ArrayList;
+
+import static com.olgaboiar.mint.Constants.BLANK_LINE;
 
 public class Header {
     private String statusLine;
     private String contentType;
-    private String blankLine;
     private String date;
-    String headersToSend;
-    String[] allowedMethods;
+    ArrayList<String> allowedMethods;
+    String redirect;
 
     public Header(String statusLine, String contentType, String date) {
         this.statusLine = statusLine;
         this.contentType = contentType;
         this.date = date;
-        this.blankLine = ("");
         this.allowedMethods = null;
+        this.redirect = null;
     }
 
     String getStatusLine() {
@@ -30,25 +31,58 @@ public class Header {
         return date;
     }
 
-    String prepareHeaders() {
-        if (allowedMethods != null) {
-            String methods = String.join(",", allowedMethods);
-            String accessControl = "Allow: " + methods;
-            headersToSend = statusLine + "\n"
-                    + contentType + "\n"
-                    + date + "\n"
-                    + accessControl + "\n"
-                    + blankLine;
-        } else {
-            headersToSend = statusLine + "\n"
-                + contentType + "\n"
-                + date + "\n"
-                + blankLine;
+    public ArrayList<String> getHeaders() {
+        ArrayList<String> headers = new ArrayList<String>();
+        headers.add(getStatusLine());
+        headers.add(getContentType());
+        headers.add(getDate());
+        if (allowedMethodsExist()) {
+            String aloowHeader = createAllowHeader();
+            headers.add(aloowHeader);
         }
+        if (redirectExist()) {
+            String redirectHeader = createRedirectHeader();
+            headers.add(redirectHeader);
+        }
+        return headers;
+    }
+
+    public String prepareHeaders() {
+        String headersToSend = String.join("\n", getHeaders());
         return headersToSend;
     }
 
-    public void setAllowMethods(String[] allowedMethods1) {
-        allowedMethods = allowedMethods1;
+    public boolean allowedMethodsExist () {
+        if (allowedMethods != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public String createAllowHeader() {
+        String allMethods = String.join(",", allowedMethods);
+        String allowHeader = "Allow: " + allMethods;
+        return allowHeader;
+
+    }
+
+    public String createRedirectHeader () {
+        String redirectHeader = "Location: " + redirect;
+        return redirectHeader;
+    }
+
+    public boolean redirectExist () {
+        if (redirect != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setAllowMethods(ArrayList<String> methods) {
+        allowedMethods = methods;
+    }
+
+    public void setRedirection(String redirectTarget) {
+        redirect = redirectTarget;
     }
 }
