@@ -100,4 +100,26 @@ class RouterTest {
 
         assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD,POST,GET,OPTIONS,PUT"}, responseArray);
     }
+
+    @Test
+    void returns200OKWhenPostRequest() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/echo_body");
+        String method = "POST";
+        Request testRequest = new Request(url, method);
+        response = router.route(testRequest);
+        String responseStatusHeader = response.getHeader().getStatusLine();
+
+        assertEquals("HTTP/1.1 200 OK", responseStatusHeader);
+    }
+
+    @Test
+    void responseBodyEqualsToRequestBody() throws IOException {
+//        URL url = new URL("http://0.0.0.0:5000/echo_body");
+//        String method = "POST";
+//        Request testRequest = new Request(url, method);
+//        response = router.route(testRequest);
+//        String responseStatusHeader = response.getHeader().getStatusLine();
+//
+//        assertEquals("HTTP/1.1 200 OK", responseStatusHeader);
+    }
 }

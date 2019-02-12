@@ -15,7 +15,12 @@ public class RequestBuilder {
     Request buildRequest(List<String> incomingRequest) throws MalformedURLException {
         String[] requestLine = incomingRequest.get(0).split(" ");
         Map<String, String> requestHeaders = parser.parseRequestHeaders(incomingRequest);
-        URL url = new URL(parser.parseProtocol(requestLine), parser.parseHost(requestHeaders), parser.parsePort(requestHeaders), parser.parsePath(requestLine));
+        URL url = new URL(
+                parser.parseProtocol(requestLine),
+                parser.parseHost(requestHeaders),
+                parser.parsePort(requestHeaders),
+                parser.parsePath(requestLine)
+        );
         Request parsedRequest = new Request(url, parser.parseMethod(requestLine));
         return parsedRequest;
     }

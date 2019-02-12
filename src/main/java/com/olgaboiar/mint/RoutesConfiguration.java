@@ -23,6 +23,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
     @Override
     public void createRoutes() {
         allRoutes = new ArrayList<> ();
+//        Yaml yaml = new Yaml();
         allRoutes.add(new Route("/simple_get", new HashMap<String, IHandler>() {{
             put(Method.GET.toString(), new RouteHandler());
             put(Method.HEAD.toString(), new HeadHandler());
@@ -49,6 +50,9 @@ public class RoutesConfiguration implements IRoutesConfiguration {
         }}));
         allRoutes.add(new Route("/redirect", new HashMap<String, IHandler>() {{
             put(Method.GET.toString(), new RedirectHandler("http://0.0.0.0:5000/simple_get"));
+        }}));
+        allRoutes.add(new Route("/echo_body", new HashMap<String, IHandler>() {{
+            put(Method.POST.toString(), new PostHandler());
         }}));
     }
 

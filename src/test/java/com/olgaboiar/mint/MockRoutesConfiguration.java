@@ -29,7 +29,9 @@ public class MockRoutesConfiguration implements IRoutesConfiguration {
         allTestRoutes.add(new Route("/test_redirect", new HashMap<String, IHandler>() {{
             put(RoutesConfiguration.Method.GET.toString(), new RedirectHandler("http://0.0.0.0:5000/simple_get"));
         }}));
-
+        allTestRoutes.add(new Route("/echo_body", new HashMap<String, IHandler>() {{
+            put(RoutesConfiguration.Method.POST.toString(), new PostHandler());
+        }}));
     }
 
     @Override

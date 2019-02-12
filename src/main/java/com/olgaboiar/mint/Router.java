@@ -23,10 +23,7 @@ public class Router {
     }
 
     private boolean methodHandlersExist (Map<String, IHandler> methodHandlers) {
-        if (methodHandlers != null) {
-            return true;
-        }
-        return false;
+        return methodHandlers != null;
     }
 
 }
