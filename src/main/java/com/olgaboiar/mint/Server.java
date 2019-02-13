@@ -15,11 +15,13 @@ public class Server {
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
     IServerConnection serverSocket;
     Reader reader;
+    RouteMap routeMap;
 
 
-    public Server(IServerConnection serverSocket, ILogger logger) {
+    public Server(IServerConnection serverSocket, ILogger logger) throws IOException {
         this.serverSocket = serverSocket;
         this.logger = logger;
+        createRouteMap();
     }
 
     public void start() throws IOException {
@@ -47,10 +49,13 @@ public class Server {
     }
 
     private Response prepareResponse(Request parsedRequest) throws IOException {
-        RoutesConfiguration routesConfiguration = new RoutesConfiguration();
-        RouteMap routeMap = new RouteMap(routesConfiguration);
         Response response = new Router(routeMap).route(parsedRequest);
         return response;
+    }
+
+    private void createRouteMap() throws IOException {
+        RoutesConfiguration routesConfiguration = new RoutesConfiguration();
+        routeMap = new RouteMap(routesConfiguration);
     }
 
     public void stop() throws IOException {
