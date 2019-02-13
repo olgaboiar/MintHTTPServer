@@ -35,17 +35,6 @@ public class ServerConnection implements IServerConnection {
     }
 
     @Override
-    public List<String> readClientInput(BufferedReader in) throws IOException {
-        List<String> clientInput = new ArrayList<String>();
-        String input = in.readLine();
-        while (input.length() > 0) {
-            clientInput.add(input);
-            input = in.readLine();
-        }
-        return clientInput;
-    }
-
-    @Override
     public void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
         out.close();
         in.close();
@@ -65,7 +54,7 @@ public class ServerConnection implements IServerConnection {
     @Override
     public PrintWriter sendResponseToClient(Response response, Socket clientSocket) throws IOException {
         PrintWriter out = createOutPutStream(clientSocket);
-        out.println(response.prepareResponse());
+        out.print(response.prepareResponse());
         out.flush();
         return out;
     }

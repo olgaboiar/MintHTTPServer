@@ -14,7 +14,7 @@ public interface IServerConnection {
 
     BufferedReader listenToClientConnection(Socket clientSocket) throws IOException;
 
-    List<String> readClientInput(BufferedReader in) throws IOException;
+//    List<String> readClientInput(BufferedReader in) throws IOException;
 
     void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException;
 

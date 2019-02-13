@@ -15,8 +15,7 @@ public class Response {
     public Header getHeader() {
         return header;
     }
-
-    Body getBody() {
+    public Body getBody() {
         return body;
     }
 

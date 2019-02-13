@@ -113,13 +113,14 @@ class RouterTest {
     }
 
     @Test
-    void responseBodyEqualsToRequestBody() throws IOException {
-//        URL url = new URL("http://0.0.0.0:5000/echo_body");
-//        String method = "POST";
-//        Request testRequest = new Request(url, method);
-//        response = router.route(testRequest);
-//        String responseStatusHeader = response.getHeader().getStatusLine();
+    void returnResponseWithBodyEqualToRequestBody() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/echo_body");
+        String method = "POST";
+        Request testRequest = new Request(url, method);
+        testRequest.setBody("test");
+        response = router.route(testRequest);
+        String responseBody = response.getBody().getBodyString();
 //
-//        assertEquals("HTTP/1.1 200 OK", responseStatusHeader);
+        assertEquals("test", responseBody);
     }
 }

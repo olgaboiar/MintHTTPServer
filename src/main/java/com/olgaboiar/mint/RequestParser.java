@@ -27,6 +27,14 @@ public class RequestParser {
         return requestHeaders.get("Host").split(":")[0];
     }
 
+    public String parseContentLength(Map<String, String> requestHeaders) {
+        return requestHeaders.get("Content-Length").split(":")[0];
+    }
+
+    public Boolean contentLengthExist(Map<String, String> requestHeaders) {
+        return (requestHeaders.get("Content-Length") != null);
+    }
+
     public String parseProtocol(String[] requestLine) {
         return requestLine[2].split("/")[0].toLowerCase();
     }

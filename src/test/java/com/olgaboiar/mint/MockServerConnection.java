@@ -23,10 +23,10 @@ public class MockServerConnection implements IServerConnection{
         return new BufferedReader(new InputStreamReader(System.in));
     }
 
-    @Override
-    public List<String> readClientInput(BufferedReader in) throws IOException {
-        return null;
-    }
+//    @Override
+//    public List<String> readClientInput(BufferedReader in) throws IOException {
+//        return null;
+//    }
 
     @Override
     public void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {

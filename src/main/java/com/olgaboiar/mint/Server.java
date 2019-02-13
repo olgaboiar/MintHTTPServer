@@ -14,6 +14,7 @@ public class Server {
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
     IServerConnection serverSocket;
+    Reader reader;
 
 
     public Server(IServerConnection serverSocket, ILogger logger) {
@@ -30,7 +31,8 @@ public class Server {
     public void run() throws IOException {
         Socket clientSocket = serverSocket.acceptClientConnection();
         BufferedReader in = serverSocket.listenToClientConnection(clientSocket);
-        List<String> clientInput = serverSocket.readClientInput(in);
+        reader = new Reader(in);
+        List<String> clientInput = reader.readClientInputHeaders();
         Request parsedRequest = parseRequest(clientInput);
         Response response = prepareResponse(parsedRequest);
         PrintWriter out = serverSocket.sendResponseToClient(response, clientSocket);
@@ -39,7 +41,7 @@ public class Server {
     }
 
     private Request parseRequest(List<String> clientInput) throws IOException {
-        Request currentRequest = new RequestBuilder(new RequestParser()).buildRequest(clientInput);
+        Request currentRequest = new RequestBuilder(new RequestParser(), reader).buildRequest(clientInput);
         logger.logMessage("\nReceived request:\n" + clientInput);
         return currentRequest;
     }

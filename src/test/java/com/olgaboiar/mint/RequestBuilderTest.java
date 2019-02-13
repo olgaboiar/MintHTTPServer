@@ -3,7 +3,10 @@ package com.olgaboiar.mint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +16,14 @@ class RequestBuilderTest {
     RequestBuilder testRequestBuilder;
 
     @BeforeEach
-    public void init(){
-        testRequestBuilder = new RequestBuilder(new RequestParser());
+    public void init() throws IOException {
+        MockServerConnection testSocket = new MockServerConnection();
+        BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
+        testRequestBuilder = new RequestBuilder(new RequestParser(), new Reader(in));
     }
 
     @Test
-    void testRequestBuilderCreatesRequestObject() throws MalformedURLException {
+    void testRequestBuilderCreatesRequestObject() throws IOException {
         List<String> incomingRequest = new ArrayList<String>();
         incomingRequest.add("HEAD /simple_get HTTP/1.1");
         incomingRequest.add("Accept: */*");
