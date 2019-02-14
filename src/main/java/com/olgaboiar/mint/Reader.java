@@ -13,19 +13,19 @@ public class Reader {
     }
 
     public List<String> readClientInputHeaders() throws IOException {
-        List<String> clientInput = new ArrayList<String>();
+        List<String> clientInputHeaders = new ArrayList<String>();
         String input = in.readLine();
-        while (input.length() > 0) {
-            clientInput.add(input);
+        while (input != null && input.length() > 0) {
+            clientInputHeaders.add(input);
             input = in.readLine();
         }
-        return clientInput;
+        return clientInputHeaders;
     }
 
     public String readClientInputBody(int contentLength) throws IOException {
         char[] buffer = new char[contentLength];
         in.read(buffer, 0, contentLength);
-        String postData = new String(buffer, 0, buffer.length);
-        return postData;
+        String clientInputBody = new String(buffer, 0, buffer.length);
+        return clientInputBody;
     }
 }
