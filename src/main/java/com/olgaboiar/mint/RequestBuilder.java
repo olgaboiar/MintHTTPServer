@@ -26,9 +26,6 @@ public class RequestBuilder {
         Request parsedRequest = new Request(url, parser.parseMethod(requestLine));
         if ((parser.contentLengthExist(requestHeaders)) && (Integer.parseInt(parser.parseContentLength(requestHeaders)))>0) {
             String body = reader.readClientInputBody(Integer.parseInt(parser.parseContentLength(requestHeaders)));
-//            String newBody = body.trim();
-//            String newBody = body.substring(0, body.length() - 1);
-//            String newBody = body.replaceAll("[\n\r]", "");
             parsedRequest.setBody(body);
         }
         return parsedRequest;

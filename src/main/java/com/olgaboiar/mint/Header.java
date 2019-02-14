@@ -2,8 +2,6 @@ package com.olgaboiar.mint;
 
 import java.util.ArrayList;
 
-import static com.olgaboiar.mint.Constants.BLANK_LINE;
-
 public class Header {
     private String statusLine;
     private String contentType;
