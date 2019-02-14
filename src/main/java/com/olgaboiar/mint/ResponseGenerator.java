@@ -1,9 +1,9 @@
 package com.olgaboiar.mint;
 
 public class ResponseGenerator {
-    HeaderGenerator headerGenerator = new HeaderGenerator();
 
-    public Response generateResponse(Constants.Status status, String body) {
+    public static Response generateResponse(Constants.Status status, String body) {
+        HeaderGenerator headerGenerator = new HeaderGenerator();
         String contentType = ("Content-Type: text/html");
         Header header = headerGenerator.generate(status, contentType);
         Body responseBody = new Body(body);

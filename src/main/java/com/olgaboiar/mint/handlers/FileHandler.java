@@ -13,6 +13,6 @@ public class FileHandler implements IHandler {
         String file = "." + request.getUri();
         List<String> fileContent = Files.readAllLines(Paths.get(file));
         String body = String.join("", fileContent);
-        return new ResponseGenerator().generateResponse(Constants.Status.STATUS_CODE_200, body);
+        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, body);
     }
 }
