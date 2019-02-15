@@ -63,7 +63,6 @@ public class RoutesConfiguration implements IRoutesConfiguration {
         allRoutes = new ArrayList<> ();
         Yaml yaml = new Yaml();
         byte[] encoded = Files.readAllBytes(Paths.get(filePath));
-//        byte[] encoded = Files.readAllBytes(Paths.get("src/main/java/com/olgaboiar/mint/ServerRoutes.yaml"));
         String document = new String(encoded, StandardCharsets.UTF_8);
         for (Object route : yaml.loadAll(document)) {
             Map<String, Object> currentRoute = (Map<String, Object>) route;
