@@ -1,0 +1,54 @@
+---
+path: /simple_get
+methodhandlers:
+  - method: GET
+    handler: ROUTE_HANDLER
+  - method: HEAD
+    handler: HEAD_HANDLER
+---
+path: /method_options
+methodhandlers:
+  - method: GET
+    handler: ROUTE_HANDLER
+  - method: HEAD
+    handler: HEAD_HANDLER
+  - method: OPTIONS
+    handler: OPTIONS_HANDLER
+---
+path: /get_with_body
+methodhandlers:
+  - method: HEAD
+    handler: HEAD_HANDLER
+  - method: OPTIONS
+    handler: OPTIONS_HANDLER
+---
+path: /method_options2
+methodhandlers:
+  - method: GET
+    handler: ROUTE_HANDLER
+  - method: HEAD
+    handler: HEAD_HANDLER
+  - method: OPTIONS
+    handler: OPTIONS_HANDLER
+  - method: PUT
+    handler: NOT_ALLOWED_HANDLER
+  - method: POST
+    handler: NOT_ALLOWED_HANDLER
+---
+path: /redirect
+methodhandlers:
+  - method: GET
+    handler: REDIRECT_HANDLER
+    redirect: http://0.0.0.0:5000/simple_get
+---
+path: /index.html
+methodhandlers:
+  - method: GET
+    handler: FILE_HANDLER
+  - method: HEAD
+    handler: HEAD_HANDLER
+---
+path: /echo_body
+methodhandlers:
+  - method: POST
+    handler: POST_HANDLER

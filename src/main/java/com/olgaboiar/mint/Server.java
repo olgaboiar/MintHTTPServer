@@ -18,10 +18,10 @@ public class Server {
     RouteMap routeMap;
 
 
-    public Server(IServerConnection serverSocket, ILogger logger) throws IOException {
+    public Server(IServerConnection serverSocket, ILogger logger, String routesConfigFilePath) throws IOException {
         this.serverSocket = serverSocket;
         this.logger = logger;
-        createRouteMap();
+        createRouteMap(routesConfigFilePath);
     }
 
     public void start() throws IOException {
@@ -53,8 +53,8 @@ public class Server {
         return response;
     }
 
-    private void createRouteMap() throws IOException {
-        RoutesConfiguration routesConfiguration = new RoutesConfiguration();
+    private void createRouteMap(String filePath) throws IOException {
+        RoutesConfiguration routesConfiguration = new RoutesConfiguration(filePath);
         routeMap = new RouteMap(routesConfiguration);
     }
 

@@ -3,13 +3,18 @@ package com.olgaboiar.mint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouteMapTest {
     RouteMap testMap;
-    MockRoutesConfiguration serverTestRoutes = new MockRoutesConfiguration();
+    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    RoutesConfiguration serverTestRoutes = new RoutesConfiguration(serverTestRoutesPath);
+
+    RouteMapTest() throws IOException {
+    }
 
     @BeforeEach
     public void init(){

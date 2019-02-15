@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class MockRouteMap implements IRouteMap {
     private Map<String, Map<String, IHandler>> routes = new HashMap<>();
-    MockRoutesConfiguration serverTestRoutes;
+    RoutesConfiguration serverTestRoutes;
 
-    public MockRouteMap(MockRoutesConfiguration serverTestRoutes) {
+    public MockRouteMap(RoutesConfiguration serverTestRoutes) {
         this.serverTestRoutes = serverTestRoutes;
         registerTestRoutes();
     }

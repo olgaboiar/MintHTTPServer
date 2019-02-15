@@ -2,58 +2,83 @@ package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.handlers.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
+import org.yaml.snakeyaml.Yaml;
 
 public class RoutesConfiguration implements IRoutesConfiguration {
     ArrayList<Route> allRoutes;
+    static String redirect;
 
-    public RoutesConfiguration() {
-        createRoutes();
+    public RoutesConfiguration(String filePath) throws IOException {
+
+        createRoutes(filePath);
     }
 
-    enum Method {
-        GET,
-        HEAD,
-        POST,
-        PUT,
-        OPTIONS
+    enum Handler {
+        ROUTE_HANDLER {
+            public RouteHandler getHandler() {
+                return new RouteHandler();
+            }
+        },
+        HEAD_HANDLER {
+            public HeadHandler getHandler() {
+                return new HeadHandler();
+            }
+        },
+        NOT_ALLOWED_HANDLER {
+            public NotAllowedHandler getHandler() {
+                return new NotAllowedHandler();
+            }
+        },
+        FILE_HANDLER {
+            public FileHandler getHandler() {
+                return new FileHandler();
+            }
+        },
+        POST_HANDLER {
+            public PostHandler getHandler() {
+                return new PostHandler();
+            }
+        },
+        REDIRECT_HANDLER {
+            public RedirectHandler getHandler() {
+                return new RedirectHandler(redirect);
+            }
+        },
+        OPTIONS_HANDLER {
+            public OptionsHandler getHandler() {
+                return new OptionsHandler();
+            }
+        };
+        public abstract IHandler getHandler();
     }
 
     @Override
-    public void createRoutes() {
+    public void createRoutes(String filePath) throws IOException {
         allRoutes = new ArrayList<> ();
-//        Yaml yaml = new Yaml();
-        allRoutes.add(new Route("/simple_get", new HashMap<String, IHandler>() {{
-            put(Method.GET.toString(), new RouteHandler());
-            put(Method.HEAD.toString(), new HeadHandler());
-        }}));
-        allRoutes.add(new Route("/method_options", new HashMap<String, IHandler>() {{
-            put(Method.GET.toString(), new RouteHandler());
-            put(Method.HEAD.toString(), new HeadHandler());
-            put(Method.OPTIONS.toString(), new OptionsHandler());
-        }}));
-        allRoutes.add(new Route("/method_options2", new HashMap<String, IHandler>() {{
-            put(Method.GET.toString(), new RouteHandler());
-            put(Method.HEAD.toString(), new HeadHandler());
-            put(Method.OPTIONS.toString(), new OptionsHandler());
-            put(Method.PUT.toString(), new NotAllowedHandler());
-            put(Method.POST.toString(), new NotAllowedHandler());
-        }}));
-        allRoutes.add(new Route("/get_with_body", new HashMap<String, IHandler>() {{
-            put(Method.HEAD.toString(), new HeadHandler());
-            put(Method.OPTIONS.toString(), new OptionsHandler());
-        }}));
-        allRoutes.add(new Route("/index.html", new HashMap<String, IHandler>() {{
-            put(Method.GET.toString(), new FileHandler());
-            put(Method.HEAD.toString(), new HeadHandler());
-        }}));
-        allRoutes.add(new Route("/redirect", new HashMap<String, IHandler>() {{
-            put(Method.GET.toString(), new RedirectHandler("http://0.0.0.0:5000/simple_get"));
-        }}));
-        allRoutes.add(new Route("/echo_body", new HashMap<String, IHandler>() {{
-            put(Method.POST.toString(), new PostHandler());
-        }}));
+        Yaml yaml = new Yaml();
+        byte[] encoded = Files.readAllBytes(Paths.get(filePath));
+//        byte[] encoded = Files.readAllBytes(Paths.get("src/main/java/com/olgaboiar/mint/ServerRoutes.yaml"));
+        String document = new String(encoded, StandardCharsets.UTF_8);
+        for (Object route : yaml.loadAll(document)) {
+            Map<String, Object> currentRoute = (Map<String, Object>) route;
+            String path = (String) currentRoute.get("path");
+            List<Map<String, Object>> methodHandlers = (List<Map<String, Object>>) currentRoute.get("methodhandlers");
+            allRoutes.add(new Route(path, new HashMap<String, IHandler>() {{
+                for (Map<String, Object> methodHandler : methodHandlers) {
+                    String method = (String) methodHandler.get("method");
+                    String handlerEnum = (String) methodHandler.get("handler");
+                    redirect = (String) methodHandler.get("redirect");
+                    IHandler handler = Handler.valueOf(handlerEnum).getHandler();
+                    put(method, handler);
+                }
+            }}));
+        }
     }
 
     @Override

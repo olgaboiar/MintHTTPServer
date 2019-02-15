@@ -8,10 +8,14 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouterTest {
-    MockRoutesConfiguration serverTestRoutes = new MockRoutesConfiguration();
+    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    RoutesConfiguration serverTestRoutes = new RoutesConfiguration(serverTestRoutesPath);
     MockRouteMap testMap = new MockRouteMap(serverTestRoutes);
     Router router = new Router(testMap);
     Response response;
+
+    RouterTest() throws IOException {
+    }
 
     @Test
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
