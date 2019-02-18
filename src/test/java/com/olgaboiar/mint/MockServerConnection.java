@@ -23,7 +23,7 @@ public class MockServerConnection implements IServerConnection{
     }
 
     @Override
-    public void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
+    public void closeClientConnection(IBufferedReaderWrapper in, PrintWriter out, Socket clientSocket) throws IOException {
 
     }
 

@@ -3,7 +3,6 @@ package com.olgaboiar.mint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ class RequestBuilderTest {
     @BeforeEach
     public void init() throws IOException {
         MockServerConnection testSocket = new MockServerConnection();
-        BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
+        BufferedReaderWrapper in = new BufferedReaderWrapper(testSocket.listenToClientConnection(testSocket.acceptClientConnection()));
         testRequestBuilder = new RequestBuilder(new RequestParser(new Reader(in)));
     }
 

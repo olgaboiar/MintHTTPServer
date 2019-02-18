@@ -33,7 +33,7 @@ public class ServerConnection implements IServerConnection {
     }
 
     @Override
-    public void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException {
+    public void closeClientConnection(IBufferedReaderWrapper in, PrintWriter out, Socket clientSocket) throws IOException {
         out.close();
         in.close();
         clientSocket.close();

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reader {
-    BufferedReader in;
+    IBufferedReaderWrapper in;
 
-    public Reader(BufferedReader in) {
+    public Reader(IBufferedReaderWrapper in) {
         this.in = in;
     }
 
@@ -24,7 +24,7 @@ public class Reader {
 
     public String readChars(int contentLength) throws IOException {
         char[] buffer = new char[contentLength];
-        in.read(buffer, 0, contentLength);
+        in.read(buffer, contentLength);
         String clientInputBody = new String(buffer, 0, buffer.length);
         return clientInputBody;
     }

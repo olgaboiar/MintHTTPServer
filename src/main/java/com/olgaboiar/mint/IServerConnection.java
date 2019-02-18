@@ -13,7 +13,7 @@ public interface IServerConnection {
 
     BufferedReader listenToClientConnection(Socket clientSocket) throws IOException;
 
-    void closeClientConnection(BufferedReader in, PrintWriter out, Socket clientSocket) throws IOException;
+    void closeClientConnection(IBufferedReaderWrapper in, PrintWriter out, Socket clientSocket) throws IOException;
 
     void stop() throws IOException;
 

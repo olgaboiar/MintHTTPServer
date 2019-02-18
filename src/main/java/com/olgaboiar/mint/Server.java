@@ -32,7 +32,7 @@ public class Server {
 
     public void run() throws IOException {
         Socket clientSocket = serverSocket.acceptClientConnection();
-        BufferedReader in = serverSocket.listenToClientConnection(clientSocket);
+        BufferedReaderWrapper in = new BufferedReaderWrapper(serverSocket.listenToClientConnection(clientSocket));
         reader = new Reader(in);
         List<String> clientInput = reader.readInput();
         Request parsedRequest = parseRequest(clientInput);
