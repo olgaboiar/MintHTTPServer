@@ -31,9 +31,7 @@ methodhandlers:
   - method: OPTIONS
     handler: OPTIONS_HANDLER
   - method: PUT
-    handler: NOT_ALLOWED_HANDLER
   - method: POST
-    handler: NOT_ALLOWED_HANDLER
 ---
 path: /redirect
 methodhandlers:

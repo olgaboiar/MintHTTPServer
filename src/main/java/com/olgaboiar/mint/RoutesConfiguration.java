@@ -11,6 +11,7 @@ import java.util.*;
 import org.yaml.snakeyaml.Yaml;
 
 public class RoutesConfiguration implements IRoutesConfiguration {
+    IHandler handler;
     ArrayList<Route> allRoutes;
     static String redirect;
 
@@ -73,7 +74,11 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                     String method = (String) methodHandler.get("method");
                     String handlerEnum = (String) methodHandler.get("handler");
                     redirect = (String) methodHandler.get("redirect");
-                    IHandler handler = Handler.valueOf(handlerEnum).getHandler();
+                    if (handlerEnum == null) {
+                        handler = Handler.NOT_ALLOWED_HANDLER.getHandler();
+                    } else {
+                        handler = Handler.valueOf(handlerEnum).getHandler();
+                    }
                     put(method, handler);
                 }
             }}));
