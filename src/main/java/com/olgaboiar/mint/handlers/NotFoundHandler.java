@@ -7,6 +7,6 @@ import java.io.IOException;
 public class NotFoundHandler implements IHandler {
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
-        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_404, "");
+        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_404);
     }
 }

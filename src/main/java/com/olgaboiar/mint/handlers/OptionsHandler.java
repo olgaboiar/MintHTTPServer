@@ -9,7 +9,7 @@ public class OptionsHandler implements IHandler {
 
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
-        Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, "");
+        Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200);
         ArrayList<String> allowedMethods = routes.getAllowedMethods(request.getUri());
         response.getHeader().setAllowMethods(allowedMethods);
         return response;
