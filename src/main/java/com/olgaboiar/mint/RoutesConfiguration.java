@@ -21,37 +21,37 @@ public class RoutesConfiguration implements IRoutesConfiguration {
     }
 
     enum Handler {
-        ROUTE_HANDLER {
+        GET_REQUEST_HANDLER {
             public RouteHandler getHandler() {
                 return new RouteHandler();
             }
         },
-        HEAD_HANDLER {
+        HEAD_REQUEST_HANDLER {
             public HeadHandler getHandler() {
                 return new HeadHandler();
             }
         },
-        NOT_ALLOWED_HANDLER {
+        NOT_ALLOWED_REQUEST_HANDLER {
             public NotAllowedHandler getHandler() {
                 return new NotAllowedHandler();
             }
         },
-        FILE_HANDLER {
+        FILE_REQUEST_HANDLER {
             public FileHandler getHandler() {
                 return new FileHandler();
             }
         },
-        POST_HANDLER {
+        POST_REQUEST_HANDLER {
             public PostHandler getHandler() {
                 return new PostHandler();
             }
         },
-        REDIRECT_HANDLER {
+        REDIRECT_REQUEST_HANDLER {
             public RedirectHandler getHandler() {
                 return new RedirectHandler(redirect);
             }
         },
-        OPTIONS_HANDLER {
+        OPTIONS_REQUEST_HANDLER {
             public OptionsHandler getHandler() {
                 return new OptionsHandler();
             }
@@ -75,7 +75,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                     String handlerEnum = (String) methodHandler.get("handler");
                     redirect = (String) methodHandler.get("redirect");
                     if (handlerEnum == null) {
-                        handler = Handler.NOT_ALLOWED_HANDLER.getHandler();
+                        handler = Handler.NOT_ALLOWED_REQUEST_HANDLER.getHandler();
                     } else {
                         handler = Handler.valueOf(handlerEnum).getHandler();
                     }

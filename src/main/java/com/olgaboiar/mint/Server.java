@@ -21,7 +21,7 @@ public class Server {
     public Server(IServerConnection serverSocket, ILogger logger, String routesConfigFilePath) throws IOException {
         this.serverSocket = serverSocket;
         this.logger = logger;
-        createRouteMap(routesConfigFilePath);
+        createRoutes(routesConfigFilePath);
     }
 
     public void start() throws IOException {
@@ -53,7 +53,7 @@ public class Server {
         return response;
     }
 
-    private void createRouteMap(String filePath) throws IOException {
+    private void createRoutes(String filePath) throws IOException {
         RoutesConfiguration routesConfiguration = new RoutesConfiguration(filePath);
         routeMap = new RouteMap(routesConfiguration);
     }
