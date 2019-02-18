@@ -7,26 +7,18 @@ import java.util.Map;
 
 public class RequestBuilder {
     RequestParser parser;
-    Reader reader;
 
-    public RequestBuilder(RequestParser parser, Reader reader) {
+    public RequestBuilder(RequestParser parser) {
         this.parser = parser;
-        this.reader = reader;
     }
 
     Request buildRequest(List<String> incomingRequest) throws IOException {
-        String[] requestLine = incomingRequest.get(0).split(" ");
-        Map<String, String> requestHeaders = parser.parseRequestHeaders(incomingRequest);
-        URL url = new URL(
-                parser.parseProtocol(requestLine),
-                parser.parseHost(requestHeaders),
-                parser.parsePort(requestHeaders),
-                parser.parsePath(requestLine)
-        );
+        String[] requestLine = parser.parseRequestLine(incomingRequest);
+//        Map<String, String> requestHeaders = parser.parseRequestHeaders(incomingRequest);
+        URL url = parser.createUrl(incomingRequest);
         Request parsedRequest = new Request(url, parser.parseMethod(requestLine));
-        if ((parser.contentLengthExist(requestHeaders)) && (Integer.parseInt(parser.parseContentLength(requestHeaders)))>0) {
-            String body = reader.readClientInputBody(Integer.parseInt(parser.parseContentLength(requestHeaders)));
-            parsedRequest.setBody(body);
+        if (parser.requestBodyExists()) {
+            parsedRequest.setBody(parser.parseBody());
         }
         return parsedRequest;
     }

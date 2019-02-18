@@ -43,7 +43,7 @@ public class Server {
     }
 
     private Request parseRequest(List<String> clientInput) throws IOException {
-        Request currentRequest = new RequestBuilder(new RequestParser(), reader).buildRequest(clientInput);
+        Request currentRequest = new RequestBuilder(new RequestParser(reader)).buildRequest(clientInput);
         logger.logMessage("\nReceived request:\n" + clientInput);
         return currentRequest;
     }

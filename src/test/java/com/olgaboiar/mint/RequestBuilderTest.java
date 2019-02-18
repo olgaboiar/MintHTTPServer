@@ -17,7 +17,7 @@ class RequestBuilderTest {
     public void init() throws IOException {
         MockServerConnection testSocket = new MockServerConnection();
         BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
-        testRequestBuilder = new RequestBuilder(new RequestParser(), new Reader(in));
+        testRequestBuilder = new RequestBuilder(new RequestParser(new Reader(in)));
     }
 
     @Test

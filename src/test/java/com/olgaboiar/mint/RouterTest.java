@@ -123,7 +123,7 @@ class RouterTest {
         Request testRequest = new Request(url, method);
         testRequest.setBody("test");
         response = router.route(testRequest);
-        String responseBody = response.getBody().getBodyString();
+        String responseBody = response.getBody().getBody();
 //
         assertEquals("test", responseBody);
     }

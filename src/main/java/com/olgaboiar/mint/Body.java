@@ -7,7 +7,7 @@ public class Body {
         this.body = body;
     }
 
-    public String getBodyString() {
+    public String getBody() {
         return body;
     }
 }

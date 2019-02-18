@@ -1,15 +1,24 @@
 package com.olgaboiar.mint;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RequestParser {
+    Map<String, String> requestHeaders;
+    Reader reader;
+
+    public RequestParser(Reader reader) {
+        this.reader = reader;
+    }
 
 
     public Map<String, String> parseRequestHeaders(List<String> incomingRequest) {
         List<String> headers = incomingRequest.subList(1, incomingRequest.size());
-        Map<String, String> requestHeaders = new HashMap<String, String>();
+        requestHeaders = new HashMap<>();
         String[] restArr = new String[headers.size()];
         restArr = headers.toArray(restArr);
         for (int i = 0; i < headers.size(); i ++) {
@@ -45,5 +54,30 @@ public class RequestParser {
 
     public String parsePath(String[] requestLine) {
         return requestLine[1];
+    }
+
+    public URL createUrl (List<String> incomingRequest) throws MalformedURLException {
+        String[] requestLine = parseRequestLine(incomingRequest);
+        Map<String, String> requestHeaders = parseRequestHeaders(incomingRequest);
+        URL url = new URL(
+                parseProtocol(requestLine),
+                parseHost(requestHeaders),
+                parsePort(requestHeaders),
+                parsePath(requestLine)
+        );
+        return url;
+    }
+
+    public String[] parseRequestLine(List<String> incomingRequest) {
+        return incomingRequest.get(0).split(" ");
+    }
+
+    public String parseBody() throws IOException {
+        String body = reader.readClientInputBody(Integer.parseInt(parseContentLength(requestHeaders)));
+        return body;
+    }
+
+    public boolean requestBodyExists() {
+        return (contentLengthExist(requestHeaders)) && (Integer.parseInt(parseContentLength(requestHeaders)))>0;
     }
 }

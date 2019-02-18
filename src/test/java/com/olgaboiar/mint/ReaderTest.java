@@ -46,7 +46,9 @@ class ReaderTest {
         BufferedReader testBufferReader = new BufferedReader(stringReader);
         Reader testReader = new Reader(testBufferReader);
         List<String> testClientInput = testReader.readClientInputHeaders();
-        RequestParser requestParser = new RequestParser();
+        MockServerConnection testSocket = new MockServerConnection();
+        BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
+        RequestParser requestParser = new RequestParser(new Reader(in));
         Map<String, String> requestHeaders = requestParser.parseRequestHeaders(testClientInput);
         int contentLength = Integer.valueOf(requestParser.parseContentLength(requestHeaders));
         String testClientInputBody = testReader.readClientInputBody(contentLength);
