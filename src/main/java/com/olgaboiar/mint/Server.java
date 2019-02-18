@@ -34,7 +34,7 @@ public class Server {
         Socket clientSocket = serverSocket.acceptClientConnection();
         BufferedReader in = serverSocket.listenToClientConnection(clientSocket);
         reader = new Reader(in);
-        List<String> clientInput = reader.readClientInputHeaders();
+        List<String> clientInput = reader.readInput();
         Request parsedRequest = parseRequest(clientInput);
         Response response = prepareResponse(parsedRequest);
         PrintWriter out = serverSocket.sendResponseToClient(response, clientSocket);

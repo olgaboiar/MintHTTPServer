@@ -73,7 +73,7 @@ public class RequestParser {
     }
 
     public String parseBody() throws IOException {
-        String body = reader.readClientInputBody(Integer.parseInt(parseContentLength(requestHeaders)));
+        String body = reader.readChars(Integer.parseInt(parseContentLength(requestHeaders)));
         return body;
     }
 

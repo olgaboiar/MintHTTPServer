@@ -14,7 +14,6 @@ public class RequestBuilder {
 
     Request buildRequest(List<String> incomingRequest) throws IOException {
         String[] requestLine = parser.parseRequestLine(incomingRequest);
-//        Map<String, String> requestHeaders = parser.parseRequestHeaders(incomingRequest);
         URL url = parser.createUrl(incomingRequest);
         Request parsedRequest = new Request(url, parser.parseMethod(requestLine));
         if (parser.requestBodyExists()) {

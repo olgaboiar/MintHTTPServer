@@ -12,20 +12,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ReaderTest {
 
     @Test
-    void testReaderGetsInputHeadersForRequestWithHeadersOnly() throws IOException {
+    void testGetInputHeadersForRequestWithHeadersOnly() throws IOException {
         List<String> expected = new ArrayList<String>();
         String requestLine = "GET /simple_get HTTP/1.1";
         expected.add(requestLine);
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader testBufferReader = new BufferedReader(stringReader);
         Reader testReader = new Reader(testBufferReader);
-        List<String> testClientInput = testReader.readClientInputHeaders();
+        List<String> testClientInput = testReader.readInput();
 
         assertEquals(expected, testClientInput);
     }
 
     @Test
-    void testReaderGetsInputHeadersForRequestWithHeadersAndBody() throws IOException {
+    void testGetInputHeadersForRequestWithHeadersAndBody() throws IOException {
         List<String> expected = new ArrayList<String>();
         String requestLine = "GET /simple_get HTTP/1.1\n\nsome_body";
         String requestHeader = "GET /simple_get HTTP/1.1";
@@ -33,25 +33,25 @@ class ReaderTest {
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader testBufferReader = new BufferedReader(stringReader);
         Reader testReader = new Reader(testBufferReader);
-        List<String> testClientInput = testReader.readClientInputHeaders();
+        List<String> testClientInput = testReader.readInput();
 
         assertEquals(expected, testClientInput);
     }
 
     @Test
-    void testReaderGetsInputBodyForRequestWithHeadersAndBody() throws IOException {
+    void testGetInputBodyForRequestWithHeadersAndBody() throws IOException {
         String expected = "some_body";
         String requestLine = "GET /simple_get HTTP/1.1\nContent-Length: 9\n\nsome_body";
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader testBufferReader = new BufferedReader(stringReader);
         Reader testReader = new Reader(testBufferReader);
-        List<String> testClientInput = testReader.readClientInputHeaders();
+        List<String> testClientInput = testReader.readInput();
         MockServerConnection testSocket = new MockServerConnection();
         BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
         RequestParser requestParser = new RequestParser(new Reader(in));
         Map<String, String> requestHeaders = requestParser.parseRequestHeaders(testClientInput);
         int contentLength = Integer.valueOf(requestParser.parseContentLength(requestHeaders));
-        String testClientInputBody = testReader.readClientInputBody(contentLength);
+        String testClientInputBody = testReader.readChars(contentLength);
 
         assertEquals(expected, testClientInputBody);
     }
