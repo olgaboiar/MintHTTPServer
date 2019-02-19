@@ -46,4 +46,26 @@ class ResponseTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void responseHasValidBody() {
+        Body body = new Body("body");
+        Response testResponse = new Response (header, body);
+        String actual = testResponse.getBody().getBody();
+        String expected = "body";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void responseHasValidHeader() {
+        Body body = new Body("body");
+        Response testResponse = new Response (header, body);
+        String actual = testResponse.getHeader().prepareHeaders();
+        String expected = "200 OK\n" +
+                "Content-Type: text/html\n" +
+                "Date: " + currentDate;
+
+        assertEquals(expected, actual);
+    }
+
 }
