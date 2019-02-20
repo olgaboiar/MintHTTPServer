@@ -5,11 +5,18 @@ import static com.olgaboiar.mint.Constants.*;
 import java.io.IOException;
 
 public class ServerRunner {
+    static int port;
+    static Server server;
 
     public static void main(String[] args) throws IOException {
-        ServerConnection serverSocket = new ServerConnection(DEFAULT_PORT);
+        if (args.length > 0) {
+            port = Integer.valueOf(args[0]);
+        } else {
+            port = DEFAULT_PORT;
+        }
+        ServerConnection serverConnection = new ServerConnection(port);
         String serverRoutes = DEFAULT_ROUTES;
-        Server server = new Server(serverSocket, DEFAULT_LOGGER, serverRoutes);
+        server = new Server(serverConnection, DEFAULT_LOGGER, serverRoutes);
         server.start();
         while(true) {
             server.run();

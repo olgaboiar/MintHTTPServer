@@ -51,4 +51,14 @@ class RequestBuilderTest {
         assertEquals(expectedUri, actualUri);
     }
 
+    @Test
+    void testRequestBuilderCreatesRequestWithCorrectBody() throws IOException {
+        Request parsedRequest = testRequestBuilder.buildRequest(incomingRequest);
+        String expectedBody = "test";
+        parsedRequest.setBody(expectedBody);
+        String actualBody = parsedRequest.getBody();
+
+        assertEquals(expectedBody, actualBody);
+    }
+
 }

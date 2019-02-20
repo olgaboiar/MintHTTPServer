@@ -2,13 +2,10 @@ package com.olgaboiar.mint;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class ServerConnection implements IServerConnection {
-    ServerSocket serverSocket;
+    ServerSocketWrapper serverSocket;
     int port;
 
     public ServerConnection(int port) {
@@ -17,23 +14,22 @@ public class ServerConnection implements IServerConnection {
 
     @Override
     public void createServerSocket() throws IOException {
-        serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocketWrapper(port);
     }
 
     @Override
-    public Socket acceptClientConnection() throws IOException {
-        Socket clientSocket = serverSocket.accept();
-        return clientSocket;
+    public ISocketWrapper acceptClientConnection() throws IOException {
+        return serverSocket.accept();
     }
 
     @Override
-    public BufferedReader listenToClientConnection(Socket clientSocket) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    public BufferedReader listenToClientConnection(ISocketWrapper clientSocket) throws IOException {
+        BufferedReader in = clientSocket.getInputStream();
         return in;
     }
 
     @Override
-    public void closeClientConnection(IBufferedReaderWrapper in, PrintWriter out, Socket clientSocket) throws IOException {
+    public void closeClientConnection(IBufferedReaderWrapper in, PrintWriter out, ISocketWrapper clientSocket) throws IOException {
         out.close();
         in.close();
         clientSocket.close();
@@ -45,12 +41,12 @@ public class ServerConnection implements IServerConnection {
     }
 
     @Override
-    public PrintWriter createOutPutStream(Socket clientSocket) throws IOException {
-        return new PrintWriter(clientSocket.getOutputStream());
+    public PrintWriter createOutPutStream(ISocketWrapper clientSocket) throws IOException {
+        return clientSocket.getPrintWriter();
     }
 
     @Override
-    public PrintWriter sendResponseToClient(Response response, Socket clientSocket) throws IOException {
+    public PrintWriter sendResponseToClient(Response response, ISocketWrapper clientSocket) throws IOException {
         PrintWriter out = createOutPutStream(clientSocket);
         out.print(response.prepareResponse());
         out.flush();

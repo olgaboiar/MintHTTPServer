@@ -3,8 +3,7 @@ package com.olgaboiar.mint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -12,21 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RequestParserTest {
     RequestParser testRequestParser;
-    List<String> incomingRequest;
     Map<String, String> requestHeaders;
     String[] requestLine;
 
     @BeforeEach
     public void init() throws IOException {
-        MockServerConnection testSocket = new MockServerConnection();
-        BufferedReaderWrapper in = new BufferedReaderWrapper(testSocket.listenToClientConnection(testSocket.acceptClientConnection()));
-        testRequestParser = new RequestParser(new Reader(in));
-        incomingRequest = new ArrayList<String>();
-        incomingRequest.add("HEAD /simple_get HTTP/1.1");
-        incomingRequest.add("Accept: */*");
-        incomingRequest.add("User-Agent: Ruby");
-        incomingRequest.add("Connection: close");
-        incomingRequest.add("Host: 0.0.0.0:5000");
+        String request = "HEAD /test HTTP/1.1\nHost: 0.0.0.0:5000\n\nsome_body";
+        StringReader stringReader = new StringReader(request);
+        BufferedReader bufferedReader = new BufferedReader(stringReader);
+        BufferedReaderWrapper testBufferedReader = new BufferedReaderWrapper(bufferedReader);
+        Reader testReader = new Reader(testBufferedReader);
+        List<String> incomingRequest = testReader.readInput();
+        testRequestParser = new RequestParser(new Reader(testBufferedReader));
         requestHeaders = testRequestParser.parseRequestHeaders(incomingRequest);
         requestLine = incomingRequest.get(0).split(" ");
     }
@@ -63,6 +59,6 @@ class RequestParserTest {
     void testRequestParserParsesPath() {
         String parsedPath = testRequestParser.parsePath(requestLine);
 
-        assertEquals("/simple_get", parsedPath);
+        assertEquals("/test", parsedPath);
     }
 }

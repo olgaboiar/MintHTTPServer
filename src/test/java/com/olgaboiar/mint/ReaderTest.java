@@ -40,8 +40,6 @@ class ReaderTest {
         String requestLine = "GET /simple_get HTTP/1.1\nContent-Length: 9\n\nsome_body";
         Reader testReader = new Reader(new MockBufferReader(requestLine));
         List<String> testClientInput = testReader.readInput();
-        MockServerConnection testSocket = new MockServerConnection();
-        BufferedReader in = testSocket.listenToClientConnection(testSocket.acceptClientConnection());
         RequestParser requestParser = new RequestParser(testReader);
         Map<String, String> requestHeaders = requestParser.parseRequestHeaders(testClientInput);
         int contentLength = Integer.valueOf(requestParser.parseContentLength(requestHeaders));

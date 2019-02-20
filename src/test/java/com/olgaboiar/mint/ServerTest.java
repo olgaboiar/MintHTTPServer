@@ -4,16 +4,37 @@ import com.olgaboiar.mint.loggers.ILogger;
 import com.olgaboiar.mint.loggers.MockFileLogger;
 import org.junit.jupiter.api.*;
 
+import java.io.*;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ServerTest {
     String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
     ILogger logger = new MockFileLogger();
 
-    @BeforeAll
-    public void setUp () throws Exception {
-        MockServerConnection serverSocket = new MockServerConnection();
-        Server testServer = new Server(serverSocket, logger, serverTestRoutesPath);
-        testServer.start();
+    @Test
+    public void serverAnswersSimpleGet() throws IOException {
+        String requestLine = "GET /test HTTP/1.1\nHost: 0.0.0.0:5000\n\nsome_body";
+        StringReader stringReader = new StringReader(requestLine);
+        BufferedReader bufferedReader = new BufferedReader(stringReader);
+        StringWriter stringWriter = new StringWriter();
+        String currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        MockServerConnection serverConnection = new MockServerConnection(printWriter, bufferedReader);
+        Server server = new Server(serverConnection, logger, serverTestRoutesPath);
+        server.start();
+        server.run();
+        String actual = stringWriter.toString();
+        String expected = String.join("\n", new String[]{
+                "HTTP/1.1 200 OK",
+                "Content-Type: text/html",
+                "Date: " + currentDate
+        });
+
+        assertEquals(expected, actual);
     }
 }
