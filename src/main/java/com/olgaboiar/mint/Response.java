@@ -15,14 +15,13 @@ public class Response {
     public Header getHeader() {
         return header;
     }
-
-    Body getBody() {
+    public Body getBody() {
         return body;
     }
 
     String prepareResponse() {
-        if (body.getBodyString().length() > 0) {
-            responseToSend = header.prepareHeaders() + BLANK_LINE + body.getBodyString();
+        if (body.getBody().length() > 0) {
+            responseToSend = header.prepareHeaders() + BLANK_LINE + body.getBody();
         } else {
             responseToSend = header.prepareHeaders();
         }

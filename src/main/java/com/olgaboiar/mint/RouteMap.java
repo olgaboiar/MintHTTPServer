@@ -31,6 +31,6 @@ public class RouteMap implements IRouteMap {
     @Override
     public void registerTestRoutes() {
         ArrayList<Route> allRoutes = serverRoutes.getAllRoutes();
-        for (Route r : allRoutes) routes.put(r.getPath(), r.getAllowedMethods());
+        for (Route route : allRoutes) routes.put(route.getPath(), route.getAllowedMethods());
     }
 }

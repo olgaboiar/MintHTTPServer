@@ -1,46 +1,40 @@
 package com.olgaboiar.mint;
 
-import com.olgaboiar.mint.loggers.FileLogger;
-import com.olgaboiar.mint.loggers.FileLoggerTest;
 import com.olgaboiar.mint.loggers.ILogger;
 import com.olgaboiar.mint.loggers.MockFileLogger;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ServerTest {
+    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
     ILogger logger = new MockFileLogger();
 
-    @BeforeAll
-    public void setUp () throws Exception {
-        MockServerConnection serverSocket = new MockServerConnection();
-        Server testServer = new Server(serverSocket, logger);
-        testServer.start();
+    @Test
+    public void serverAnswersSimpleGet() throws IOException {
+        String requestLine = "GET /test HTTP/1.1\nHost: 0.0.0.0:5000\n\nsome_body";
+        StringReader stringReader = new StringReader(requestLine);
+        BufferedReader bufferedReader = new BufferedReader(stringReader);
+        StringWriter stringWriter = new StringWriter();
+        String currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        MockServerConnection serverConnection = new MockServerConnection(printWriter, bufferedReader);
+        Server server = new Server(serverConnection, logger, serverTestRoutesPath);
+        server.start();
+        server.run();
+        String actual = stringWriter.toString();
+        String expected = String.join("\n", new String[]{
+                "HTTP/1.1 200 OK",
+                "Content-Type: text/html",
+                "Date: " + currentDate
+        });
+
+        assertEquals(expected, actual);
     }
-
-//    @Test
-//    void testServerAnswersGetRequest () throws Exception {
-//        String requestLine = "GET /simple_get HTTP/1.1";
-//        InputStream stream = new ByteArrayInputStream((requestLine).getBytes(StandardCharsets.UTF_8));
-//        System.setIn(stream);
-//
-//        String actual = new StringWriter().toString();
-//        String expected = String.join("\r\n", new String[]{
-//                "HTTP/1.1 200 OK",
-//                "Content-Length: 0",
-//                "",
-//                "",
-//                ""
-//        });
-//
-//        assertEquals(expected, actual);
-//    }
-
 }

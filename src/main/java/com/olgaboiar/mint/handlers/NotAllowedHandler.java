@@ -9,7 +9,7 @@ public class NotAllowedHandler implements IHandler {
 
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
-        Response response =  new ResponseGenerator().generateResponse(Constants.Status.STATUS_CODE_405.toString(), "");
+        Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_405);
         ArrayList<String> allowedMethods = routes.getAllowedMethods(request.getUri());
         response.getHeader().setAllowMethods(allowedMethods);
         return response;

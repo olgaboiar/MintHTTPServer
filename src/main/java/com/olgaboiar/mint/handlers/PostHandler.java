@@ -4,9 +4,10 @@ import com.olgaboiar.mint.*;
 
 import java.io.IOException;
 
-public class NotFoundHandler implements IHandler {
+public class PostHandler implements IHandler {
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
-        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_404);
+        String body = request.getBody();
+        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, body);
     }
 }

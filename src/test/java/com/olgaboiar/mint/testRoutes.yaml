@@ -1,0 +1,29 @@
+---
+path: /test
+methodhandlers:
+  - method: GET
+    handler: GET_REQUEST_HANDLER
+  - method: HEAD
+    handler: HEAD_REQUEST_HANDLER
+  - method: OPTIONS
+    handler: OPTIONS_REQUEST_HANDLER
+  - method: PUT
+  - method: POST
+---
+path: /test_redirect
+methodhandlers:
+  - method: GET
+    handler: REDIRECT_REQUEST_HANDLER
+    redirect: http://0.0.0.0:5000/simple_get
+---
+path: /index.html
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+  - method: HEAD
+    handler: HEAD_REQUEST_HANDLER
+---
+path: /echo_body
+methodhandlers:
+  - method: POST
+    handler: POST_REQUEST_HANDLER

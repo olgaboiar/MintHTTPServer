@@ -3,7 +3,6 @@ package com.olgaboiar.mint;
 import com.olgaboiar.mint.loggers.ILogger;
 
 import java.io.*;
-import java.net.Socket;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,45 +12,42 @@ import static com.olgaboiar.mint.Constants.DEFAULT_PORT;
 public class Server {
     ILogger logger;
     static String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
-    IServerConnection serverSocket;
+    IServerConnection serverConnection;
+    Reader reader;
+    Router router;
 
 
-    public Server(IServerConnection serverSocket, ILogger logger) {
-        this.serverSocket = serverSocket;
+    public Server(IServerConnection serverConnection, ILogger logger, String routesConfigFilePath) throws IOException {
+        this.serverConnection = serverConnection;
         this.logger = logger;
+        this.router = new Router(createRoutes(routesConfigFilePath));
     }
 
     public void start() throws IOException {
         logger.logMessage(date + "\nServer started.");
         logger.logMessage("\nConnection on port " + DEFAULT_PORT);
-        serverSocket.createServerSocket();
+        serverConnection.createServerSocket();
     }
 
     public void run() throws IOException {
-        Socket clientSocket = serverSocket.acceptClientConnection();
-        BufferedReader in = serverSocket.listenToClientConnection(clientSocket);
-        List<String> clientInput = serverSocket.readClientInput(in);
-        Request parsedRequest = parseRequest(clientInput);
-        Response response = prepareResponse(parsedRequest);
-        PrintWriter out = serverSocket.sendResponseToClient(response, clientSocket);
+        ISocketWrapper clientSocket = serverConnection.acceptClientConnection();
+        BufferedReaderWrapper in = new BufferedReaderWrapper(serverConnection.listenToClientConnection(clientSocket));
+        reader = new Reader(in);
+        List<String> clientInput = reader.readInput();
+        Request parsedRequest = new RequestBuilder(new RequestParser(reader)).buildRequest(clientInput);;
+        Response response = router.route(parsedRequest);
+        PrintWriter out = serverConnection.sendResponseToClient(response, clientSocket);
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());
-        serverSocket.closeClientConnection(in, out, clientSocket);
+        serverConnection.closeClientConnection(in, out, clientSocket);
     }
 
-    private Request parseRequest(List<String> clientInput) throws IOException {
-        Request currentRequest = new RequestParser().parse(clientInput);
-        logger.logMessage("\nReceived request:\n" + clientInput);
-        return currentRequest;
-    }
+    private RouteMap createRoutes(String filePath) throws IOException {
+        RoutesConfiguration routesConfiguration = new RoutesConfiguration(filePath);
+        return new RouteMap(routesConfiguration);
 
-    private Response prepareResponse(Request parsedRequest) throws IOException {
-        RoutesConfiguration serverRoutes = new RoutesConfiguration();
-        RouteMap routeMap = new RouteMap(serverRoutes);
-        Response response = new Router(routeMap).route(parsedRequest);
-        return response;
     }
 
     public void stop() throws IOException {
-        serverSocket.stop();
+        serverConnection.stop();
     }
 }

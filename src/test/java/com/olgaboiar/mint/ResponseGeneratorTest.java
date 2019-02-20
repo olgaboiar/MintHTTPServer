@@ -8,7 +8,7 @@ class ResponseGeneratorTest {
     @Test
     void testResponseGeneratorReturnsResponseObject() {
         ResponseGenerator testResponseGenerator = new ResponseGenerator();
-        Response response = testResponseGenerator.generateResponse("200 OK", "");
+        Response response = testResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, "");
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
         assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
@@ -17,7 +17,7 @@ class ResponseGeneratorTest {
     @Test
     void testResponseGeneratorReturnsResponseForNotFound() {
         ResponseGenerator testResponseGenerator = new ResponseGenerator();
-        Response response = testResponseGenerator.generateResponse("404 Not Found", "");
+        Response response = testResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_404, "");
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
 
         assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", "Content-Type: text/html", ""}, responseArray);

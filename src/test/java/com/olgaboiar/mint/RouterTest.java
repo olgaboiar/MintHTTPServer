@@ -8,10 +8,14 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouterTest {
-    MockRoutesConfiguration serverTestRoutes = new MockRoutesConfiguration();
+    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    RoutesConfiguration serverTestRoutes = new RoutesConfiguration(serverTestRoutesPath);
     MockRouteMap testMap = new MockRouteMap(serverTestRoutes);
     Router router = new Router(testMap);
     Response response;
+
+    RouterTest() throws IOException {
+    }
 
     @Test
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
@@ -99,5 +103,28 @@ class RouterTest {
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().createAllowHeader()};
 
         assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD,POST,GET,OPTIONS,PUT"}, responseArray);
+    }
+
+    @Test
+    void returns200OKWhenPostRequest() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/echo_body");
+        String method = "POST";
+        Request testRequest = new Request(url, method);
+        response = router.route(testRequest);
+        String responseStatusHeader = response.getHeader().getStatusLine();
+
+        assertEquals("HTTP/1.1 200 OK", responseStatusHeader);
+    }
+
+    @Test
+    void returnResponseWithBodyEqualToRequestBody() throws IOException {
+        URL url = new URL("http://0.0.0.0:5000/echo_body");
+        String method = "POST";
+        Request testRequest = new Request(url, method);
+        testRequest.setBody("test");
+        response = router.route(testRequest);
+        String responseBody = response.getBody().getBody();
+//
+        assertEquals("test", responseBody);
     }
 }

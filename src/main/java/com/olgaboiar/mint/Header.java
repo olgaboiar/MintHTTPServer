@@ -2,8 +2,6 @@ package com.olgaboiar.mint;
 
 import java.util.ArrayList;
 
-import static com.olgaboiar.mint.Constants.BLANK_LINE;
-
 public class Header {
     private String statusLine;
     private String contentType;
@@ -37,8 +35,8 @@ public class Header {
         headers.add(getContentType());
         headers.add(getDate());
         if (allowedMethodsExist()) {
-            String aloowHeader = createAllowHeader();
-            headers.add(aloowHeader);
+            String allowHeader = createAllowHeader();
+            headers.add(allowHeader);
         }
         if (redirectExist()) {
             String redirectHeader = createRedirectHeader();
@@ -53,10 +51,7 @@ public class Header {
     }
 
     public boolean allowedMethodsExist () {
-        if (allowedMethods != null) {
-            return true;
-        }
-        return false;
+        return allowedMethods != null;
     }
 
     public String createAllowHeader() {
@@ -72,10 +67,7 @@ public class Header {
     }
 
     public boolean redirectExist () {
-        if (redirect != null) {
-            return true;
-        }
-        return false;
+        return redirect != null;
     }
 
     public void setAllowMethods(ArrayList<String> methods) {
