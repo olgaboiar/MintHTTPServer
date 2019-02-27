@@ -18,7 +18,7 @@ public class Router {
         if (!methodHandlersExist(methodHandlers)) {
             return new NotFoundHandler().handleRequest(request, routes);
         }
-        IHandler handler =  methodHandlers.getOrDefault(request.getMethod(), new NotAllowedHandler());
+        IHandler handler =  methodHandlers.getOrDefault(request.getMethod(), new NoMethodHandler());
         return handler.handleRequest(request, routes);
     }
 

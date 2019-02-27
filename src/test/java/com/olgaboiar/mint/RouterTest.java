@@ -102,7 +102,7 @@ class RouterTest {
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().createAllowHeader()};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD,POST,GET,OPTIONS,PUT"}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Allow: HEAD,POST,GET,PUT,OPTIONS"}, responseArray);
     }
 
     @Test

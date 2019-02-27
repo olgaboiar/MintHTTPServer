@@ -12,15 +12,11 @@ methodhandlers:
     handler: GET_REQUEST_HANDLER
   - method: HEAD
     handler: HEAD_REQUEST_HANDLER
-  - method: OPTIONS
-    handler: OPTIONS_REQUEST_HANDLER
 ---
 path: /get_with_body
 methodhandlers:
   - method: HEAD
     handler: HEAD_REQUEST_HANDLER
-  - method: OPTIONS
-    handler: OPTIONS_REQUEST_HANDLER
 ---
 path: /method_options2
 methodhandlers:
@@ -28,8 +24,6 @@ methodhandlers:
     handler: GET_REQUEST_HANDLER
   - method: HEAD
     handler: HEAD_REQUEST_HANDLER
-  - method: OPTIONS
-    handler: OPTIONS_REQUEST_HANDLER
   - method: PUT
   - method: POST
 ---

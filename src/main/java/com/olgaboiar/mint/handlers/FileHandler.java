@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class FileHandler implements IHandler {
+
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
         String file = "." + request.getUri();

@@ -2,8 +2,6 @@ package com.olgaboiar.mint.handlers;
 
 import com.olgaboiar.mint.*;
 
-import java.io.IOException;
-
 public class RedirectHandler implements IHandler {
     String redirectTarget;
 
@@ -12,7 +10,7 @@ public class RedirectHandler implements IHandler {
     }
 
     @Override
-    public Response handleRequest(Request request, IRouteMap routes) throws IOException {
+    public Response handleRequest(Request request, IRouteMap routes) {
         Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_301);
         response.getHeader().setRedirection(redirectTarget);
         return response;

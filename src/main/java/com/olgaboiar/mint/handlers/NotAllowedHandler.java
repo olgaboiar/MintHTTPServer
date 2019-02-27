@@ -2,15 +2,18 @@ package com.olgaboiar.mint.handlers;
 
 import com.olgaboiar.mint.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class NotAllowedHandler implements IHandler {
+    ArrayList<String> allowedMethods;
+
+    public NotAllowedHandler(ArrayList<String> allowedMethods) {
+        this.allowedMethods = allowedMethods;
+    }
 
     @Override
-    public Response handleRequest(Request request, IRouteMap routes) throws IOException {
+    public Response handleRequest(Request request, IRouteMap routes) {
         Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_405);
-        ArrayList<String> allowedMethods = routes.getAllowedMethods(request.getUri());
         response.getHeader().setAllowMethods(allowedMethods);
         return response;
     }

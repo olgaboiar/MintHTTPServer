@@ -31,9 +31,9 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                 return new HeadHandler();
             }
         },
-        NOT_ALLOWED_REQUEST_HANDLER {
-            public NotAllowedHandler getHandler() {
-                return new NotAllowedHandler();
+        NO_METHOD_REQUEST_HANDLER {
+            public NoMethodHandler getHandler() {
+                return new NoMethodHandler();
             }
         },
         FILE_REQUEST_HANDLER {
@@ -49,11 +49,6 @@ public class RoutesConfiguration implements IRoutesConfiguration {
         REDIRECT_REQUEST_HANDLER {
             public RedirectHandler getHandler() {
                 return new RedirectHandler(redirect);
-            }
-        },
-        OPTIONS_REQUEST_HANDLER {
-            public OptionsHandler getHandler() {
-                return new OptionsHandler();
             }
         };
         public abstract IHandler getHandler();
@@ -75,7 +70,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                     String handlerEnum = (String) methodHandler.get("handler");
                     redirect = (String) methodHandler.get("redirect");
                     if (handlerEnum == null) {
-                        handler = Handler.NOT_ALLOWED_REQUEST_HANDLER.getHandler();
+                        handler = Handler.NO_METHOD_REQUEST_HANDLER.getHandler();
                     } else {
                         handler = Handler.valueOf(handlerEnum).getHandler();
                     }
