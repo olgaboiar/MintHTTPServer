@@ -2,12 +2,10 @@ package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.handlers.*;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
 
+import com.olgaboiar.mint.utils.FileReader;
 import org.yaml.snakeyaml.Yaml;
 
 public class RoutesConfiguration implements IRoutesConfiguration {
@@ -58,8 +56,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
     public void createRoutes(String filePath) throws IOException {
         allRoutes = new ArrayList<> ();
         Yaml yaml = new Yaml();
-        byte[] encoded = Files.readAllBytes(Paths.get(filePath));
-        String document = new String(encoded, StandardCharsets.UTF_8);
+        String document = new FileReader().readFileToString(filePath);
         for (Object route : yaml.loadAll(document)) {
             Map<String, Object> currentRoute = (Map<String, Object>) route;
             String path = (String) currentRoute.get("path");
