@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ServerTest {
-    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    String serverTestRoutesPath = "/testRoutes.yaml";
     ILogger logger = new MockFileLogger();
 
     @Test

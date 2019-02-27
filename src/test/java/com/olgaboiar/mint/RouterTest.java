@@ -8,7 +8,7 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RouterTest {
-    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    String serverTestRoutesPath = "/testRoutes.yaml";
     RoutesConfiguration serverTestRoutes = new RoutesConfiguration(serverTestRoutesPath);
     MockRouteMap testMap = new MockRouteMap(serverTestRoutes);
     Router router = new Router(testMap);
