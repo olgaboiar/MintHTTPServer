@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public class Header {
     private String statusLine;
-    private String contentType;
     private String date;
     ArrayList<String> allowedMethods;
     String redirect;
 
-    public Header(String statusLine, String contentType, String date) {
+    public Header(String statusLine, String date) {
         this.statusLine = statusLine;
-        this.contentType = contentType;
         this.date = date;
         this.allowedMethods = null;
         this.redirect = null;
@@ -21,10 +19,6 @@ public class Header {
         return statusLine;
     }
 
-    String getContentType() {
-        return contentType;
-    }
-
     String getDate() {
         return date;
     }
@@ -32,7 +26,6 @@ public class Header {
     public ArrayList<String> getHeaders() {
         ArrayList<String> headers = new ArrayList<String>();
         headers.add(getStatusLine());
-        headers.add(getContentType());
         headers.add(getDate());
         if (allowedMethodsExist()) {
             String allowHeader = createAllowHeader();
@@ -46,7 +39,7 @@ public class Header {
     }
 
     public String prepareHeaders() {
-        String headersToSend = String.join("\n", getHeaders());
+        String headersToSend = String.join("\r\n", getHeaders());
         return headersToSend;
     }
 

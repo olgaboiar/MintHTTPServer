@@ -2,12 +2,10 @@ package com.olgaboiar.mint;
 
 import com.olgaboiar.mint.handlers.*;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
 
+import com.olgaboiar.mint.utils.FileReader;
 import org.yaml.snakeyaml.Yaml;
 
 public class RoutesConfiguration implements IRoutesConfiguration {
@@ -31,9 +29,9 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                 return new HeadHandler();
             }
         },
-        NOT_ALLOWED_REQUEST_HANDLER {
-            public NotAllowedHandler getHandler() {
-                return new NotAllowedHandler();
+        NO_METHOD_REQUEST_HANDLER {
+            public NoMethodHandler getHandler() {
+                return new NoMethodHandler();
             }
         },
         FILE_REQUEST_HANDLER {
@@ -50,11 +48,6 @@ public class RoutesConfiguration implements IRoutesConfiguration {
             public RedirectHandler getHandler() {
                 return new RedirectHandler(redirect);
             }
-        },
-        OPTIONS_REQUEST_HANDLER {
-            public OptionsHandler getHandler() {
-                return new OptionsHandler();
-            }
         };
         public abstract IHandler getHandler();
     }
@@ -63,8 +56,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
     public void createRoutes(String filePath) throws IOException {
         allRoutes = new ArrayList<> ();
         Yaml yaml = new Yaml();
-        byte[] encoded = Files.readAllBytes(Paths.get(filePath));
-        String document = new String(encoded, StandardCharsets.UTF_8);
+        String document = new FileReader().readFileToString(filePath);
         for (Object route : yaml.loadAll(document)) {
             Map<String, Object> currentRoute = (Map<String, Object>) route;
             String path = (String) currentRoute.get("path");
@@ -75,7 +67,7 @@ public class RoutesConfiguration implements IRoutesConfiguration {
                     String handlerEnum = (String) methodHandler.get("handler");
                     redirect = (String) methodHandler.get("redirect");
                     if (handlerEnum == null) {
-                        handler = Handler.NOT_ALLOWED_REQUEST_HANDLER.getHandler();
+                        handler = Handler.NO_METHOD_REQUEST_HANDLER.getHandler();
                     } else {
                         handler = Handler.valueOf(handlerEnum).getHandler();
                     }

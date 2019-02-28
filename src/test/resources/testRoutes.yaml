@@ -5,8 +5,6 @@ methodhandlers:
     handler: GET_REQUEST_HANDLER
   - method: HEAD
     handler: HEAD_REQUEST_HANDLER
-  - method: OPTIONS
-    handler: OPTIONS_REQUEST_HANDLER
   - method: PUT
   - method: POST
 ---

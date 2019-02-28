@@ -2,11 +2,10 @@ package com.olgaboiar.mint.handlers;
 
 import com.olgaboiar.mint.*;
 
-import java.io.IOException;
-
 public class RouteHandler implements IHandler {
+
     @Override
-    public Response handleRequest(Request request, IRouteMap routes) throws IOException {
+    public Response handleRequest(Request request, IRouteMap routes) {
         return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200);
     }
 }

@@ -6,7 +6,7 @@ import com.olgaboiar.mint.loggers.ILogger;
 public final class Constants {
 
     public static final int DEFAULT_PORT = 5000;
-    public static final String DEFAULT_ROUTES = "src/main/java/com/olgaboiar/mint/ServerRoutes.yaml";
+    public static final String DEFAULT_ROUTES = "/ServerRoutes.yaml";
     public static final ILogger DEFAULT_LOGGER = new FileLogger("logs.txt");
 
     public static final String PROTOCOL = "HTTP/1.1";

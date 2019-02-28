@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RouteMapTest {
     RouteMap testMap;
-    String serverTestRoutesPath = "src/test/java/com/olgaboiar/mint/testRoutes.yaml";
+    String serverTestRoutesPath = "/testRoutes.yaml";
     RoutesConfiguration serverTestRoutes = new RoutesConfiguration(serverTestRoutesPath);
 
     RouteMapTest() throws IOException {
