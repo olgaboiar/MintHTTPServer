@@ -23,9 +23,9 @@ class RouterTest {
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", ""}, responseArray);
     }
 
     @Test
@@ -34,9 +34,9 @@ class RouterTest {
         String method = "HEAD";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", ""}, responseArray);
     }
 
     @Test
@@ -45,9 +45,9 @@ class RouterTest {
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 200 OK", ""}, responseArray);
     }
 
     @Test
@@ -56,9 +56,9 @@ class RouterTest {
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", ""}, responseArray);
     }
 
     @Test
@@ -67,9 +67,9 @@ class RouterTest {
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 404 Not Found", ""}, responseArray);
     }
 
     @Test
@@ -78,9 +78,9 @@ class RouterTest {
         String method = "GET";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 301 Moved Permanently", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 301 Moved Permanently", ""}, responseArray);
     }
 
     @Test
@@ -89,9 +89,9 @@ class RouterTest {
         String method = "POST";
         Request testRequest = new Request(url, method);
         response = router.route(testRequest);
-        String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().getContentType(), ""};
+        String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
-        assertArrayEquals(new String[]{"HTTP/1.1 405 Method Not Allowed", "Content-Type: text/html", ""}, responseArray);
+        assertArrayEquals(new String[]{"HTTP/1.1 405 Method Not Allowed", ""}, responseArray);
     }
 
     @Test

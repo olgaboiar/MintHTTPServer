@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.olgaboiar.mint.Constants.DEFAULT_PORT;
+
 public class RequestParser {
     Map<String, String> requestHeaders;
     Reader reader;
@@ -29,7 +31,11 @@ public class RequestParser {
     }
 
     public Integer parsePort(Map<String, String> requestHeaders) {
-        return Integer.parseInt(requestHeaders.get("Host").split(":")[1]);
+        int port = DEFAULT_PORT;
+        if (requestHeaders.get("Host").contains(":")) {
+            port = Integer.parseInt(requestHeaders.get("Host").split(":")[1]);
+        }
+        return port;
     }
 
     public String parseHost(Map<String, String> requestHeaders) {

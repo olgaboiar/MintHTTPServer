@@ -29,11 +29,10 @@ class ServerTest {
         server.start();
         server.run();
         String actual = stringWriter.toString();
-        String expected = String.join("\n", new String[]{
-                "HTTP/1.1 200 OK",
-                "Content-Type: text/html",
-                "Date: " + currentDate
-        });
+        String expected =
+                "HTTP/1.1 200 OK\r\n" +
+                "Date: " + currentDate +
+                "\n\n";
 
         assertEquals(expected, actual);
     }

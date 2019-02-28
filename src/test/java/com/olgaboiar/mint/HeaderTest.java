@@ -12,23 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class HeaderTest {
     Header testHeader;
     String code200 = "200 OK";
-    String contentType = ("Content-Type: text/html");
     String currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
     String date = "Date: " + currentDate;
 
     @BeforeEach
     public void init(){
-        testHeader = new Header(code200,contentType, date);
+        testHeader = new Header(code200, date);
     }
 
     @Test
     void getStatusLineReturnsStatusLine() {
         assertEquals(code200, testHeader.getStatusLine());
-    }
-
-    @Test
-    void getContentTypeReturnsContentType() {
-        assertEquals(contentType, testHeader.getContentType());
     }
 
     @Test
@@ -38,9 +32,8 @@ class HeaderTest {
 
     @Test
     void getHeadersReturnsHeaderArrayWithoutRedirectAndAllowedMethods() {
-        ArrayList<String> headers = new ArrayList<String>();
+        ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
-        headers.add(contentType);
         headers.add(date);
         ArrayList<String> actual = testHeader.getHeaders();
 
@@ -50,9 +43,8 @@ class HeaderTest {
     @Test
     void getHeadersReturnsHeaderArrayWithRedirect() {
         testHeader.setRedirection("http://test.com");
-        ArrayList<String> headers = new ArrayList<String>();
+        ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
-        headers.add(contentType);
         headers.add(date);
         headers.add("Location: http://test.com");
         ArrayList<String> actual = testHeader.getHeaders();
@@ -62,12 +54,11 @@ class HeaderTest {
 
     @Test
     void getHeadersReturnsHeaderArrayWithAllowedMethods() {
-        ArrayList<String> methods = new ArrayList<String>();
+        ArrayList<String> methods = new ArrayList<>();
         methods.add("GET");
         testHeader.setAllowMethods(methods);
-        ArrayList<String> headers = new ArrayList<String>();
+        ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
-        headers.add(contentType);
         headers.add(date);
         headers.add("Allow: GET");
         ArrayList<String> actual = testHeader.getHeaders();
@@ -84,7 +75,7 @@ class HeaderTest {
 
     @Test
     void returnsTrueWhenAllowedMethodsAreSet() {
-        ArrayList<String> methods = new ArrayList<String>();
+        ArrayList<String> methods = new ArrayList<>();
         methods.add("GET");
         testHeader.setAllowMethods(methods);
         Boolean actual = testHeader.allowedMethodsExist();
@@ -109,7 +100,7 @@ class HeaderTest {
 
     @Test
     void allowHeaderIsGeneratedCorrectly() {
-        ArrayList<String> methods = new ArrayList<String>();
+        ArrayList<String> methods = new ArrayList<>();
         methods.add("GET");
         methods.add("HEAD");
         testHeader.setAllowMethods(methods);
@@ -138,7 +129,7 @@ class HeaderTest {
 
     @Test
     void setsAllowedMethods() {
-        ArrayList<String> methods = new ArrayList<String>();
+        ArrayList<String> methods = new ArrayList<>();
         methods.add("GET");
         methods.add("HEAD");
         testHeader.setAllowMethods(methods);
@@ -149,10 +140,8 @@ class HeaderTest {
 
     @Test
     void returnsStringOfHeaders() {
-        ArrayList<String> headers = testHeader.getHeaders();
         String actual = testHeader.prepareHeaders();
-        String expected = "200 OK\n" +
-                "Content-Type: text/html\n" +
+        String expected = "200 OK\r\n" +
                 testHeader.getDate();
 
         assertEquals(expected, actual);

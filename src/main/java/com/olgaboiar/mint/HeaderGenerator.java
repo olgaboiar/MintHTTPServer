@@ -8,11 +8,11 @@ import static com.olgaboiar.mint.Constants.*;
 public class HeaderGenerator {
     String currentDate;
 
-    public Header generate(Status statusCode, String contentType) {
+    public Header generate(Status statusCode) {
         String statusLine = PROTOCOL + " " + statusCode.toString();
         currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
         String date = "Date: " + currentDate;
-        Header header = new Header(statusLine, contentType, date);
+        Header header = new Header(statusLine, date);
         return header;
     }
 }
