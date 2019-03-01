@@ -1,0 +1,9 @@
+branch-defaults:
+  master:
+    environment: $CIRCLE_BRANCH-MintServer-env
+global:
+  application_name: Mint Server
+  default_ec2_keyname: XXXXXX
+  default_platform: Java 8 running on 64bit Amazon Linux/2.8.1
+  default_region: eu-east-2
+  sc: git
