@@ -2,44 +2,19 @@
 version: 2
 jobs:
   build:
-
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/com.olgaboiar.mint
 
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
       CC_TEST_REPORTER_ID: 1ebdaad12e42ab517142e9edd95bf092e830a63fe3237e8284a58a68c314e52e
 
     steps:
       - checkout
-      - run:
-          name: Test Logging Artifacts
-          command: |
-            echo "Logs from Server tests go here" > ~/com.olgaboiar.mint/artifact-1;
-      - run:
-          name: Test Logging Artifacts
-          command: |
-            echo "Logs from Logger tests go here" > ~/com.olgaboiar.mint/artifact-2;
 
-      - store_artifacts:
-          path: ~/com.olgaboiar.mint/artifact-1
-          destination: artifact-file
-
-      - store_artifacts:
-          path: ~/com.olgaboiar.mint/artifact-2
-          destination: artifact-file2
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
@@ -52,23 +27,63 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                     chmod +x ./cc-test-reporter
+  test:
+    docker:
+      - image: circleci/openjdk:8-jdk
 
-      # run tests!
-      - run: gradle test jacocoTestReport -i
+      working_directory: ~/com.olgaboiar.mint
 
+      environment:
+        JVM_OPTS: -Xmx3200m
+        TERM: dumb
+        CC_TEST_REPORTER_ID: 1ebdaad12e42ab517142e9edd95bf092e830a63fe3237e8284a58a68c314e52e
 
-      - run:
-          name: Upload coverage to code climate
-          command: |
-            export JACOCO_SOURCE_PATH=src/main/java
-            ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco --debug
-            ./cc-test-reporter upload-coverage
+      steps:
+        - checkout
+        - run:
+            name: Test Logging Artifacts
+            command: |
+              echo "Logs from Server tests go here" > ~/com.olgaboiar.mint/artifact-1;
+        - run:
+            name: Test Logging Artifacts
+            command: |
+              echo "Logs from Logger tests go here" > ~/com.olgaboiar.mint/artifact-2;
+
+        - store_artifacts:
+            path: ~/com.olgaboiar.mint/artifact-1
+            destination: artifact-file
+
+        - store_artifacts:
+            path: ~/com.olgaboiar.mint/artifact-2
+            destination: artifact-file2
+
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "build.gradle" }}
+              - v1-dependencies-
+
+        - run: gradle dependencies
+
+        - save_cache:
+            paths:
+              - ~/.gradle
+            key: v1-dependencies-{{ checksum "build.gradle" }}
+
+        - run:
+            name: Setup Code Climate test-reporter
+            command: |
+              # download test reporter as a static binary
+                       curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                       chmod +x ./cc-test-reporter
+
+        - run: gradle test jacocoTestReport -i
+
+        - run:
+            name: Upload coverage to code climate
+            command: |
+              export JACOCO_SOURCE_PATH=src/main/java
+              ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco --debug
+              ./cc-test-reporter upload-coverage
 
   deploy:
     docker:
@@ -101,8 +116,10 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  build-test-and-deploy:
     jobs:
+      - build
+      - test
       - deploy:
           filters:
             branches:
