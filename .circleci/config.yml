@@ -78,10 +78,7 @@ jobs:
     working_directory: ~/com.olgaboiar.mint
     steps:
       - checkout
-      - run:
-          name: Build
-          command: |
-            gradle build
+
       - run:
           name: Install python
           command: |
@@ -92,19 +89,16 @@ jobs:
           name: Install awsebcli
           command: sudo pip install awsebcli --upgrade
       - run:
-          name: script
+          name: Create AWS credentials
           command: |
-            mkdir /home/circleci/.aws
-            touch /home/circleci/.aws/config
-            chmod 600 /home/circleci/.aws/config
-            echo "[profile user]" > /home/circleci/.aws/config
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> /home/circleci/.aws/config
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /home/circleci/.aws/config
+            chmod +x src/main/resources/aws_credentials.sh
+            bash src/main/resources/aws_credentials.sh
+      - run:
+          name: Create build jar
+          command: gradle build
       - run:
           name: Deploying
-          command: bash /src/main/resources/deploy.sh
-            gradle build
-            eb deploy --profile user --region us-east-2
+          command: eb deploy --profile user --region us-east-2
 
 workflows:
   version: 2
