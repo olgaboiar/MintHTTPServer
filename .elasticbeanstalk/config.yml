@@ -1,5 +1,5 @@
 branch-defaults:
-  aws-circleci:
+  develop:
     environment: Mintserver-env-staging
   master:
     environment: Mintserver-env
