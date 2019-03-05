@@ -75,14 +75,36 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk
 
-      working_directory: ~/com.olgaboiar.mint
+    working_directory: ~/com.olgaboiar.mint
     steps:
+      - checkout
+      - run:
+          name: Build
+          command: |
+            gradle build
+      - run:
+          name: Install python
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install --upgrade setuptools
       - run:
           name: Install awsebcli
-          command: brew install awsebcli
+          command: sudo pip install awsebcli --upgrade
+      - run:
+          name: script
+          command: |
+            mkdir /home/circleci/.aws
+            touch /home/circleci/.aws/config
+            chmod 600 /home/circleci/.aws/config
+            echo "[profile user]" > /home/circleci/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> /home/circleci/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /home/circleci/.aws/config
       - run:
           name: Deploying
-          command: eb deploy $CIRCLE_BRANCH-MintServer-env
+          command: |
+            gradle build
+            eb deploy --profile user --region us-east-2
 
 workflows:
   version: 2

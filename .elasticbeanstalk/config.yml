@@ -1,9 +1,23 @@
 branch-defaults:
+  aws-circleci:
+    environment: Mintserver-env
   master:
-    environment: $CIRCLE_BRANCH-MintServer-env
+    environment: $CIRCLE_BRANCH-Mintserver-env
+environment-defaults:
+  Mintserver-env:
+    branch: null
+    repository: null
+deploy:
+  artifact: build/libs/application.jar
 global:
-  application_name: Mint Server
-  default_ec2_keyname: XXXXXX
-  default_platform: Java 8 running on 64bit Amazon Linux/2.8.1
-  default_region: eu-east-2
+  application_name: MintServer
+  default_ec2_keyname: null
+  default_platform: Java
+  default_region: us-east-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+#  profile: eb-cli
   sc: git
+  workspace_type: Application

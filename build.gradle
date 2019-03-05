@@ -8,7 +8,7 @@ application {
     mainClassName = 'com.olgaboiar.mint.ServerRunner'
 }
 
-version '1.0-SNAPSHOT'
+//version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -56,4 +56,5 @@ jar {
                 'Main-Class': 'com.olgaboiar.mint.ServerRunner'
         )
     }
+    baseName 'application'
 }
