@@ -2,20 +2,38 @@
 version: 2
 jobs:
   build:
-
     docker:
-      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/com.olgaboiar.mint
 
     environment:
-      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+      CC_TEST_REPORTER_ID: 1ebdaad12e42ab517142e9edd95bf092e830a63fe3237e8284a58a68c314e52e
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
+
+      - run: gradle dependencies
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+  test:
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/com.olgaboiar.mint
+
+    environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
       CC_TEST_REPORTER_ID: 1ebdaad12e42ab517142e9edd95bf092e830a63fe3237e8284a58a68c314e52e
@@ -24,12 +42,10 @@ jobs:
       - checkout
       - run:
           name: Test Logging Artifacts
-          command: |
-            echo "Logs from Server tests go here" > ~/com.olgaboiar.mint/artifact-1;
+          command: echo "Logs from Server tests go here" > ~/com.olgaboiar.mint/artifact-1;
       - run:
           name: Test Logging Artifacts
-          command: |
-            echo "Logs from Logger tests go here" > ~/com.olgaboiar.mint/artifact-2;
+          command: echo "Logs from Logger tests go here" > ~/com.olgaboiar.mint/artifact-2;
 
       - store_artifacts:
           path: ~/com.olgaboiar.mint/artifact-1
@@ -39,11 +55,9 @@ jobs:
           path: ~/com.olgaboiar.mint/artifact-2
           destination: artifact-file2
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: gradle dependencies
@@ -56,13 +70,10 @@ jobs:
       - run:
           name: Setup Code Climate test-reporter
           command: |
-            # download test reporter as a static binary
-                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                     chmod +x ./cc-test-reporter
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
 
-      # run tests!
       - run: gradle test jacocoTestReport -i
-
 
       - run:
           name: Upload coverage to code climate
@@ -70,3 +81,45 @@ jobs:
             export JACOCO_SOURCE_PATH=src/main/java
             ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco --debug
             ./cc-test-reporter upload-coverage
+
+  deploy:
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/com.olgaboiar.mint
+    steps:
+      - checkout
+
+      - run:
+          name: Install python
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install --upgrade setuptools
+      - run:
+          name: Install awsebcli
+          command: sudo pip install awsebcli --upgrade
+      - run:
+          name: Create AWS credentials
+          command: |
+            chmod +x src/main/resources/aws_credentials.sh
+            bash src/main/resources/aws_credentials.sh
+      - run:
+          name: Create build jar
+          command: gradle build
+      - run:
+          name: Deploying
+          command: eb deploy --profile user --region us-east-2
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - test
+      - deploy:
+          filters:
+            branches:
+              only:
+                - aws-circleci
+                - master
