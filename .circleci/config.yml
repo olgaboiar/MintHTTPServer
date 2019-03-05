@@ -102,7 +102,7 @@ jobs:
             echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> /home/circleci/.aws/config
       - run:
           name: Deploying
-          command: |
+          command: bash /src/main/resources/deploy.sh
             gradle build
             eb deploy --profile user --region us-east-2
 
