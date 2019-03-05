@@ -1,8 +1,8 @@
 branch-defaults:
   aws-circleci:
-    environment: Mintserver-env
+    environment: Mintserver-env-staging
   master:
-    environment: $CIRCLE_BRANCH-Mintserver-env
+    environment: Mintserver-env
 environment-defaults:
   Mintserver-env:
     branch: null
