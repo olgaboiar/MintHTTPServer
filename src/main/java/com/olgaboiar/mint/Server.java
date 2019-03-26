@@ -34,7 +34,8 @@ public class Server {
         BufferedReaderWrapper in = new BufferedReaderWrapper(serverConnection.listenToClientConnection(clientSocket));
         reader = new Reader(in);
         List<String> clientInput = reader.readInput();
-        Request parsedRequest = new RequestBuilder(new RequestParser(reader)).buildRequest(clientInput);;
+        Request parsedRequest = new RequestBuilder(new RequestParser(reader)).buildRequest(clientInput);
+        logger.logMessage("\nRequest:\n" + clientInput);
         Response response = router.route(parsedRequest);
         PrintWriter out = serverConnection.sendResponseToClient(response, clientSocket);
         logger.logMessage("\nResponse sent:\n" + response.prepareResponse());

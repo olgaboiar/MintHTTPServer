@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tic Tac Toe with Javascript</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>test</h1>
-    <img src="https://images.unsplash.com/photo-1484960055659-a39d25adcb3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="Girl in a jacket" style="width:900px;height:600px;">
+<h1>TicTacToe</h1>
+<label for="human-symbol">Choose your symbol:</label>
+<select id="human-symbol">
+    <option value="cupcake">cupcake</option>
+    <option value="donut">donut</option>
+    <option value="cookie">cookie</option>
+    <option value="ice-cream">ice-cream</option>
+    <option value="fries">fries</option>
+    <option value="pizza">pizza</option>
+    <option value="taco">taco</option>
+    <option value="bacon">bacon</option>
+    <option value="strawberry">strawberry</option>
+    <option value="apple">apple</option>
+    <option value="cherry">cherry</option>
+    <option value="pepper">pepper</option>
+    <option value="broccoli">broccoli</option>
+    <option value="soda">soda</option>
+    <option value="egg">egg</option>
+</select>
+<br>
+<label for="computer-symbol">Choose computer symbol:</label>
+<select id="computer-symbol">
+    <option value="donut">donut</option>
+    <option value="cupcake">cupcake</option>
+    <option value="cookie">cookie</option>
+    <option value="ice-cream">ice-cream</option>
+    <option value="fries">fries</option>
+    <option value="pizza">pizza</option>
+    <option value="taco">taco</option>
+    <option value="bacon">bacon</option>
+    <option value="strawberry">strawberry</option>
+    <option value="apple">apple</option>
+    <option value="cherry">cherry</option>
+    <option value="pepper">pepper</option>
+    <option value="broccoli">broccoli</option>
+    <option value="soda">soda</option>
+    <option value="egg">egg</option>
+</select>
+<br>
+<div id="board"></div>
+<br>
+<button id="newgame">Play</button>
+<script type="text/javascript" src="dist/bundle.js"></script>
 </body>
 </html>

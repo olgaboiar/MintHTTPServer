@@ -44,3 +44,13 @@ path: /echo_body
 methodhandlers:
   - method: POST
     handler: POST_REQUEST_HANDLER
+---
+path: /script.js
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /style.css
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
