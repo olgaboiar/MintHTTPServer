@@ -44,3 +44,23 @@ path: /echo_body
 methodhandlers:
   - method: POST
     handler: POST_REQUEST_HANDLER
+---
+path: /style.css
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /dist/bundle.js
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/donut.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/cupcake.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
