@@ -3,9 +3,9 @@ package com.olgaboiar.mint;
 public class ResponseGenerator {
     static Body responseBody;
 
-    public static Response generateResponse(Constants.Status status, String...body) {
+    public static Response generateResponse(Request request, Constants.Status status, String...body) {
         HeaderGenerator headerGenerator = new HeaderGenerator();
-        Header header = headerGenerator.generate(status);
+        Header header = headerGenerator.generate(request, status);
         if (body.length > 0) {
             responseBody = new Body(body[0]);
         } else {

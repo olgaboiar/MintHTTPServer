@@ -5,12 +5,14 @@ import java.util.ArrayList;
 public class Header {
     private String statusLine;
     private String date;
+    private String contentType;
     ArrayList<String> allowedMethods;
     String redirect;
 
-    public Header(String statusLine, String date) {
+    public Header(String statusLine, String date, String contentType) {
         this.statusLine = statusLine;
         this.date = date;
+        this.contentType = contentType;
         this.allowedMethods = null;
         this.redirect = null;
     }
@@ -23,10 +25,15 @@ public class Header {
         return date;
     }
 
+    String getContentType() {
+        return contentType;
+    }
+
     public ArrayList<String> getHeaders() {
         ArrayList<String> headers = new ArrayList<String>();
         headers.add(getStatusLine());
         headers.add(getDate());
+        headers.add(getContentType());
         if (allowedMethodsExist()) {
             String allowHeader = createAllowHeader();
             headers.add(allowHeader);

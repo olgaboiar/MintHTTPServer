@@ -11,7 +11,7 @@ public class RedirectHandler implements IHandler {
 
     @Override
     public Response handleRequest(Request request, IRouteMap routes) {
-        Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_301);
+        Response response =  ResponseGenerator.generateResponse(request, Constants.Status.STATUS_CODE_301);
         response.getHeader().setRedirection(redirectTarget);
         return response;
     }
