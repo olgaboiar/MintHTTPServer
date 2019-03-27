@@ -55,12 +55,77 @@ methodhandlers:
   - method: GET
     handler: FILE_REQUEST_HANDLER
 ---
-path: /images/donut.svg
+path: /images/apple.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/bacon.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/broccoli.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/cherry.svg
 methodhandlers:
   - method: GET
     handler: FILE_REQUEST_HANDLER
 ---
 path: /images/cupcake.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/cookie.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/donut.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/egg.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/fries.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/ice-cream.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/pepper.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/pizza.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/soda.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/strawberry.svg
+methodhandlers:
+  - method: GET
+    handler: FILE_REQUEST_HANDLER
+---
+path: /images/taco.svg
 methodhandlers:
   - method: GET
     handler: FILE_REQUEST_HANDLER
