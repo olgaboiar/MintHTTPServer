@@ -11,7 +11,7 @@ class RequestTest {
 
     @Test
     void getMethodReturnsGetMethodForGetRequest() throws MalformedURLException {
-        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "GET");
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "GET", "Content-Type: text/html");
         String actual = testRequest.getMethod();
 
         assertEquals("GET", actual);
@@ -19,7 +19,7 @@ class RequestTest {
 
     @Test
     void getMethodReturnsPostMethodForPostRequest() throws MalformedURLException {
-        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST");
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST", "Content-Type: text/html");
         String actual = testRequest.getMethod();
 
         assertEquals("POST", actual);
@@ -27,7 +27,7 @@ class RequestTest {
 
     @Test
     void getUriReturnsCorrectPath() throws MalformedURLException {
-        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST");
+        Request testRequest = new Request(new URL("http://0.0.0.0:5000/method_options"), "POST", "Content-Type: text/html");
         String actual = testRequest.getUri();
 
         assertEquals("/method_options", actual);

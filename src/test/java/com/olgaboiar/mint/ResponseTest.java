@@ -11,13 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ResponseTest {
     String currentDate;
     String date;
+    String contentType;
     Header header;
 
     @BeforeEach
     public void init(){
         currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
         date = "Date: " + currentDate;
-        header = new Header("200 OK", date);
+        contentType = "Content-Type: text/html";
+        header = new Header("200 OK", date, contentType);
     }
 
     @Test
@@ -27,6 +29,7 @@ class ResponseTest {
         String actual = testResponse.prepareResponse();
         String expected = "200 OK\r\n" +
                 "Date: " + currentDate +
+                "\r\n" + contentType +
                 "\n\n" +
                 "body";
 
@@ -40,6 +43,7 @@ class ResponseTest {
         String actual = testResponse.prepareResponse();
         String expected = "200 OK\r\n" +
                 "Date: " + currentDate +
+                "\r\n" + contentType +
                 "\n\n";
 
         assertEquals(expected, actual);
@@ -61,7 +65,8 @@ class ResponseTest {
         Response testResponse = new Response (header, body);
         String actual = testResponse.getHeader().prepareHeaders();
         String expected = "200 OK\r\n" +
-                "Date: " + currentDate;
+                "Date: " + currentDate +
+                "\r\n" + contentType;
 
         assertEquals(expected, actual);
     }

@@ -14,7 +14,8 @@ public class RequestBuilder {
     Request buildRequest(List<String> incomingRequest) throws IOException {
         String[] requestLine = parser.parseRequestLine(incomingRequest);
         URL url = parser.createUrl(incomingRequest);
-        Request parsedRequest = new Request(url, parser.parseMethod(requestLine));
+        String contentType = parser.parseContentType(incomingRequest);
+        Request parsedRequest = new Request(url, parser.parseMethod(requestLine), contentType);
         if (parser.requestBodyExists()) {
             parsedRequest.setBody(parser.parseBody());
         }
