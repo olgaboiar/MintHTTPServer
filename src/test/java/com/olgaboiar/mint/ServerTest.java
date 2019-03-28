@@ -32,6 +32,8 @@ class ServerTest {
         String expected =
                 "HTTP/1.1 200 OK\r\n" +
                 "Date: " + currentDate +
+                "\r\n" +
+                "Content-Type: null" +
                 "\n\n";
 
         assertEquals(expected, actual);

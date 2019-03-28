@@ -21,7 +21,7 @@ class RouterTest {
     void returns200OKWhenLegalRouteIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/test");
         String method = "GET";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -32,7 +32,7 @@ class RouterTest {
     void returns200OKWhenLegalRouteHeadIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/test");
         String method = "HEAD";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -43,7 +43,7 @@ class RouterTest {
     void returns200OKWhenExistentFileIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/index.html");
         String method = "GET";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -54,7 +54,7 @@ class RouterTest {
     void returns404NotFoundWhenNonExistentRouteIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/dead-end");
         String method = "GET";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -65,7 +65,7 @@ class RouterTest {
     void returns404NotFoundWhenNonExistentFileIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/no.html");
         String method = "GET";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -76,7 +76,7 @@ class RouterTest {
     void returns301MovedWhenRedirectedRouteIsRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/test_redirect");
         String method = "GET";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -87,7 +87,7 @@ class RouterTest {
     void returns405MethodNotAllowedWhenUnsupportedMethodRequested() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/index.html");
         String method = "POST";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), ""};
 
@@ -98,7 +98,7 @@ class RouterTest {
     void returns200OKAndAllowedMethods() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/test");
         String method = "OPTIONS";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String[] responseArray = {response.getHeader().getStatusLine(), response.getHeader().createAllowHeader()};
 
@@ -109,7 +109,7 @@ class RouterTest {
     void returns200OKWhenPostRequest() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/echo_body");
         String method = "POST";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         response = router.route(testRequest);
         String responseStatusHeader = response.getHeader().getStatusLine();
 
@@ -120,7 +120,7 @@ class RouterTest {
     void returnResponseWithBodyEqualToRequestBody() throws IOException {
         URL url = new URL("http://0.0.0.0:5000/echo_body");
         String method = "POST";
-        Request testRequest = new Request(url, method);
+        Request testRequest = new Request(url, method, "Content-Type: text/html");
         testRequest.setBody("test");
         response = router.route(testRequest);
         String responseBody = response.getBody().getBody();
