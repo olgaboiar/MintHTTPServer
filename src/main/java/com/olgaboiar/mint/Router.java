@@ -14,7 +14,8 @@ public class Router {
 
     public Response route(Request request) throws IOException {
         Map<String, Map<String, IHandler>> routesMap = routes.getMap();
-        Map<String, IHandler> methodHandlers = routesMap.get(request.getUri());
+        String path = addPublicResources(request.getUri());
+        Map<String, IHandler> methodHandlers = routesMap.get(path);
         if (!methodHandlersExist(methodHandlers)) {
             return new NotFoundHandler().handleRequest(request, routes);
         }
@@ -24,6 +25,10 @@ public class Router {
 
     private boolean methodHandlersExist (Map<String, IHandler> methodHandlers) {
         return methodHandlers != null;
+    }
+
+    private String addPublicResources (String path) {
+        return path.replaceAll("images/.*svg", "images/*.svg");
     }
 
 }
