@@ -6,6 +6,6 @@ public class NotFoundHandler implements IHandler {
 
     @Override
     public Response handleRequest(Request request, IRouteMap routes) {
-        return ResponseGenerator.generateResponse(request, Constants.Status.STATUS_CODE_404);
+        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_404);
     }
 }

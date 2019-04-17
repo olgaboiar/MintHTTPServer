@@ -17,10 +17,6 @@ public class ServerRunner {
         ServerConnection serverConnection = new ServerConnection(port);
         String serverRoutes = DEFAULT_ROUTES;
         server = new Server(serverConnection, DEFAULT_LOGGER, serverRoutes);
-//        server.start();
-//        while(true) {
-//            server.run();
-//        }
         while(true) {
             server.start();
             server.run();

@@ -13,7 +13,7 @@ public class OptionsHandler implements IHandler {
 
     @Override
     public Response handleRequest(Request request, IRouteMap routes) {
-        Response response =  ResponseGenerator.generateResponse(request, Constants.Status.STATUS_CODE_200);
+        Response response =  ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200);
         response.getHeader().setAllowMethods(allowedMethods);
         return response;
     }

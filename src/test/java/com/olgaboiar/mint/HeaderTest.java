@@ -14,11 +14,10 @@ class HeaderTest {
     String code200 = "200 OK";
     String currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
     String date = "Date: " + currentDate;
-    String contentType = "Content-Type: text/html";
 
     @BeforeEach
     public void init(){
-        testHeader = new Header(code200, date, contentType);
+        testHeader = new Header(code200, date);
     }
 
     @Test
@@ -36,7 +35,6 @@ class HeaderTest {
         ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
         headers.add(date);
-        headers.add(contentType);
         ArrayList<String> actual = testHeader.getHeaders();
 
         assertEquals(headers, actual);
@@ -48,7 +46,6 @@ class HeaderTest {
         ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
         headers.add(date);
-        headers.add(contentType);
         headers.add("Location: http://test.com");
         ArrayList<String> actual = testHeader.getHeaders();
 
@@ -63,7 +60,6 @@ class HeaderTest {
         ArrayList<String> headers = new ArrayList<>();
         headers.add(code200);
         headers.add(date);
-        headers.add(contentType);
         headers.add("Allow: GET");
         ArrayList<String> actual = testHeader.getHeaders();
 
@@ -146,8 +142,7 @@ class HeaderTest {
     void returnsStringOfHeaders() {
         String actual = testHeader.prepareHeaders();
         String expected = "200 OK\r\n" +
-                testHeader.getDate() + "\r\n" +
-                "Content-Type: text/html";
+                testHeader.getDate();
 
         assertEquals(expected, actual);
     }
