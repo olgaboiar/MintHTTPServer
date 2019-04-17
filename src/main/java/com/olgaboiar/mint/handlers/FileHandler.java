@@ -10,6 +10,8 @@ public class FileHandler implements IHandler {
     @Override
     public Response handleRequest(Request request, IRouteMap routes) throws IOException {
         String body = new FileReader().readFileToString(request.getUri());
-        return ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, body);
+        Response response = ResponseGenerator.generateResponse(Constants.Status.STATUS_CODE_200, body);
+        response.getHeader().setContentType(request.getContentType());
+        return response;
     }
 }

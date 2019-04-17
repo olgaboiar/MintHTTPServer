@@ -3,6 +3,8 @@ package com.olgaboiar.mint;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,11 @@ public class RequestParser {
 
     public String parseContentLength(Map<String, String> requestHeaders) {
         return requestHeaders.get("Content-Length").split(":")[0];
+    }
+
+    public String parseContentType(List<String> incomingRequest) throws IOException {
+        String path = parsePath(parseRequestLine(incomingRequest));
+        return Files.probeContentType(Paths.get(path));
     }
 
     public Boolean contentLengthExist(Map<String, String> requestHeaders) {

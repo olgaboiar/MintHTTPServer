@@ -11,12 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ResponseTest {
     String currentDate;
     String date;
+    String contentType;
     Header header;
 
     @BeforeEach
     public void init(){
         currentDate = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
         date = "Date: " + currentDate;
+        contentType = "Content-Type: text/html";
         header = new Header("200 OK", date);
     }
 

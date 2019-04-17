@@ -1,11 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tic Tac Toe with Javascript</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
-    <h1>master</h1>
-    <img src="https://images.unsplash.com/photo-1484960055659-a39d25adcb3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" alt="Girl in a jacket" style="width:900px;height:600px;">
+<nav>
+    <div class="nav-wrapper teal lighten-4">
+        <a href="#" class="brand-logo center" id="title">Tic-Tac-Toe</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m4">
+            <div class="row">
+                <div class="col s12"><h5>Choose symbols to play with!</h5></div>
+                <div class="col s12 input-field">
+                    <select class="icons" id="human-symbol">
+                        <option value="" disabled selected>Choose your symbol</option>
+                        <option value="cupcake" data-icon="images/cupcake.svg">cupcake</option>
+                        <option value="donut" data-icon="images/donut.svg">donut</option>
+                        <option value="cookie" data-icon="images/cookie.svg">cookie</option>
+                        <option value="fries" data-icon="images/fries.svg">fries</option>
+                        <option value="pizza" data-icon="images/pizza.svg">pizza</option>
+                        <option value="taco" data-icon="images/taco.svg">taco</option>
+                        <option value="bacon" data-icon="images/bacon.svg">bacon</option>
+                        <option value="strawberry" data-icon="images/strawberry.svg">strawberry</option>
+                        <option value="apple" data-icon="images/apple.svg">apple</option>
+                        <option value="broccoli" data-icon="images/broccoli.svg">broccoli</option>
+                        <option value="soda" data-icon="images/soda.svg">soda</option>
+                        <option value="egg" data-icon="images/egg.svg">egg</option>
+                    </select>
+                </div>
+                <div class="col s12 input-field">
+                    <select class="icons" id="computer-symbol">
+                        <option value="" disabled selected>Choose computer symbol</option>
+                        <option value="cupcake" data-icon="images/cupcake.svg">cupcake</option>
+                        <option value="donut" data-icon="images/donut.svg">donut</option>
+                        <option value="cookie" data-icon="images/cookie.svg">cookie</option>
+                        <option value="fries" data-icon="images/fries.svg">fries</option>
+                        <option value="pizza" data-icon="images/pizza.svg">pizza</option>
+                        <option value="taco" data-icon="images/taco.svg">taco</option>
+                        <option value="bacon" data-icon="images/bacon.svg">bacon</option>
+                        <option value="strawberry" data-icon="images/strawberry.svg">strawberry</option>
+                        <option value="apple" data-icon="images/apple.svg">apple</option>
+                        <option value="broccoli" data-icon="images/broccoli.svg">broccoli</option>
+                        <option value="soda" data-icon="images/soda.svg">soda</option>
+                        <option value="egg" data-icon="images/egg.svg">egg</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12"><h5>Choose difficulty level:</h5></div>
+                <div class="col s12">
+                    <form action="#" id="difficulty-level">
+                        <p><label for="easy">
+                            <input name="difficulty-level" type="radio" value="easy" id ="easy" checked/>
+                            <span>Easy</span>
+                        </label></p>
+                        <p><label for="medium">
+                            <input name="difficulty-level" type="radio" value="medium" id="medium" />
+                            <span>Medium</span>
+                        </label></p>
+                        <p><label for="hard">
+                            <input name="difficulty-level" type="radio" value="hard" id="hard"  />
+                            <span>Hard</span>
+                        </label>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12"><h5>Choose player to go first:</h5>
+                    <div class="switch center-align">
+                        <label>
+                            Human
+                            <input type="checkbox" id="first-move">
+                            <span class="lever"></span>
+                            Computer
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row center-align">
+                <a class="waves-effect waves-light btn-large teal lighten-2" id="newgame">Play</a>
+            </div>
+        </div>
+        <div class="col s12 m8">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12" id="board"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="dist/bundle.js"></script>
 </body>
 </html>

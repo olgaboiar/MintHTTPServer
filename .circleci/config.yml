@@ -121,5 +121,5 @@ workflows:
           filters:
             branches:
               only:
-                - aws-circleci
+                - develop
                 - master
